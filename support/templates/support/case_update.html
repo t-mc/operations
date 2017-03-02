@@ -1,0 +1,36 @@
+{%  extends 'base.html' %}
+
+{# load the tag library #}
+{% load bootstrap3 %}
+
+{# load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load staticfiles %}
+
+{% block title %}Case Details{% endblock %}
+
+{% block bodyblock %}
+
+        <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Case Details</h3>
+        </div>
+        <div style="padding: 10pt">
+                <form action="/support/update_case/{{ object.id }}/" method="POST" class="form">
+                  {% csrf_token %}
+                  {% bootstrap_form form %}
+                  {#  {{ form.as_p }} #}
+                
+                  {% buttons %}
+                    <button type="submit" class="btn btn-custom" value="Sla actie op">Opslaan</button>
+                  {% endbuttons %}
+                </form>
+        </div>
+    </div>
+
+{%  endblock %}

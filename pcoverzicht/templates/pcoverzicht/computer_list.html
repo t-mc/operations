@@ -1,0 +1,40 @@
+{%  extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Computeroverzicht{% endblock %}
+
+{% block bodyblock %}
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">PC Overzicht</h3>
+        </div>
+        {% if object_list %}
+            <table class="table">
+                <thead>
+                    <th>PC Naam</th>
+                    <th>Gebruiker</th>
+                    <th>Merk en type</th>
+                    <th>Kenmerken</th>
+                    <th>Aanschafdatum</th>
+                    <th>Serienummer</th>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                        <tr>
+                            <td><a href="/pcoverzicht/computer/update/{{ object.pk }}">{{ object.naam }}</a></td>
+                            <td>{{ object.gebruiker }}</td>
+                            <td>{{ object.merkentype }}</td>
+                            <td>{{ object.kenmerken }}</td>
+                            <td>{{ object.aanschafdatum }}</td>
+                            <td>{{ object.serienummer }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/pcoverzicht/computer/new" class="btn btn-custom" style="margin: 10px">PC Toevoegen</a>
+        {% else %}
+            <h1>No computers in the list!</h1>
+        {% endif %}
+    </div>
+{%  endblock %}

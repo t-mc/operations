@@ -1,0 +1,32 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+{% block sidebar %}
+    <table class="table">
+        <tr>
+            <td><a href="/support">Overzicht Support Cases</a></td>
+        </tr>
+        <tr>
+            <td><a href="/support/case_add">Support Case Toevoegen</a></td>
+        </tr>
+        <tr>
+            <td><a href="/support/activity_add">Activiteit aan Case Toevoegen</a></td>
+        </tr>
+        <tr>
+            <td><a href="/pcoverzicht/computer/list">PC Overzicht</a></td>
+        </tr>
+        <tr>
+            <td><a href="/pcoverzicht/computer/new">PC Toevoegen</a></td>
+        </tr>
+        <tr>
+            <td><a href="/pcoverzicht/software/list">Software Overzicht</a></td>
+        </tr>
+        <tr>
+            <td><a href="/pcoverzicht/software/new">Software Toevoegen</a></td>
+        </tr>
+    </table>
+{% endblock sidebar %}
+
+{% block bodyblock %}
+    <img src="static/imgs/t-mc_logo_fc.png" alt="" width="500">
+{% endblock bodyblock %}

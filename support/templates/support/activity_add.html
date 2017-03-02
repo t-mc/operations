@@ -1,0 +1,32 @@
+{%  extends 'base.html' %}
+
+
+{% load bootstrap3 %}
+
+{% bootstrap_messages %}
+
+{% load staticfiles %}
+
+{% block title %}Maak nieuwe activiteit aan{% endblock %}
+
+{% block bodyblock %}
+
+        <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Nieuwe Activiteit</h3>
+        </div>
+        <div style="padding: 10pt">
+                <form action="/support/activity_add/" method="POST" class="form">
+                  {% csrf_token %}
+                  {% bootstrap_form form %}
+                  {% buttons %}
+                    <button type="submit" class="btn btn-custom" value="Sla actie op">
+                      Opslaan
+                    </button>
+                  {% endbuttons %}
+                </form>
+        </div>
+    </div>
+
+{%  endblock %}
+

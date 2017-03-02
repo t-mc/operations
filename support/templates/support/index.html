@@ -1,0 +1,46 @@
+{%  extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Support Case{% endblock %}
+
+{% block bodyblock %}
+    <div class="hero-unit">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Overzicht Support Cases</h3>
+            </div>
+           {% if cases %}
+                <div style="padding: 5pt">
+                    <table class="table" id="dev-table">
+                        <thead>
+                            <tr>
+                                <th>Onderwerp</th>
+                                <th>Datum melding</th>
+                                <th>Klant</th>
+                                <th>Uitvoerende</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for case in cases %}
+                                 <tr> 
+                                    <td><a href="/support/update_case/{{ case.slug }}">{{ case.onderwerp }}</a></td>
+                                    <td>{{ case.datumMelding }}</td>
+                                    <td>{{ case.klant }}</td>
+                                    <td>{{ case.uitvoerende }}</td>
+                                    <td>{{ case.status }}</td>
+                                 </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <h1>No cases in the list!</h1>
+            {% endif %}
+        </div>
+    </div>
+
+
+{%  endblock %}
+

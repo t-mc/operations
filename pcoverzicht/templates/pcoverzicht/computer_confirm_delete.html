@@ -1,0 +1,13 @@
+{%  extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Computer verwijderen{% endblock %}
+
+{% block bodyblock %}
+    <form method="post">{% csrf_token %}
+        Weet je zeker dat je "{{ object }}"  wilt verwijderen?
+        <input class="btn btn-custom" type="submit" value="Delete" />
+        <a href="/pcoverzicht/computer/list" class="btn btn-custom">Annuleren</a>
+    </form>
+{% endblock %}

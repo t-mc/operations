@@ -1,0 +1,38 @@
+{%  extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Softwareoverzicht{% endblock %}
+
+{% block bodyblock %}
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Software Overzicht</h3>
+        </div>
+        {% if object_list %}
+            <table class="table">
+                <thead>
+                    <th>PC Naam</th>
+                    <th>Software</th>
+                    <th>Versienummer</th>
+                    <th>Productkey</th>
+                </thead>
+                <tbody>
+                    {% for object in object_list %}
+                        <tr>
+                            <td><a href="/pcoverzicht/software/update/{{ object.pk }}">{{ object.naam }}</a></td>
+                            <td>{{ object.software }}</td>
+                            <td>{{ object.versienummer }}</td>
+                            <td>{{ object.productkey }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/pcoverzicht/software/new" class="btn btn-custom" style="margin: 10px">Software Toevoegen</a>
+        {% else %}
+            <h1>No software in the list!</h1>
+        {% endif %}
+    </div>
+{%  endblock %}
+

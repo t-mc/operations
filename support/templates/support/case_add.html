@@ -1,0 +1,33 @@
+{%  extends 'base.html' %}
+
+
+{% load bootstrap3 %}
+
+{% bootstrap_messages %}
+
+{% load crispy_forms_tags %}
+
+{% load staticfiles %}
+
+{% block title %}Maak nieuwe case aan{% endblock %}
+
+{% block bodyblock %}
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Nieuwe Case</h3>
+        </div>
+        <div style="padding: 10pt">
+            <form action="/support/case_add/" method="POST" class="form">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              {% buttons %}
+                <button type="submit" class="btn btn-custom" value="Sla case op">
+                  Opslaan
+                </button>
+              {% endbuttons %}
+            </form>
+        </div>
+    </div>
+
+{%  endblock %}

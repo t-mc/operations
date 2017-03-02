@@ -1,0 +1,12 @@
+{%  extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Software verwijderen{% endblock %}
+
+{% block bodyblock %}
+    <form method="post">{% csrf_token %}
+        Weet je zeker dat je "{{ object }}"  wilt verwijderen?
+        <input type="submit" value="Delete" />
+    </form>
+{% endblock %}

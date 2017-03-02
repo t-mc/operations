@@ -1,0 +1,28 @@
+{%  extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load bootstrap3 %}
+
+{% block title %}Computer aanpassen{% endblock %}
+
+{% block bodyblock %}
+
+    <div class="panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Software aanpassen</h3>
+        </div>
+        <div style="padding: 10pt">
+            <form action="" method="POST" class="form">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              {% buttons %}
+                <button type="submit" class="btn btn-custom" value="Sla wijziging op">
+                  Opslaan
+                </button>
+              {% endbuttons %}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
