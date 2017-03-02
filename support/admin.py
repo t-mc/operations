@@ -1,6 +1,7 @@
 from django.contrib import admin
-from django.forms import TextInput, Textarea
 from django.db import models
+from django.forms import TextInput, Textarea
+from django.utils.html import format_html
 
 from .models import Activiteiten, ActivityStatus, ActivityType, Bedrijf,\
                     Cases, CaseStatus, CaseType, Contactpersoon, Contract, \
@@ -14,16 +15,30 @@ class ActiviteitenAdmin(admin.ModelAdmin):
 
     list_display = ('caseId', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datumUitgevoerd')
 
+class BedrijfContacten(admin.TabularInline):
+    model = Contactpersoon
+    classes = ['collapse']
+    extra = 1
+
+class BedrijfContracten(admin.TabularInline):
+    model = Contract
+    classes = ['collapse']
+    extra = 1
+
 class BedrijvenAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
     }
-
-    list_display = ('bedrijfsnaam', 'telefoonnummer', 'primair_contact', 'klantpartner', 'emailadres')    
+    inlines = [
+        BedrijfContracten,
+        BedrijfContacten
+    ]
+    list_display = ('bedrijfsnaam', 'telefoon', 'telefoonnummer', 'primair_contact', 'klantpartner', 'emailadres')    
 
 class CaseActivities(admin.TabularInline):
     model = Activiteiten
+    classes = ['collapse']
     extra = 1
 
 class CasesAdmin(admin.ModelAdmin):
@@ -53,12 +68,26 @@ class ContractenAdmin(admin.ModelAdmin):
 
     list_display = ('projectcode', 'startdatum', 'einddatum', 'klantpartner', 'contract_bij')  
 
+class LeverancierContract(admin.TabularInline):
+    model = Contract
+    classes = ['collapse']
+    extra = 1
+
+class LeverancierSLA(admin.TabularInline):
+    model = SLA
+    classes = ['collapse']
+    extra = 1
+
 class LeveranciersAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
     }
 
+    inlines = [
+        LeverancierContract,
+        LeverancierSLA
+    ]
     list_display = ('leveranciernaam', 'telefoonnummer', 'emailadres', 'klantpartner')  
 
 class SLAAdmin(admin.ModelAdmin):
@@ -77,6 +106,13 @@ class UserProfileAdmin(admin.ModelAdmin):
     }
 
     list_display = ('user', 'website', 'picture') 
+    readonly_fields = ('image_preview',)
+
+    def image_preview(self, obj):
+        image_field = getattr(obj, 'picture', '')
+        print(image_field.url)
+        return format_html(u'<img src="/static/{}" width="200" height="200" />', image_field.url)
+
 #
 # Register your models here.
 #

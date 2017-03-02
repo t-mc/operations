@@ -4,6 +4,7 @@ from datetime import date
 import random
 import string
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
 
 #
 # Lookup tabel voor case status
@@ -58,6 +59,7 @@ class ActivityType(models.Model):
 #
 class Bedrijf(models.Model):
     bedrijfsnaam = models.CharField(max_length=64)
+    telefoon = PhoneNumberField(blank=True, null=True)
     telefoonnummer = models.CharField(max_length=20)
     primair_contact = models.CharField(max_length=64)
     klantpartner = models.CharField(max_length=254)
@@ -106,6 +108,7 @@ class Leverancier(models.Model):
 #
 class Contract(models.Model):
     projectcode = models.CharField(max_length=6)
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
     startdatum = models.DateField()
     einddatum = models.DateField()
     klantpartner = models.CharField(max_length=254)
