@@ -45,10 +45,10 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Support registraties<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/support">Overzicht Cases</a></li>
+                                <li><a href="/support/case/list">Overzicht Cases</a></li>
                                 <li class="divider"></li>
-                                <li><a href="/support/case_add">Case Toevoegen</a></li>
-                                <li><a href="/support/activity_add">Activiteit Toevoegen</a></li>
+                                <li><a href="/support/case/new">Case Toevoegen</a></li>
+                                <li><a href="/support/activity/new">Activiteit Toevoegen</a></li>
                                 <li class="divider"></li>
                             </ul>
                         </li>
@@ -98,9 +98,12 @@
                 </div>
             </div> <!--/col-->
             <div class="col-xs-9 col-sm-9 col-md-9">
+                {% block dashboard %}
+                {% endblock dashboard %}
                 {% block bodyblock %}
                     De inhoud van de pagina
                 {% endblock %}
+
             </div> <!--/col-->
         </div> <!--/row-->
      {% else %}
@@ -135,5 +138,6 @@
     </footer>
     <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
     </body>
 </html>

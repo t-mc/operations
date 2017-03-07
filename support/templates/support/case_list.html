@@ -1,6 +1,7 @@
-{%  extends 'base.html' %}
+{%  extends './support_base.html' %}
 
 {% load staticfiles %}
+{% load static %}
 
 {% block title %}Support Case{% endblock %}
 
@@ -25,9 +26,9 @@
                         <tbody>
                              {% for case in cases %}
                                  <tr> 
-                                    <td><a href="/support/update_case/{{ case.slug }}">{{ case.onderwerp }}</a></td>
-                                    <td>{{ case.datumMelding }}</td>
-                                    <td>{{ case.klant }}</td>
+                                    <td><a href="{% url 'support:case_update' case.pk %}">{{ case.onderwerp }}</a></td>
+                                    <td>{{ case.datum_melding }}</td>
+                                    <td>{{ case.bedrijf }}</td>
                                     <td>{{ case.uitvoerende }}</td>
                                     <td>{{ case.status }}</td>
                                  </tr>

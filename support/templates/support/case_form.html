@@ -6,7 +6,7 @@
 
 {% block bodyblock %}
 
-        <div class="panel">
+    <div class="panel">
         <div class="panel-heading">
             <h3 class="panel-title">Case Details</h3>
         </div>
@@ -15,9 +15,11 @@
                   {% csrf_token %}
                   {% bootstrap_form form layout='inline' %}
                   {#  {{ form.as_p }} #}
-                
+
                   {% buttons %}
-                    <button type="submit" class="btn btn-custom" value="Sla actie op">{% bootstrap_icon "star" %} Opslaan</button>
+                    <button type="submit" class="btn btn-primary" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
+                    <button type="cancel" class="btn btn-warning" value="Annuleer">{% bootstrap_icon "backward" %} Annuleer</button>
+                    <button type="delete" class="btn btn-danger" value="Verwijder">{% bootstrap_icon "remove" %} Verwijder</button>
                   {% endbuttons %}
                 </form>
         </div>

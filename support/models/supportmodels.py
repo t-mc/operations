@@ -142,15 +142,13 @@ class SLA(models.Model):
 # Record layout cases tabel
 #
 class Cases(models.Model):
-    slug = models.CharField(max_length=16, primary_key=True, editable=False, unique=True)
+    case_code = models.CharField(max_length=16, editable=False, unique=True)
     onderwerp = models.CharField(max_length=64)
     omschrijving = models.TextField()
-    datumMelding = models.DateField(("Datum melding"), default=date.today)
-    datumGereed = models.DateField(("Datum gereed"), blank=True, null=True)
+    datum_melding = models.DateField(("Datum melding"), default=date.today)
+    datum_gereed = models.DateField(("Datum gereed"), blank=True, null=True)
     status = models.ForeignKey(CaseStatus, null=True)
-    klant = models.CharField(max_length=64, null=True)
     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
-    contactpersoon = models.CharField(max_length=64, blank=True, null=True)
     contact = models.ForeignKey(Contactpersoon, blank=True, null=True)
     contract = models.ForeignKey(Contract, blank=True, null=True)
     uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
@@ -159,11 +157,11 @@ class Cases(models.Model):
         verbose_name_plural = 'Cases'
 
     def __str__(self):
-        return self.slug
+        return self.onderwerp
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = id_generator()
+        if not self.case_code:
+            self.case_code = id_generator()
             # using your function as above or anything else
         success = False
         failures = 0
@@ -184,12 +182,12 @@ class Cases(models.Model):
 # Record layout voor activiteiten tabel
 #
 class Activiteiten(models.Model):
-    caseId = models.ForeignKey(Cases)
+    case_id = models.ForeignKey(Cases)
     activiteit = models.ForeignKey(ActivityType)
     status = models.ForeignKey(ActivityStatus)
     omschrijving = models.TextField()
     uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
-    datumUitgevoerd = models.DateField(("Datum"), default=date.today)
+    datum_uitgevoerd = models.DateField(("Datum"), default=date.today)
 
     class Meta:
         verbose_name_plural = 'Activiteiten'

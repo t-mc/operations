@@ -13,7 +13,7 @@ class ActiviteitenAdmin(admin.ModelAdmin):
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
     }
 
-    list_display = ('caseId', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datumUitgevoerd')
+    list_display = ('case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd')
 
 class BedrijfContacten(admin.TabularInline):
     model = Contactpersoon
@@ -43,14 +43,14 @@ class CaseActivities(admin.TabularInline):
 
 class CasesAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['klant', 'contactpersoon', 'onderwerp']}),
-        ("Detail informatie", {'fields': ['status', 'omschrijving', 'datumMelding', 'uitvoerende']})
+        (None, {'fields': ['bedrijf', 'contact', 'onderwerp']}),
+        ("Detail informatie", {'fields': ['status', 'omschrijving', 'datum_melding', 'uitvoerende']})
     ]
     inlines = [
         CaseActivities
     ]
-    list_display= ('slug', 'onderwerp', 'omschrijving', 'datumMelding', 'status', 'klant', 'contactpersoon', 'uitvoerende')
-    list_filter = ('status', 'klant')
+    list_display= ('onderwerp', 'omschrijving', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
+    list_filter = ('status', 'bedrijf')
 
 class ContactpersonenAdmin(admin.ModelAdmin):
     formfield_overrides = {

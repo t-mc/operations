@@ -6,7 +6,7 @@ from pcoverzicht.views import ComputerCreate, ComputerDelete, ComputerUpdate, Co
 
 urlpatterns = [
         url(r'^computer/list/$', ComputerListView.as_view(), name='computer_list'),
-        url(r'^computer/new$', ComputerCreate.as_view(), name='computer_new'),
+        url(r'^computer/new/$', ComputerCreate.as_view(), name='computer_new'),
         url(r'^computer/update/(?P<pk>\d+)$', ComputerUpdate.as_view(), name='computer_update'),
         url(r'^computer/delete/(?P<pk>\d+)$', ComputerDelete.as_view(), name='computer_delete'),
         url(r'^software/list/$', SoftwareListView.as_view(), name='software_list'),
