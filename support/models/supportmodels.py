@@ -142,7 +142,7 @@ class SLA(models.Model):
 # Record layout cases tabel
 #
 class Cases(models.Model):
-    case_code = models.CharField(max_length=16, editable=False, unique=True)
+    case_code = models.CharField(max_length=16,  unique=True)
     onderwerp = models.CharField(max_length=64)
     omschrijving = models.TextField()
     datum_melding = models.DateField(("Datum melding"), default=date.today)
@@ -157,7 +157,7 @@ class Cases(models.Model):
         verbose_name_plural = 'Cases'
 
     def __str__(self):
-        return self.onderwerp
+        return self.case_code
 
     def save(self, *args, **kwargs):
         if not self.case_code:

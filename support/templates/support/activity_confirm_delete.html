@@ -1,0 +1,15 @@
+{%  extends './support_base.html' %}
+
+{% load bootstrap3 %}
+
+{% load staticfiles %}
+
+{% block title %}Activiteit verwijderen{% endblock %}
+
+{% block bodyblock %}
+    <form method="post">{% csrf_token %}
+        Weet je zeker dat je de activiteit "{{ object }}"  wilt verwijderen?
+        <button type="submit" class="btn btn-custom" value="Delete">{% bootstrap_icon "ok" %} Verwijderen</button>
+        <a href="/support/activity/list" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
+    </form>
+{% endblock %}

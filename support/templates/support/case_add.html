@@ -11,13 +11,12 @@
             <h3 class="panel-title">Nieuwe Case</h3>
         </div>
         <div style="padding: 10pt">
-            <form action="/support/case_add/" method="POST" class="form">
+            <form action="" method="POST" class="form">
               {% csrf_token %}
               {% bootstrap_form form %}
               {% buttons %}
-                <button type="submit" class="btn btn-custom" value="Sla case op">
-                  Opslaan
-                </button>
+                    <button type="submit" class="btn btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
+                    <a href="/support/case/list" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
               {% endbuttons %}
             </form>
         </div>

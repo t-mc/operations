@@ -1,0 +1,79 @@
+{%  extends './support_base.html' %}
+
+{% load staticfiles %}
+{% load static %}
+{% load bootstrap3 %}
+
+{% block title %}Case - Activiteiten{% endblock %}
+
+{% block bodyblock %}
+    <div class="hero-unit">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Case Details</h3>
+            </div>
+            <div style="padding: 5pt">
+                <table class="table table-condensed table-borderless" id="dev-table">
+                    <tr> 
+                        <td>Onderwerp</td>
+                        <td>{{ cases.onderwerp }}</td>
+                        <td>Datum melding</td>
+                        <td>{{ cases.datum_melding }}</td>
+                    </tr>
+                    <tr> 
+                        <td>Omschrijving</td>
+                        <td>{{ cases.omschrijving }}</td>
+                        <td>Status</td>
+                        <td>{{ cases.status }}</td>
+                    </tr>                    
+                    <tr> 
+                        <td>Bedrijf</td>
+                        <td>{{ cases.bedrijf }}</td>
+                        <td>Datum gereed</td>
+                        <td>{{ cases.datum_gereed }}</td>
+                    </tr>                    
+                    <tr>
+                        <td>Contact</td>
+                        <td>{{ cases.contact }}</td>
+                        <td>Uitvoerende</td>
+                        <td>{{ cases.uitvoerende }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Uitgevoerde Activiteiten</h3>
+            </div>
+           {% if activities %}
+                <div style="padding: 5pt">
+                    <table class="table table-condensed" id="dev-table">
+                        <thead>
+                            <tr>
+                                <th>Activiteit</th>
+                                <th>Status</th>
+                                <th>Omschrijving</th>
+                                <th>Uitvoerende</th>
+                                <th>Datum uitgevoerd</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for activity in activities %}
+                                 <tr> 
+                                    <td><a href="{% url 'support:activity_update' activity.pk %}">{{ activity.activiteit }}</a></td>
+                                    <td>{{ activity.status }}</td>
+                                    <td>{{ activity.omschrijving }}</td>
+                                    <td>{{ activity.uitvoerende }}</td>
+                                    <td>{{ activity.datum_uitgevoerd }}</td>
+                                 </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            {% else %}
+                <h1>No activities in the list!</h1> 
+            {% endif %}
+            <a href="{% url 'support:activity_new' cases.case_code %}" class="btn btn-custom">Activiteit Toevoegen</a>
+        </div>
+    </div>
+{%  endblock %}

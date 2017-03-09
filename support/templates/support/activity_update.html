@@ -1,24 +1,23 @@
 {%  extends './support_base.html' %}
 
+
 {% load bootstrap3 %}
 
-{% block title %}Case Details{% endblock %}
+{% block title %}Update Activiteit{% endblock %}
 
 {% block bodyblock %}
 
         <div class="panel">
         <div class="panel-heading">
-            <h3 class="panel-title">Case Details</h3>
+            <h3 class="panel-title">Update Activiteit</h3>
         </div>
         <div style="padding: 10pt">
                 <form action="" method="POST" class="form">
                   {% csrf_token %}
-                  {% bootstrap_form form layout='inline' %}
-                  {#  {{ form.as_p }} #}
-                
+                  {% bootstrap_form form layout='inline'%}
                   {% buttons %}
                     <button type="submit" class="btn btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
-                    <a href="/support/case/delete/{{ object.pk }}" class="btn btn-custom">{% bootstrap_icon "remove" %} Verwijderen</a>
+                    <a href="/support/activity/delete/{{ object.pk }}" class="btn btn-custom">{% bootstrap_icon "remove" %} Verwijderen</a>
                   {% endbuttons %}
                 </form>
                 </form>
@@ -26,3 +25,4 @@
     </div>
 
 {%  endblock %}
+

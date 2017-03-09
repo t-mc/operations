@@ -1,15 +1,17 @@
 from django.conf.urls import url
 from support import views
-from support.views import CaseListView, CaseCreate, CaseUpdate, CaseDelete, \
+from support.views import CaseListView, CaseCreate, CaseDetail, CaseUpdate, CaseDelete, \
                             ActivityListView, ActivityCreate, ActivityUpdate, ActivityDelete
 app_name = 'support'
 
 urlpatterns = [
         url(r'^case/list/$',                  CaseListView.as_view(),     name='case_list'),
         url(r'^case/new/$',                   CaseCreate.as_view(),       name='case_new'),
+        url(r'^case/detail/(?P<pk>\d+)/$',    CaseDetail.as_view(),       name='case_detail'),
         url(r'^case/update/(?P<pk>\d+)/$',    CaseUpdate.as_view(),       name='case_update'),
         url(r'^case/delete/(?P<pk>\d+)/$',    CaseDelete.as_view(),       name='case_delete'),
         url(r'^activity/list/$',              ActivityListView.as_view(), name='activity_list'),
+        url(r'^activity/new/(?P<case_code>\w+)/$', ActivityCreate.as_view(),   name='activity_new'),        
         url(r'^activity/new/$',               ActivityCreate.as_view(),   name='activity_new'),
         url(r'^activity/update/(?P<pk>\d+)/$',ActivityUpdate.as_view(),   name='activity_update'),
         url(r'^activity/delete/(?P<pk>\d+)/$',ActivityDelete.as_view(),   name='activity_delete'),

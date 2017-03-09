@@ -44,7 +44,7 @@ class CaseActivities(admin.TabularInline):
 class CasesAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['bedrijf', 'contact', 'onderwerp']}),
-        ("Detail informatie", {'fields': ['status', 'omschrijving', 'datum_melding', 'uitvoerende']})
+        ("Detail informatie", {'fields': ['case_code', 'status', 'omschrijving', 'datum_melding', 'uitvoerende']})
     ]
     inlines = [
         CaseActivities

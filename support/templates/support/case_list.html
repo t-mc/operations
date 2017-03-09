@@ -26,7 +26,7 @@
                         <tbody>
                              {% for case in cases %}
                                  <tr> 
-                                    <td><a href="{% url 'support:case_update' case.pk %}">{{ case.onderwerp }}</a></td>
+                                    <td><a href="{% url 'support:case_detail' case.pk %}">{{ case.onderwerp }}</a></td>
                                     <td>{{ case.datum_melding }}</td>
                                     <td>{{ case.bedrijf }}</td>
                                     <td>{{ case.uitvoerende }}</td>
@@ -35,6 +35,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    <a href="/support/case/new" class="btn btn-custom">Support Case Toevoegen</a>
                 </div>
             {% else %}
                 <h1>No cases in the list!</h1>

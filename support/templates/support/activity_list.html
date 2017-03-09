@@ -1,0 +1,49 @@
+{%  extends './support_base.html' %}
+
+{% load staticfiles %}
+{% load static %}
+
+{% block title %}Overzicht Activiteiten{% endblock %}
+
+{% block bodyblock %}
+    <div class="hero-unit">
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Overzicht Activiteiten</h3>
+            </div>
+           {% if activities %}
+                <div style="padding: 5pt">
+                    <table class="table table-condensed table-borderless" id="dev-table">
+                        <thead>
+                            <tr>
+                                <th>Case</th>
+                                <th>Activiteit</th>
+                                <th>Status</th>
+                                <th>Omschrijving</th>
+                                <th>Uitvoerende</th>
+                                <th>Datum uitgevoerd</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for activity in activities %}
+                                 <tr> 
+                                    <td><a href="{% url 'support:activity_update' activity.pk %}">{{ activity.case_id }}</a></td>
+                                    <td>{{ activity.activiteit }}</td>
+                                    <td>{{ activity.status }}</td>
+                                    <td>{{ activity.omschrijving }}</td>
+                                    <td>{{ activity.uitvoerende }}</td>
+                                    <td>{{ activity.datum_uitgevoerd }}</td>
+                                 </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="/support/activity/new" class="btn btn-custom">Activiteit Toevoegen</a>
+                </div>
+            {% else %}
+                <h1>No cases in the list!</h1>
+            {% endif %}
+        </div>
+    </div>
+
+
+{%  endblock %}
