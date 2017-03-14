@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
 from django.forms import formset_factory
-from django.shortcuts import render 
+from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
 from django.views.generic import DetailView, FormView, ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
@@ -15,19 +15,12 @@ Activity views
 class ActivityCreate(CreateView):
     model = Activiteiten
     form_class = ActivityForm
-    template_name = 'support/activity_form.html'
+    template_name = 'support/activity_add.html'
     success_url = "/support/case/list"
-    # fields = '__all__'
 
-    def __init__(self, *args, **kwargs):
-        super(ActivityCreate, self).__init__(*args, **kwargs)
-        set.fields['case_id'].initial = kwargs['case_code']
-
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(ActivityCreate, self).get_context_data(**kwargs)
-    #     context['case_id'] = self.kwargs['case_code']
-    #     print(context['case_id'])
-    #     return context
+    def form_valid(self, form):
+        form.instance.case_id = Cases.objects.get(case_code = self.kwargs['case_code'])
+        return super(ActivityCreate, self).form_valid(form)
 
 class ActivityDelete(DeleteView):
     model = Activiteiten
@@ -82,6 +75,13 @@ class CaseListView(ListView):
     model = Cases
     template_name = 'support/case_list.html'
     context_object_name = 'cases'
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseListView, self).get_context_data(**kwargs)
+        # Filter aanpassen zodat enkel actieve case naar boven komen
+        # En sortering toepassen oudste case eerst
+        # context['cases'] = Cases.objects.filter(id="1")
+        return context
 
 class CaseUpdate(UpdateView):
     model = Cases

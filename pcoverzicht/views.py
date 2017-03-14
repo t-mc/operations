@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 
 from pcoverzicht.models import Computer, Software
+from pcoverzicht.forms import ComputerForm
 
 # Create your views here.
 
@@ -22,9 +23,10 @@ class ComputerCreate(CreateView):
 
 class ComputerUpdate(UpdateView):
     model = Computer
+    form_class = ComputerForm
     success_url = reverse_lazy('computer_list')
     template_name = 'pcoverzicht/computer_update.html'
-    fields = '__all__'
+    # fields = '__all__'
 
 
 class ComputerDelete(DeleteView):

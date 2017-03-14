@@ -18,6 +18,7 @@
                 
                   {% buttons %}
                     <button type="submit" class="btn btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
+                    <a href="/support/case/list" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
                     <a href="/support/case/delete/{{ object.pk }}" class="btn btn-custom">{% bootstrap_icon "remove" %} Verwijderen</a>
                   {% endbuttons %}
                 </form>
