@@ -8,8 +8,8 @@
 
 {% block bodyblock %}
     <form method="post">{% csrf_token %}
-        Weet je zeker dat je de activiteit "{{ object }}"  wilt verwijderen?
-        <button type="submit" class="btn btn-custom" value="Delete">{% bootstrap_icon "ok" %} Verwijderen</button>
-        <a href="/support/activity/list" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
+        Weet je zeker dat je de activiteit "{{ object.omschrijving }}"  wilt verwijderen?
+        <button type="submit" class="btn btn-primary btn-custom" name="delete" value="Delete">{% bootstrap_icon "ok" %} Verwijderen</button>
+        <button type="submit" class="btn btn-primary btn-custom" name="cancel" value="Cancel">{% bootstrap_icon "remove" %} Annuleren</button>
     </form>
 {% endblock %}

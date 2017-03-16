@@ -9,7 +9,7 @@
 {% block bodyblock %}
     <form method="post">{% csrf_token %}
         Weet je zeker dat je de case "{{ object }}"  wilt verwijderen?
-        <button type="submit" class="btn btn-custom" value="Delete">{% bootstrap_icon "ok" %} Verwijderen</button>
-        <a href="/support/case/list" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
+        <button type="submit" class="btn btn-primary btn-custom" value="Delete">{% bootstrap_icon "ok" %} Verwijderen</button>
+        <a href="/support/case/list" class="btn btn-primary btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
     </form>
 {% endblock %}

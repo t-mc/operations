@@ -6,7 +6,7 @@ from django.db import models
 import datetime
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import ButtonHolder, Fieldset, Layout, Reset, Submit
+from crispy_forms.layout import ButtonHolder, Fieldset, HTML, Layout, Reset, Submit
 
 from pcoverzicht.models import Computer, Software
 
@@ -27,7 +27,9 @@ class ComputerForm(forms.ModelForm):
             Fieldset('PC informatie', 'naam', 'gebruiker'),
             Fieldset('PC details', 'merkentype', 'aanschafdatum', 'serienummer'),
             ButtonHolder(
-                Submit('save', ('Opslaan'), css_class='btn btn-primary '),
-                Reset('reset', ('Annuleren'), css_class='btn')
+                Submit('save', ('Opslaan'), css_class='btn btn-custom'),
+                Submit('cancel', ('Annuleren'), css_class='btn btn-custom'),
+                # HTML("<button type='submit' class='btn btn-primary btn-custom' value='Sla op'>Opslaan</button>"),
+                # HTML("<a href='/pcoverzicht/computer/list' class='btn btn-primary btn-custom'>Annuleren</a>")
                 ),
         )

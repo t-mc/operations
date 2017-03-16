@@ -17,9 +17,9 @@
                   {#  {{ form.as_p }} #}
                 
                   {% buttons %}
-                    <button type="submit" class="btn btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
-                    <a href="/support/case/detail/{{ object.pk }}" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
-                    <a href="/support/case/delete/{{ object.pk }}" class="btn btn-custom">{% bootstrap_icon "remove" %} Verwijderen</a>
+                    <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
+                    <button type="cancel" class="btn btn-primary btn-custom" value="Cancel">{% bootstrap_icon "remove" %} Annuleren</button>
+                    <a href="/support/case/delete/{{ object.pk }}" class="btn btn-primary btn-custom">{% bootstrap_icon "remove" %} Verwijderen</a>
                   {% endbuttons %}
                 </form>
                 </form>

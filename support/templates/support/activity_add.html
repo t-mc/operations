@@ -16,8 +16,8 @@
                   {% csrf_token %}
                   {% bootstrap_form form %}
                   {% buttons %}
-                    <button type="submit" class="btn btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
-                    <a href="/support/case/list" class="btn btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
+                    <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
+                    <button type="cancel" class="btn btn-primary btn-custom" value="Cancel">{% bootstrap_icon "remove" %} Annuleren</button>
                   {% endbuttons %}
                 </form>
         </div>

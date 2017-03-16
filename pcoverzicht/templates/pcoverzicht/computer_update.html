@@ -1,9 +1,9 @@
 {%  extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% load staticfiles %}
 
-{% load bootstrap3 %}
+
+
 
 
 {% block title %}Computer aanpassen{% endblock %}
@@ -18,7 +18,6 @@
             <form action="" method="POST" class="form">
               {% csrf_token %}
               {% crispy form %}
-
             </form>
         </div>
     </div>

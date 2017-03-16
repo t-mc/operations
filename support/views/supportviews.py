@@ -17,33 +17,48 @@ class ActivityCreate(CreateView):
     model = Activiteiten
     form_class = ActivityForm
     template_name = 'support/activity_add.html'
-    success_url = "/support/case/list"
+    # success_url = "/support/case/list"
 
     def get_success_url(self):
-        print(self)
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
     def form_valid(self, form):
         form.instance.case_id = Cases.objects.get(case_code = self.kwargs['case_code'])
         return super(ActivityCreate, self).form_valid(form)
 
+
 class ActivityDelete(DeleteView):
     model = Activiteiten
     template_name = "support/activity_confirm_delete.html"
-    success_url = "/support/case/list"
+    # success_url = "/support/case/list"
     fields = '__all__'
+
+    def get_success_url(self):
+        print(self.request.session['pk'])
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(ActivityDelete, self).post(request, *args, **kwargs)
 
 class ActivityListView(ListView):
     model = Activiteiten
     template_name = 'support/activity_list.html'
     context_object_name = 'activities'
 
+
 class ActivityUpdate(UpdateView):
     model = Activiteiten
     form_class = ActivityForm
-    success_url = "/support/case/list"
+    # success_url = "/support/case/list"
     template_name = 'support/activity_update.html'
     # fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
 """
 Case views
@@ -54,12 +69,13 @@ class CaseCreate(CreateView):
     form_class = CaseForm
     template_name = 'support/case_add.html'
     success_url = '/support/case/list'
-    # fields = '__all__'
+
 
 class CaseDelete(DeleteView):
     model = Cases
     success_url = "/support/case/list"
     fields = '__all__'
+
 
 class CaseDetail(UpdateView):
     model = Cases
@@ -67,7 +83,6 @@ class CaseDetail(UpdateView):
     template_name = 'support/case_activities.html'
     success_url = "/support/case/list"
     context_object_name = 'cases'
-    # fields = '__all__'
     
     def get_context_data(self, **kwargs):
         self.request.session['pk'] = self.kwargs['pk']
@@ -77,9 +92,9 @@ class CaseDetail(UpdateView):
         return context
 
     def get_success_url(self):
-        print(self)
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
-        
+
+
 class CaseListView(ListView):
     model = Cases
     template_name = 'support/case_list.html'
@@ -92,12 +107,12 @@ class CaseListView(ListView):
         # context['cases'] = Cases.objects.filter(id="1")
         return context
 
+
 class CaseUpdate(UpdateView):
     model = Cases
     form_class = CaseForm
     template_name = 'support/case_update.html'
     success_url = "/support/case/list"
-    # fields = '__all__'
 
     def get_success_url(self):
         print(self)
