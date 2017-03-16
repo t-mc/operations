@@ -29,7 +29,5 @@ class ComputerForm(forms.ModelForm):
             ButtonHolder(
                 Submit('save', ('Opslaan'), css_class='btn btn-custom'),
                 Submit('cancel', ('Annuleren'), css_class='btn btn-custom'),
-                # HTML("<button type='submit' class='btn btn-primary btn-custom' value='Sla op'>Opslaan</button>"),
-                # HTML("<a href='/pcoverzicht/computer/list' class='btn btn-primary btn-custom'>Annuleren</a>")
                 ),
         )

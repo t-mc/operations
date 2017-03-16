@@ -76,6 +76,23 @@ class CaseDelete(DeleteView):
     success_url = "/support/case/list"
     fields = '__all__'
 
+    def get_context_data(self, **kwargs):
+        context = super(CaseDelete, self).get_context_data(**kwargs)
+        act_count = Activiteiten.objects.filter(case_id=self.request.session['pk']).count()
+        print(act_count)
+        context['act_count'] = act_count
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            success_url = "/support/case/list"
+            return super(CaseDelete, self).post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
 class CaseDetail(UpdateView):
     model = Cases

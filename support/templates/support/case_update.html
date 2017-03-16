@@ -13,7 +13,15 @@
         <div style="padding: 10pt">
                 <form action="" method="POST" class="form">
                   {% csrf_token %}
-                  {% bootstrap_form form layout='inline' %}
+                  {% comment %}{% bootstrap_form form %}{% endcomment %}
+                  {% bootstrap_field form.onderwerp layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.omschrijving layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.datum_melding layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.datum_gereed layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.status layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.bedrijf layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.contact layout='horizontal' size='sm' %}
+                  {% bootstrap_field form.uitvoerende layout='horizontal' size='sm' %}
                   {#  {{ form.as_p }} #}
                 
                   {% buttons %}
