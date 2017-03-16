@@ -1,4 +1,5 @@
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.contrib.sessions.models import Session
 from django.forms import formset_factory
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
 from django.views.generic import DetailView, FormView, ListView, UpdateView
@@ -17,6 +18,10 @@ class ActivityCreate(CreateView):
     form_class = ActivityForm
     template_name = 'support/activity_add.html'
     success_url = "/support/case/list"
+
+    def get_success_url(self):
+        print(self)
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
     def form_valid(self, form):
         form.instance.case_id = Cases.objects.get(case_code = self.kwargs['case_code'])
@@ -63,13 +68,17 @@ class CaseDetail(UpdateView):
     success_url = "/support/case/list"
     context_object_name = 'cases'
     # fields = '__all__'
-
+    
     def get_context_data(self, **kwargs):
+        self.request.session['pk'] = self.kwargs['pk']
         context = super(CaseDetail, self).get_context_data(**kwargs)
         context['activities'] = Activiteiten.objects.filter(case_id=context['cases'])
         context['case_id'] = context['cases']
-        print(context['cases'].case_code)
         return context
+
+    def get_success_url(self):
+        print(self)
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
         
 class CaseListView(ListView):
     model = Cases
@@ -90,5 +99,7 @@ class CaseUpdate(UpdateView):
     success_url = "/support/case/list"
     # fields = '__all__'
 
-
+    def get_success_url(self):
+        print(self)
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
