@@ -6,6 +6,24 @@ import string
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
+"""
+Abstracte class voor het toevoegen van time stamp op de modellen.
+"""
+class TransactionDT(models.Model):
+    """
+    Opnemen in (vrijwel) iedere class.
+    """
+    created_dt = models.DateTimeField(auto_now_add=True, null=True)
+    modified_dt = models.DateTimeField(auto_now=True, null=True)
+    last_modified_user = models.ForeignKey('auth.User',
+                                           verbose_name='Laatst gewijzigd door',
+                                           null=True,
+                                           blank=True
+                                           )
+
+    class Meta:
+        abstract = True
+
 #
 # Lookup tabel voor case status
 #
@@ -55,9 +73,23 @@ class ActivityType(models.Model):
         return self.type
 
 #
+# Lookup tabel voor tijdsduur
+#
+class Tijdsduur(models.Model):
+    minuten = models.DurationField(blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Tijdsduur'
+        ordering = ['minuten']
+
+    def __str__(self):
+        return str(self.minuten)
+
+
+#
 # Record layout bedrijven tabel
 #
-class Bedrijf(models.Model):
+class Bedrijf(TransactionDT):
     bedrijfsnaam = models.CharField(max_length=64)
     telefoon = PhoneNumberField(blank=True, null=True)
     telefoonnummer = models.CharField(max_length=20)
@@ -74,7 +106,7 @@ class Bedrijf(models.Model):
 #
 # Record layout contactpersonen tabel
 #
-class Contactpersoon(models.Model):
+class Contactpersoon(TransactionDT):
     contactnaam = models.CharField(max_length=64)
     functie = models.CharField(max_length=64)
     telefoonnummer = models.CharField(max_length=20)
@@ -91,7 +123,7 @@ class Contactpersoon(models.Model):
 #
 # Record layout leverancier tabel
 #
-class Leverancier(models.Model):
+class Leverancier(TransactionDT):
     leveranciernaam = models.CharField(max_length=64)
     telefoonnummer = models.CharField(max_length=20)
     emailadres = models.CharField(max_length=254)
@@ -106,7 +138,7 @@ class Leverancier(models.Model):
 #
 # Record layout contracten tabel
 #
-class Contract(models.Model):
+class Contract(TransactionDT):
     projectcode = models.CharField(max_length=6)
     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
     startdatum = models.DateField()
@@ -123,7 +155,7 @@ class Contract(models.Model):
 #
 # Record layout sla tabel
 #
-class SLA(models.Model):
+class SLA(TransactionDT):
     omschrijving = models.CharField(max_length=64)
     classificatie = models.CharField(max_length=20)
     bevestiging = models.IntegerField()
@@ -141,17 +173,17 @@ class SLA(models.Model):
 #
 # Record layout cases tabel
 #
-class Cases(models.Model):
+class Cases(TransactionDT):
     case_code = models.CharField(max_length=16,  unique=True)
     onderwerp = models.CharField(max_length=64)
     omschrijving = models.TextField()
     datum_melding = models.DateField(("Datum melding"), default=date.today)
     datum_gereed = models.DateField(("Datum gereed"), blank=True, null=True)
-    status = models.ForeignKey(CaseStatus, null=True)
+    status = models.ForeignKey(CaseStatus, null=True, default=1)
     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
     contact = models.ForeignKey(Contactpersoon, blank=True, null=True)
     contract = models.ForeignKey(Contract, blank=True, null=True)
-    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='user_uitvoerende')
 
     class Meta:
         verbose_name_plural = 'Cases'
@@ -181,13 +213,14 @@ class Cases(models.Model):
 #
 # Record layout voor activiteiten tabel
 #
-class Activiteiten(models.Model):
+class Activiteiten(TransactionDT):
     case_id = models.ForeignKey(Cases)
     activiteit = models.ForeignKey(ActivityType)
     status = models.ForeignKey(ActivityStatus)
     omschrijving = models.TextField()
-    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='act_uitvoerende')
     datum_uitgevoerd = models.DateField(("Datum"), default=date.today)
+    tijdsduur = models.ForeignKey(Tijdsduur, blank=True, null=True, default=1)
 
     class Meta:
         verbose_name_plural = 'Activiteiten'

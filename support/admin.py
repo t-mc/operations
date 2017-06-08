@@ -5,7 +5,7 @@ from django.utils.html import format_html
 
 from .models import Activiteiten, ActivityStatus, ActivityType, Bedrijf,\
                     Cases, CaseStatus, CaseType, Contactpersoon, Contract, \
-                    Leverancier, SLA, UserProfile
+                    Leverancier, SLA, UserProfile, Tijdsduur
 
 class ActiviteitenAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -43,7 +43,7 @@ class CaseActivities(admin.TabularInline):
 
 class CasesAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['bedrijf', 'contact', 'onderwerp']}),
+        (None, {'fields': ['bedrijf', 'contact', 'onderwerp', 'contract']}),
         ("Detail informatie", {'fields': ['case_code', 'status', 'omschrijving', 'datum_melding', 'uitvoerende']})
     ]
     inlines = [
@@ -128,6 +128,7 @@ admin.site.register(Contract, ContractenAdmin)
 admin.site.register(Leverancier, LeveranciersAdmin)
 admin.site.register(SLA, SLAAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Tijdsduur)
 
 
 

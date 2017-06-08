@@ -1,4 +1,4 @@
-{%  extends './support_base.html' %}
+{%  extends './modal_base.html' %}
 
 {% load bootstrap3 %}
 
@@ -13,17 +13,7 @@
         <div style="padding: 10pt">
                 <form action="" method="POST" class="form">
                   {% csrf_token %}
-                  {% comment %}{% bootstrap_form form %}{% endcomment %}
-                  {% bootstrap_field form.onderwerp layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.omschrijving layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.datum_melding layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.datum_gereed layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.status layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.bedrijf layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.contact layout='horizontal' size='sm' %}
-                  {% bootstrap_field form.uitvoerende layout='horizontal' size='sm' %}
-                  {#  {{ form.as_p }} #}
-                
+                  {% bootstrap_form form %}
                   {% buttons %}
                     <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
                     <button type="cancel" class="btn btn-primary btn-custom" value="Cancel">{% bootstrap_icon "remove" %} Annuleren</button>

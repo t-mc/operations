@@ -7,6 +7,9 @@
 {% block title %}Case - Activiteiten{% endblock %}
 
 {% block bodyblock %}
+
+
+
     <div class="hero-unit">
         <div class="panel">
             <div class="panel-heading">
@@ -15,32 +18,52 @@
             <div style="padding: 5pt">
                 <table class="table table-condensed table-borderless" id="dev-table">
                     <tr> 
-                        <td>Onderwerp</td>
+                        <td><b>Onderwerp</b></td>
                         <td>{{ cases.onderwerp }}</td>
-                        <td>Datum melding</td>
+                        <td><b>Datum melding</b></td>
                         <td>{{ cases.datum_melding }}</td>
                     </tr>
                     <tr> 
-                        <td>Omschrijving</td>
+                        <td><b>Omschrijving</b></td>
                         <td>{{ cases.omschrijving }}</td>
-                        <td>Status</td>
+                        <td><b>Status</b></td>
                         <td>{{ cases.status }}</td>
                     </tr>                    
                     <tr> 
-                        <td>Bedrijf</td>
+                        <td><b>Bedrijf</b></td>
                         <td>{{ cases.bedrijf }}</td>
-                        <td>Datum gereed</td>
+                        <td><b>Datum gereed</b></td>
                         <td>{{ cases.datum_gereed }}</td>
                     </tr>                    
                     <tr>
-                        <td>Contact</td>
+                        <td><b>Contact</b></td>
                         <td>{{ cases.contact }}</td>
-                        <td>Uitvoerende</td>
+                        <td><b>Uitvoerende</b></td>
                         <td>{{ cases.uitvoerende }}</td>
                     </tr>
                 </table>
             </div>
-            <a href="{% url 'support:case_update' cases.id %}" class="btn btn-primary btn-custom">Case aanpassen</a>
+<!--
+Placeholder voor het modal form
+-->
+            <div id="ModalID" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    </div>
+                </div>
+            </div>
+<!--
+Button voor openen van het modal form
+-->  
+            <a href="{% url 'support:case_update' cases.id %}" 
+                        data-target="#ModalID" 
+                        data-toggle="modal" 
+                        data-backdrop="static" 
+                        data-keyboard="false" 
+                        class="btn btn-primary btn-custom">Case aanpassen</a>                     
+<!--
+Einde modal form
+-->
             <div class="panel-heading">
                 <h3 class="panel-title">Uitgevoerde Activiteiten</h3>
             </div>
@@ -54,6 +77,7 @@
                                 <th>Omschrijving</th>
                                 <th>Uitvoerende</th>
                                 <th>Datum uitgevoerd</th>
+                                <th>Tijdsduur</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,6 +88,7 @@
                                     <td>{{ activity.omschrijving }}</td>
                                     <td>{{ activity.uitvoerende }}</td>
                                     <td>{{ activity.datum_uitgevoerd }}</td>
+                                    <td>{{ activity.tijdsduur }}</td>
                                  </tr>
                             {% endfor %}
                         </tbody>
@@ -73,7 +98,29 @@
             {% else %}
                 <h1>No activities in the list!</h1> 
             {% endif %}
-            <a href="{% url 'support:activity_new' cases.case_code %}" class="btn btn-primary btn-custom">Activiteit Toevoegen</a>
+
+<!--
+Placeholder voor het modal form
+-->
+                    <div id="ModalID" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                            </div>
+                        </div>
+                    </div>
+<!--
+Button voor openen van het modal form
+-->  
+                    <a href="{% url 'support:activity_new' cases.case_code %}" 
+                                data-target="#ModalID" 
+                                data-toggle="modal" 
+                                data-backdrop="static" 
+                                data-keyboard="false" 
+                                class="btn btn-primary btn-custom">Activiteit Toevoegen</a>                     
+<!--
+Einde modal form
+-->            
+            {% comment %}<a href="{% url 'support:activity_new' cases.case_code %}" class="btn btn-primary btn-custom">Activiteit Toevoegen</a>{% endcomment %}
         </div>
     </div>
 {%  endblock %}

@@ -12,41 +12,42 @@ from crispy_forms.layout import ButtonHolder, Fieldset, Layout, Reset, Submit
 
 from support.models import Activiteiten, Cases
 
+class Readonly(object):
+    # def __init__(self, *args, **kwargs):
+    #     self.ReadOnly = kwargs.pop("ReadOnly", False)
+    # super(object, object).__init__(*args, **kwargs)
+    # # SetReadonly(self, self.ReadOnly)
+    # for name, field in form_object.fields.items():
+    #     form_object.fields[name].widget.attrs['readonly'] = self.ReadOnly
+    pass
 
 class ActivityForm(forms.ModelForm):
     datum_uitgevoerd = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)
     omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':'4'}))
+    # tijdsduur = forms.DurationField()
     # case_id = forms.CharField(widget=forms.HiddenInput)
+
 
     class Meta:
         model = Activiteiten
-        fields = ( 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd',)
+        fields = ['case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd', 'tijdsduur']
 
 class CaseForm(forms.ModelForm):
     datum_melding = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)
     datum_gereed = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
     omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':'4'}))
+    ReadOnly = False
 
     class Meta:
         model = Cases
-        fields = ['onderwerp', 'omschrijving', 'datum_melding', 'datum_gereed', 'status', 'bedrijf', 'contact', 'uitvoerende']
-    """
-    Init voor Crispy Forms
-    """
+        fields = ['onderwerp', 'omschrijving', 'datum_melding', 'datum_gereed', 'status', 'bedrijf', 'contact', 'contract', 'uitvoerende']
+
+
     def __init__(self, *args, **kwargs):
-        super(CaseForm, self).__init__(*args, **kwargs) 
-        
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-inline'
-        self.helper.form_method = 'post'
-        self.helper.layout = Layout(
-            Fieldset('Case informatie', 'onderwerp', 'bedrijf', 'contact',),
-            Fieldset('Case details', 'omschrijving', 'datum_melding', 'datum_gereed', 'status', 'uitvoerende'),
-            ButtonHolder(
-                Submit('save', ('Opslaan'), css_class='btn btn-primary '),
-                Reset('reset', ('Annuleren'), css_class='btn')
-                ),
-        )
+        self.ReadOnly = kwargs.pop("ReadOnly", False)
+        super(CaseForm, self).__init__(*args, **kwargs)
+        SetReadonly(self, self.ReadOnly)
+
 
 class CaseDetailForm(forms.ModelForm):
     datum_melding = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
@@ -64,3 +65,12 @@ class CasesList(forms.ModelForm):
     class Meta:
         model = Cases
         fields = ('onderwerp', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
+
+
+#
+# Vlag alle formulier velden disabled[Flag]
+#  Flag = True | False
+def SetReadonly(form_object, Flag):
+    for name, field in form_object.fields.items():
+        form_object.fields[name].widget.attrs['readonly'] = Flag
+

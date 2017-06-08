@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.sessions.models import Session
+from django.db.models import Q
 from django.forms import formset_factory
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
 from django.views.generic import DetailView, FormView, ListView, UpdateView
@@ -18,6 +19,15 @@ class ActivityCreate(CreateView):
     form_class = ActivityForm
     template_name = 'support/activity_add.html'
     # success_url = "/support/case/list"
+
+    def get_context_data(self, **kwargs):
+        context = super(ActivityCreate, self).get_context_data(**kwargs)
+        case_code = self.kwargs['case_code']
+        case_pk = Cases.objects.filter(case_code = self.kwargs['case_code']).values_list('id', flat=True)
+        context['case_pk'] = case_pk[0]
+        print("case_pk")
+        print(case_pk[0])
+        return context
 
     def get_success_url(self):
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
@@ -53,9 +63,7 @@ class ActivityListView(ListView):
 class ActivityUpdate(UpdateView):
     model = Activiteiten
     form_class = ActivityForm
-    # success_url = "/support/case/list"
     template_name = 'support/activity_update.html'
-    # fields = '__all__'
 
     def get_success_url(self):
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
@@ -121,17 +129,38 @@ class CaseListView(ListView):
         context = super(CaseListView, self).get_context_data(**kwargs)
         # Filter aanpassen zodat enkel actieve case naar boven komen
         # En sortering toepassen oudste case eerst
-        # context['cases'] = Cases.objects.filter(id="1")
+        print(context)
+        # queryset = Cases.objects.filter(status__status='In behandeling')
+        context['cases'] = Cases.objects.filter(~Q(status__status='Afgehandeld'))
         return context
 
 
 class CaseUpdate(UpdateView):
     model = Cases
-    form_class = CaseForm
     template_name = 'support/case_update.html'
     success_url = "/support/case/list"
+    form_class = CaseForm
 
     def get_success_url(self):
         print(self)
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
+
+class CaseNoUpdate(UpdateView):
+    model = Cases
+    template_name = 'support/case_update.html'
+    success_url = "/support/case/list"
+    form_class = CaseForm
+
+    def get_form_kwargs(self):
+        kwargs = super(CaseNoUpdate, self).get_form_kwargs()
+        # print("In view")
+        # print(self.ReadOnly)
+        kwargs.update({'ReadOnly': self.ReadOnly})
+        return kwargs
+    def __init__(self, *args, **kwargs):
+        self.ReadOnly = kwargs.pop('ReadOnly', True)
+
+    def get_success_url(self):
+        print(self)
+        return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})

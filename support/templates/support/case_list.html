@@ -35,7 +35,27 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <a href="/support/case/new" class="btn btn-primary btn-custom">Support Case Toevoegen</a>
+<!--
+Placeholder voor het modal form
+-->
+                    <div id="ModalID" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                            </div>
+                        </div>
+                    </div>
+<!--
+Button voor openen van het modal form
+-->  
+                    <a href="{% url 'support:case_new' %}" 
+                                data-target="#ModalID" 
+                                data-toggle="modal" 
+                                data-backdrop="static" 
+                                data-keyboard="false" 
+                                class="btn btn-primary btn-custom">Support Case Toevoegen</a>                     
+<!--
+Einde modal form
+-->
                 </div>
             {% else %}
                 <h1>No cases in the list!</h1>

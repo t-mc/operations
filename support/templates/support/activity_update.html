@@ -14,7 +14,7 @@
         <div style="padding: 10pt">
                 <form action="" method="POST" class="form">
                   {% csrf_token %}
-                  {% bootstrap_form form layout='inline'%}
+                  {% bootstrap_form form%}
                   {% buttons %}
                     <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
                     <button type="cancel" class="btn btn-primary btn-custom" value="cancel">{% bootstrap_icon "remove" %} Annuleren</button>
