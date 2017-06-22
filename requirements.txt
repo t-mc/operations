@@ -2,7 +2,7 @@
 Babel==2.4.0
 colorama==0.3.9
 Django==1.11.2
-django-bootstrap3==8.1.0
+django-bootstrap3==8.2.3
 django-crispy-forms==1.6.1
 django-debug-panel==0.8.3
 django-debug-toolbar==1.6
