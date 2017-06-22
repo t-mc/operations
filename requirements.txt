@@ -21,7 +21,7 @@ psycopg2==2.7.1
 Pygments==2.2.0
 pylint==1.7.1
 pylint-django==0.7.2
-pylint-plugin-utils==0.2.4
+pylint-plugin-utils==0.2.6
 pytz==2016.10
 six==1.10.0
 sqlparse==0.2.2
