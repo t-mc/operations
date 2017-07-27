@@ -4,6 +4,9 @@ from django.forms import widgets
 from django.db import models
 import datetime
 
+# Import third party stuff
+from dal import autocomplete
+
 """
 Import voor Crispy Forms
 """
@@ -11,6 +14,16 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Fieldset, Layout, Reset, Submit
 
 from support.models import Activiteiten, Cases
+
+
+class ReadonlyFormMixin(forms.ModelForm):
+    #
+    # Vlag alle formulier velden disabled[Flag]
+    #  Flag = True | False
+    def SetReadonly(form_object, Flag):
+        for name, field in form_object.fields.items():
+            form_object.fields[name].widget.attrs['readonly'] = Flag
+
 
 class Readonly(object):
     # def __init__(self, *args, **kwargs):
@@ -25,28 +38,39 @@ class ActivityForm(forms.ModelForm):
     datum_uitgevoerd = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)
     omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':'4'}))
     # tijdsduur = forms.DurationField()
-    # case_id = forms.CharField(widget=forms.HiddenInput)
+    case_id = forms.CharField(widget=forms.HiddenInput)
 
 
     class Meta:
         model = Activiteiten
         fields = ['case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd', 'tijdsduur']
 
-class CaseForm(forms.ModelForm):
+class CaseForm(ReadonlyFormMixin, autocomplete.FutureModelForm):
     datum_melding = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)
     datum_gereed = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
     omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':'4'}))
-    ReadOnly = False
 
     class Meta:
         model = Cases
-        fields = ['onderwerp', 'omschrijving', 'datum_melding', 'datum_gereed', 'status', 'bedrijf', 'contact', 'contract', 'uitvoerende']
+        fields = ['onderwerp',
+                  'omschrijving',
+                  'datum_melding',
+                  'datum_gereed',
+                  'status',
+                  'bedrijf',
+                  'contact',
+                  'contract',
+                  'uitvoerende',
+                  ]
 
+        widgets = {
+            'contact': autocomplete.ModelSelect2(url='support:zoekcontact-autocomplete', forward=['bedrijf'])
+    }
 
     def __init__(self, *args, **kwargs):
         self.ReadOnly = kwargs.pop("ReadOnly", False)
         super(CaseForm, self).__init__(*args, **kwargs)
-        SetReadonly(self, self.ReadOnly)
+        self.SetReadonly(self.ReadOnly)
 
 
 class CaseDetailForm(forms.ModelForm):
@@ -67,10 +91,4 @@ class CasesList(forms.ModelForm):
         fields = ('onderwerp', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
 
 
-#
-# Vlag alle formulier velden disabled[Flag]
-#  Flag = True | False
-def SetReadonly(form_object, Flag):
-    for name, field in form_object.fields.items():
-        form_object.fields[name].widget.attrs['readonly'] = Flag
 

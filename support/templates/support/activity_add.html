@@ -1,6 +1,6 @@
 {%  extends './modal_base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap %}
 
 {% block title %}Maak nieuwe activiteit aan{% endblock %}
 
@@ -8,17 +8,16 @@
 
         <div class="panel">
         <div class="panel-heading">
-            <h3 class="panel-title">Nieuwe Activiteitje</h3>
+            <h3 class="panel-title">Nieuwe Activiteit</h3>
         </div>
         <div style="padding: 10pt">
-                <form action="" method="POST" class="form">
+                <form class="form-vertical">
                   {% csrf_token %}
-                  {% bootstrap_form form %}
-                  Case pk: {{ case_pk }}
-                  {% buttons %}
-                      <button type="submit" class="btn btn-primary btn-custom"" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
-                      <a href="{% url 'support:case_detail' case_pk %}" class="btn btn-primary btn-custom"">{% bootstrap_icon "remove" %} Annuleren</a>
-                  {% endbuttons %}
+                  {{ form | bootstrap }}
+                    <div class="form-group" style="padding: 10pt">
+                      <button type="submit" class="btn btn-primary btn-custom"" value="Sla actie op">Opslaan</button>
+                      <a href="{% url 'support:case_detail' case_pk %}" class="btn btn-primary btn-custom"">Annuleren</a>
+                    </div>
                 </form>
         </div>
     </div>

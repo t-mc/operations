@@ -6,10 +6,12 @@ from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
 from django.views.generic import DetailView, FormView, ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from dal import autocomplete
+
 import datetime
 
 from support.forms import ActivityForm, CaseForm, CaseDetailForm, CasesList
-from support.models import Cases, Activiteiten
+from support.models import Cases, Activiteiten, Contactpersoon
 
 """
 Activity views
@@ -73,11 +75,15 @@ Case views
 """
 
 class CaseCreate(CreateView):
-    model = Cases
+    # model = Cases
     form_class = CaseForm
     template_name = 'support/case_add.html'
-    success_url = '/support/case/list'
+    # success_url = '/support/case/new'
 
+    def form_valid(self, form):
+        print("Koekoek")
+        form.save()
+        return super(CaseCreate, self).form_valid(form)
 
 class CaseDelete(DeleteView):
     model = Cases
@@ -129,7 +135,7 @@ class CaseListView(ListView):
         context = super(CaseListView, self).get_context_data(**kwargs)
         # Filter aanpassen zodat enkel actieve case naar boven komen
         # En sortering toepassen oudste case eerst
-        print(context)
+        # print(context)
         # queryset = Cases.objects.filter(status__status='In behandeling')
         context['cases'] = Cases.objects.filter(~Q(status__status='Afgehandeld'))
         return context
@@ -152,15 +158,33 @@ class CaseNoUpdate(UpdateView):
     success_url = "/support/case/list"
     form_class = CaseForm
 
+    # Zet de formuliervelden op read only
+    # door ReadOnly = True als argument mee te geven.
     def get_form_kwargs(self):
         kwargs = super(CaseNoUpdate, self).get_form_kwargs()
-        # print("In view")
-        # print(self.ReadOnly)
-        kwargs.update({'ReadOnly': self.ReadOnly})
+        kwargs.update({'ReadOnly': True})
         return kwargs
-    def __init__(self, *args, **kwargs):
-        self.ReadOnly = kwargs.pop('ReadOnly', True)
 
     def get_success_url(self):
         print(self)
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
+
+class ZoekContactAutocomplete(autocomplete.Select2QuerySetView):
+    """
+    Autocomplete view voor contacten. De lijst wordt gefilterd op bedrijf
+    """
+    def get_queryset(self):
+
+        if not self.request.user.is_authenticated():
+            return Contactpersoon.objects.none()
+
+        qs = Contactpersoon.objects.all()
+
+        bedrijf = self.forwarded.get('bedrijf', None)
+
+        if bedrijf:
+             qs = qs.filter(bedrijf=bedrijf)
+        # if self.q:
+        #      qs = qs.filter(omschrijving_default__icontains=self.q)
+
+        return qs

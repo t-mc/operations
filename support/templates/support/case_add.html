@@ -1,6 +1,6 @@
 {%  extends './modal_base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap %}
 
 {% block title %}Maak nieuwe case aan{% endblock %}
 
@@ -11,15 +11,21 @@
             <h3 class="panel-title">Nieuwe Case</h3>
         </div>
         <div style="padding: 10pt">
-            <form action="" method="POST" class="form">
+            <form class="form-vertical">
               {% csrf_token %}
-              {% bootstrap_form form %}
-              {% buttons %}
-                    <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
-                    <a href="/support/case/list" class="btn btn-primary btn-custom">{% bootstrap_icon "remove" %} Annuleren</a>
-              {% endbuttons %}
+              {{ form | bootstrap }}
+                <div class="form-group" style="padding: 10pt">
+                    <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">Opslaan</button>
+                    <a href="/support/case/list" class="btn btn-primary btn-custom">Annuleren</a>
+                </div>
             </form>
         </div>
     </div>
 
 {%  endblock %}
+
+{% block script %}
+    <!-- Form.Media Nodig voor Select2 autocomplete -->
+    {{ form.media }}
+    <!-- Form.Media Nodig voor Select2 autocomplete -->
+{% endblock %}
