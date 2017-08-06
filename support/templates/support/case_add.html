@@ -1,6 +1,17 @@
-{%  extends './modal_base.html' %}
+{%  extends './support_base.html' %}
 
 {% load bootstrap %}
+{# Load the tag library #}
+{% load propeller %}
+
+{# Load CSS and JavaScript #}
+{% propeller_css %}
+{% propeller_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% propeller_messages %}
+
+
 
 {% block title %}Maak nieuwe case aan{% endblock %}
 
@@ -13,7 +24,12 @@
         <div style="padding: 10pt">
             <form class="form-vertical">
               {% csrf_token %}
-              {{ form | bootstrap }}
+              {% propeller_form form layout='horizontal'  %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                    {% propeller_icon "save" %} Opslaan
+                    </button>
+                {% endbuttons %}
                 <div class="form-group" style="padding: 10pt">
                     <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">Opslaan</button>
                     <a href="/support/case/list" class="btn btn-primary btn-custom">Annuleren</a>

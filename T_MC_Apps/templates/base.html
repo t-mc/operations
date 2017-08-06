@@ -1,110 +1,101 @@
 <!DOCTYPE html>
+{% load propeller staticfiles %}
 
-{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block propeller_title %}django_propeller template title{% endblock %}</title>
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap -->
-        <link href="{% static 'css/bootstrap-fluid-adj.css' %}" rel="stylesheet">
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-        <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
+    <!-- Bootstrap css-->
+    {% propeller_css %}
 
-    <!-- Aangepaste bootstrap css op basis van het nieuwe logo -->
+    <!--Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        <link href="{% static 'css/lavish-bootstrap.css' %}" rel="stylesheet">
-        <link href="{% static 'css/operations.css' %}" rel="stylesheet">
-        <link href="{% static 'css/bs-styles.css' %}" rel="stylesheet">
-        <link href="{% static "css/select2.min.css" %}" rel="stylesheet">
+    <!-- Propeller css --> 
+    <link href="{% static 'css/propeller.min.css' %}" rel="stylesheet">
+    <link href="http://propeller.in/components/table/css/table.css" rel="stylesheet">
+    <link href="http://propeller.in/components/shadow/css/shadow.css" rel="stylesheet">
+    
+    <link href="{% static 'css/lavish-bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% if 'javascript_in_head'|propeller_setting %}
+        {% propeller_javascript jquery=True %}
+        <script type="text/javascript" src="{% static 'js/propeller.min.js' %}"></script>
+    {% endif %}
+    {% block propeller_extra_head %}{% endblock %}
+</head>
 
-        <title>T-MC - {% block title %}Support App!{% endblock %}</title>
-
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="{% static 'imgs/favicon.ico' %}">
-
-    </head>
-
-    <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <a class="navbar-brand">T-MC Apps</a>
-        </div>
-        <!-- Toon de juiste knoppen als gebruiker is ingelogd -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-2">
-            {% if user.is_authenticated %}
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a href="/">Home</a></li>
-                </ul>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Support registraties<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/support/case/list">Overzicht Cases</a></li>
-                                <li class="divider"></li>
-                                <li><a href="/support/case/new">Case Toevoegen</a></li>
-                                <!--<li><a href="/support/activity/new">Activiteit Toevoegen</a></li>-->
-                                <li class="divider"></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">PC Overzicht<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/pcoverzicht/computer/list">PC Overzicht</a></li>
-                                <li><a href="/pcoverzicht/computer/new">PC Toevoegen</a></li>
-                                <li class="divider"></li>
-                                <li><a href="/pcoverzicht/software/list">Software Overzicht</a></li>
-                                <li><a href="/pcoverzicht/software/new">Software Toevoegen</a></li>
-                                <li class="divider"></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav pull-right">
-                        <li><a href="/support/logout">Logout</a></li>
-                    </ul>
-                </div><!--/.navbar-collapse-->
-            {% endif %}
-        </div> <!-- /.navbar-collapse -->
-      </div> <!-- /.container -->
-    </nav> <!-- /.navbar -->
-
-    <div class="container-fluid">
-{# Check of de gebruiker is ingelogd #}
+<body>
+    {# Check of de gebruiker is ingelogd #}
      {% if user.is_authenticated %}
-{#  Indien ingelogd toon inhoud van de apps #}
-        <div class="row-fluid">
-            <div class="col-xs-3 col-sm-3 col-md-3">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Snelle toegang</h3>
+        <div class="main_container"> 
+            <div class="nav_bar">
+                <!-- <span> 
+                    <img src="/static/imgs/t-mc_logo_fc.png" alt="" height="50"> -->
+                    {% if navbar %}
+                        {% propeller_navbar navbar %}
+                    {% endif %}
+                <!-- </span> -->
+            </div> <!-- End class nav_bar -->
+            <div class="content">
+                <div class="sidebar">
+                    <p class="pmd-z-depth-1 shadow-demo" style="padding: 10px 5px 5px 5px;">
+                    <!-- <div class="card"> -->
+                        <!-- <div class="container-sidebar"> -->
+                            {% block sidebar %}{% endblock sidebar %}
+                        <!-- </div>  End class container-sidebar  -->
+                        </p>
+                    <!-- </div>  End class card                               -->
+                </div> <!-- End class sidebar -->
+                <div class="page">
+                    <div class="dashboard">
+                        <div class="card">
+                            <div class="container">
+                                {% block dashboard %}{% endblock dashboard %}
+                            </div> <!-- End class container -->
+                        </div> <!-- End class card -->                                
                     </div>
-                    <table class="table">
-                        <tbody>
-                            {% block sidebar %}
-                            {% endblock sidebar %}
-                        </tbody>
-                    </table>
-                </div>
-            </div> <!--/col-->
-            <div class="col-xs-9 col-sm-9 col-md-9">
-                {% block dashboard %}
-                {% endblock dashboard %}
-                {% block bodyblock %}
-                    De inhoud van de pagina
-                {% endblock %}
+                    <div class="body_block">
+                        <div class="card">
+                            <div class="container"> 
+                                <p class="pmd-z-depth-1 shadow-demo">                       
+                                {% block bodyblock %}The meat and patatoes of this app...{% endblock bodyblock %} </p
+                            </div> <!-- End class container -->
+                        </div> <!-- End class card -->                                    
+                    </div> <!-- End class body_block -->
+                        <div class="propeller_content">
+                            <div class="card">
+                                <div class="container">                       
+                                    {% block propeller_content %}django-propeller template content{% endblock %}
+                                    {% if not 'javascript_in_head'|propeller_setting %}
+                                    {% propeller_javascript jquery=True %}
+                                    <script type="text/javascript" src="{% static 'js/propeller.min.js' %}"></script>
+                                    {% endif %}
+                                </div> <!-- End class container -->                                    
+                            </div> <!-- End class card -->
+                        </div> <!-- End class propeller -->
+                    <div class="propeller_extra">
+                        <div class="card">
+                            <div class="container">                                                    
+                                {% block propeller_extra_script %}{% endblock %}
+                            </div> <!-- End class container -->                                    
+                        </div> <!-- End class card -->
+                    </div> <!-- End class propeller_extra -->
+                </div> <!-- End class page -->
+            </div> <!-- End class content -->
+        </div> <!-- End class main_container -->
 
-            </div> <!--/col-->
-        </div> <!--/row-->
      {% else %}
-{# Indien niet in gelogd toon loginscherm #}
+        {# Indien niet in gelogd toon loginscherm #}
         <form id="login_form" method="post" action="/support/login/">
             {% csrf_token %}
             <fieldset>
@@ -125,16 +116,7 @@
             </fieldset>
         </form>
      {% endif %}
-    </div> <!--/.fluid-container-->
-    <hr>
-    <footer>
-        <div class="container">
-            <img src="/static/imgs/t-mc_logo_fc.png" alt="" width="100">
-            <p>&copy;2017 T-MC: Diverse Apps</p>
-        </div>
-    </footer>
-    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
 
-    </body>
 </html>
+

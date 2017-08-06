@@ -4,6 +4,8 @@ from support import views
 from pcoverzicht.views import ComputerCreate, ComputerDelete, ComputerUpdate, ComputerListView,\
                                  SoftwareCreate, SoftwareDelete, SoftwareUpdate, SoftwareListView
 
+app_name = 'computer'
+
 urlpatterns = [
         url(r'^computer/list/$', ComputerListView.as_view(), name='computer_list'),
         url(r'^computer/new/$', ComputerCreate.as_view(), name='computer_new'),

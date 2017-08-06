@@ -5,6 +5,9 @@ from django.forms import formset_factory
 from django.shortcuts import get_object_or_404, HttpResponseRedirect, render
 from django.views.generic import DetailView, FormView, ListView, UpdateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.forms.utils import flatatt
+from django.views.generic.base import TemplateView
+from django_propeller.views import NavBarMixin
 
 from dal import autocomplete
 
@@ -12,6 +15,10 @@ import datetime
 
 from support.forms import ActivityForm, CaseForm, CaseDetailForm, CasesList
 from support.models import Cases, Activiteiten, Contactpersoon
+from support.navbars import MainNavBar
+
+
+
 
 """
 Activity views
@@ -24,9 +31,10 @@ class ActivityCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(ActivityCreate, self).get_context_data(**kwargs)
-        case_code = self.kwargs['case_code']
-        case_pk = Cases.objects.filter(case_code = self.kwargs['case_code']).values_list('id', flat=True)
-        context['case_pk'] = case_pk[0]
+        case_code = (self.kwargs['case_code'], None)
+        if case_code != None:
+            case_pk = Cases.objects.filter(case_code = self.kwargs['case_code']).values_list('id', flat=True)
+            context['case_pk'] = case_pk[0]
         print("case_pk")
         print(case_pk[0])
         return context
@@ -74,16 +82,18 @@ class ActivityUpdate(UpdateView):
 Case views
 """
 
-class CaseCreate(CreateView):
-    # model = Cases
-    form_class = CaseForm
+class CaseCreate(CreateView, NavBarMixin):
+    model = Cases
+    fields = '__all__'
+    # form_class = CaseForm
     template_name = 'support/case_add.html'
-    # success_url = '/support/case/new'
+    success_url = '/support/case/list'
+    navbar_class = MainNavBar
 
-    def form_valid(self, form):
-        print("Koekoek")
-        form.save()
-        return super(CaseCreate, self).form_valid(form)
+    # def form_valid(self, form):
+    #     print("Koekoek")
+    #     form.save()
+    #     return super(CaseCreate, self).form_valid(form)
 
 class CaseDelete(DeleteView):
     model = Cases
@@ -126,10 +136,11 @@ class CaseDetail(UpdateView):
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
 
-class CaseListView(ListView):
+class CaseListView(ListView, NavBarMixin):
     model = Cases
     template_name = 'support/case_list.html'
     context_object_name = 'cases'
+    navbar_class = MainNavBar
 
     def get_context_data(self, **kwargs):
         context = super(CaseListView, self).get_context_data(**kwargs)

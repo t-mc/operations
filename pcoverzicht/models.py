@@ -12,6 +12,7 @@ class Computer(models.Model):
 
     class Meta:
         verbose_name_plural = "Computers"
+        ordering = ['naam']
 
     def __str__(self):
         return self.naam
@@ -24,7 +25,7 @@ class Software(models.Model):
     naam = models.ForeignKey(Computer, verbose_name='PC Naam', null= False)
     software = models.CharField(max_length=80, null=False)
     versienummer = models.CharField(max_length=20)
-    productkey = models.CharField(max_length=40, blank=True)
+    productkey = models.CharField(max_length=40, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Software"

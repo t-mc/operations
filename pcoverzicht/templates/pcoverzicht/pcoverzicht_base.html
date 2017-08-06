@@ -1,0 +1,36 @@
+{%  extends 'base.html' %}
+{% load propeller %}
+{% load staticfiles %}
+
+{% block sidebar %}
+    <a href="{% url 'computer:computer_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Overzicht computers</a>
+    <a href="{% url 'computer:computer_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Nieuwe computer</a>
+    <a href="{% url 'computer:software_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Overzicht software</a>
+    <a href="{% url 'computer:software_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Nieuwe software</a>    
+{% endblock sidebar %}
+
+{% block dashboard %}
+<h1>PC OVERZICHT</h1>
+    <!-- <table class="table table-condensed table-borderless" id="dev-table">
+        <tbody>
+            <tr> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr> 
+                <td></td>
+                <td></td>                        
+                <td></td>
+                <td></td>
+            </tr>
+            <tr> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>                        
+            </tr>
+        </tbody>
+    </table> -->
+{% endblock dashboard %}

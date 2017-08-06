@@ -1,64 +1,34 @@
 {%  extends 'base.html' %}
-
-{# load the tag library #}
-{% load bootstrap3 %}
-
-{# load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
-
+{% load propeller %}
 {% load staticfiles %}
 
 {% block sidebar %}
-{% comment %}{% include "./sidebar.html" %}{% endcomment %}
-    <table class="table">
-        <tr>
-            <td><a href="/support/case/list">Overzicht Support Cases</a></td>
-        </tr>
-        <tr>
-            <td><a href="/support/case/new">Support Case Toevoegen</a></td>
-        </tr>
-        <!--<tr>
-            <td><a href="/support/activity/list">Overzicht Activiteiten</a></td>
-        </tr>        
-        <tr>
-            <td><a href="/support/activity/new">Activiteit aan Case Toevoegen</a></td>
-        </tr>-->
-    </table>
+    <a href="{% url 'support:case_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Overzicht</a>
+    <a href="{% url 'support:case_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Nieuwe case</a>
+    <a href="{% url 'support:activity_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Nieuwe activiteit</a>
 {% endblock sidebar %}
 
 {% block dashboard %}
-    <div class="panel">
-        <div class="panel-heading">
-            <h3 class="panel-title">Dashboard</h3>
-        </div>
-        <div style="padding: 5pt">
-            <table class="table table-condensed table-borderless" id="dev-table">
-                <tbody>
-                    <tr> 
-                        <td class="col-xs-1"># Actieve cases</td>
-                        <td class="col-xs-1">12</td>
-                        <td class="col-xs-1"># Wacht op reactie klant</td>
-                        <td class="col-xs-1">4</td>
-                    </tr>
-                    <tr> 
-                        <td># Behandelde cases</td>
-                        <td>42</td>                        
-                        <td># Wacht op reactie TIBCO</td>
-                        <td>6</td>
-                    </tr>
-                    <tr> 
-                        <td>% Binnen SLA</td>
-                        <td>98</td>
-                        <td></td>
-                        <td></td>                        
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="table table-condensed table-borderless" id="dev-table">
+        <tbody>
+            <tr> 
+                <td># Actieve cases</td>
+                <td>12</td>
+                <td># Wacht op reactie klant</td>
+                <td>4</td>
+            </tr>
+            <tr> 
+                <td># Behandelde cases</td>
+                <td>42</td>                        
+                <td># Wacht op reactie TIBCO</td>
+                <td>6</td>
+            </tr>
+            <tr> 
+                <td>% Binnen SLA</td>
+                <td>98</td>
+                <td></td>
+                <td></td>                        
+            </tr>
+        </tbody>
+    </table>
 {% endblock dashboard %}
