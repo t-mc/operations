@@ -152,7 +152,7 @@ PROPELLER = {
     # 'css_url': None,
 
     # # The complete URL to the Bootstrap CSS file (None means no theme)
-    'theme_url': '/static/css/lavish-bootstrap.css',
+    # 'theme_url': '/static/css/lavish-bootstrap.css',
 
     # # The complete URL to the Bootstrap JavaScript file (None means derive it from base_url)
     # 'javascript_url': None,

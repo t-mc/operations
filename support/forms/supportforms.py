@@ -34,16 +34,17 @@ class Readonly(object):
     #     form_object.fields[name].widget.attrs['readonly'] = self.ReadOnly
     pass
 
+
 class ActivityForm(forms.ModelForm):
     datum_uitgevoerd = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)
     omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':'4'}))
     # tijdsduur = forms.DurationField()
     case_id = forms.CharField(widget=forms.HiddenInput)
 
-
     class Meta:
         model = Activiteiten
         fields = ['case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd', 'tijdsduur']
+
 
 class CaseForm(ReadonlyFormMixin, autocomplete.FutureModelForm):
     datum_melding = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)

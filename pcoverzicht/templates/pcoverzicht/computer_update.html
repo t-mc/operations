@@ -1,25 +1,21 @@
 {%  extends 'pcoverzicht/pcoverzicht_base.html' %}
 {% load crispy_forms_tags %}
-
-
-
-
-
-
+{% load propeller %}
 {% block title %}Computer aanpassen{% endblock %}
 
 {% block bodyblock %}
 
-    <div class="panel">
-        <div class="panel-heading">
+      <div class="panel">
+        <div class="panel-heading"> 
             <h3 class="panel-title">Computer aanpassen</h3>
-        </div>
+        </div> 
         <div style="padding: 10pt">
             <form action="" method="POST" class="form">
               {% csrf_token %}
-              {% crispy form %}
+              {% propeller_form form layout='inline'%}
+              <!-- {% crispy form %} -->
             </form>
         </div>
-    </div>
+    <!-- </div> -->
 
 {% endblock %}

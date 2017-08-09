@@ -1,34 +1,61 @@
-{%  extends 'base.html' %}
+{% extends 'base.html' %}
 {% load propeller %}
+
 {% load staticfiles %}
+{% block local_css %}
+    <link href="{% static 'css/support_base.css' %}" rel="stylesheet">
+{% endblock local_css %} 
 
 {% block sidebar %}
-    <a href="{% url 'support:case_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Overzicht</a>
-    <a href="{% url 'support:case_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Nieuwe case</a>
-    <a href="{% url 'support:activity_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Nieuwe activiteit</a>
+    <br>
+    <a href="{% url 'support:case_list' %}" 
+            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" 
+                role="button">Overzicht
+    </a>
+    <a href="{% url 'support:case_new' %}" 
+            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" 
+                role="button">Nieuwe case
+    </a>
+    <a href="{% url 'support:activity_new' %}" 
+            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" 
+                role="button">Nieuwe activiteit
+    </a>
+    <br>
 {% endblock sidebar %}
 
 {% block dashboard %}
-    <table class="table table-condensed table-borderless" id="dev-table">
-        <tbody>
-            <tr> 
-                <td># Actieve cases</td>
-                <td>12</td>
-                <td># Wacht op reactie klant</td>
-                <td>4</td>
-            </tr>
-            <tr> 
-                <td># Behandelde cases</td>
-                <td>42</td>                        
-                <td># Wacht op reactie TIBCO</td>
-                <td>6</td>
-            </tr>
-            <tr> 
-                <td>% Binnen SLA</td>
-                <td>98</td>
-                <td></td>
-                <td></td>                        
-            </tr>
-        </tbody>
-    </table>
+<!-- Small Table -->
+<!-- <div class="pmd-card pmd-z-depth"> -->
+    <div class="dashboard-table">
+    <div class="table-responsive" style="padding-top: 10px">
+    	<table class="table pmd-table table-sm">
+        	<thead>
+                <tr>
+                  <th class="centerText"># Actieve cases</th>
+                  <th class="centerText"># Wacht op reactie klant</th>
+                  <th class="centerText"># Behandelde cases</th>
+                  <th class="centerText"># Wacht op reactie TIBCO</th>
+                  <th class="centerText">% Binnen SLA</th>
+                </tr>
+            </thead>
+          	<tbody>
+                <tr>
+                  <td class="centerText" data-title="ActiveCases">12</td>
+                  <td class="centerText" data-title="WaitforClient">4</td>
+                  <td class="centerText" data-title="HandledCases">42</td>
+                  <td class="centerText" data-title="WaitforSupplier">6</td>
+                  <td class="centerText" data-title="WithinSLA">98</td>
+                </tr>
+                <tr>
+                  <td class="centerText" data-title="ActiveCases"><i class="material-icons md-dark pmd-sm">sentiment_neutral</i></td>
+                  <td class="centerText" data-title="WaitforClient"><i class="material-icons md-dark pmd-sm">sentiment_very_satisfied</i></td>
+                  <td class="centerText" data-title="HandledCases"><i class="material-icons md-dark pmd-sm">sentiment_neutral</i></td>
+                  <td class="centerText" data-title="WaitforSupplier"><i class="material-icons md-dark pmd-sm">sentiment_satisfied</i></td>
+                  <td class="centerText" data-title="WithinSLA"><i class="material-icons md-dark pmd-sm">sentiment_very_satisfied</i></td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+    </div>
+<!-- </div> -->
 {% endblock dashboard %}

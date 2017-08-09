@@ -3,12 +3,14 @@
 
 {% block sidebar %}
      {% if user.is_authenticated %}
-        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Klanten</a>
-        <a href="{% url 'support:case_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Verkoopkansen</a>
-        <a href="{% url 'support:activity_new' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Projecten</a>
-        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Contracten</a>
-        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">Support</a>
-        <a href="{% url 'computer:computer_list' %}" class="btn pmd-btn-outline pmd-ripple-effect btn-default btn-block" role="button">PC Overzicht</a>
+        <br>
+        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Klanten</a>
+        <a href="{% url 'support:case_new' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Verkoopkansen</a>
+        <a href="{% url 'support:activity_new' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Projecten</a>
+        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Contracten</a>
+        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Support</a>
+        <a href="{% url 'computer:computer_list' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">PC Overzicht</a>
+        <br>
     {% endif %}
 {% endblock sidebar %}
 

@@ -3,46 +3,87 @@
 {% load staticfiles %}
 {% load static %}
 {% load bootstrap3 %}
-
+{% load propeller %}
 {% block title %}Case - Activiteiten{% endblock %}
 
 {% block bodyblock %}
 
-
-
-    <div class="hero-unit">
+<!-- {% propeller_form form layout='horizontal' set_disabled='True'%} -->
+     <div class="hero-unit">
         <div class="panel">
             <div class="panel-heading">
                 <h3 class="panel-title">Case Details</h3>
             </div>
-            <div style="padding: 5pt">
-                <table class="table table-condensed table-borderless" id="dev-table">
-                    <tr> 
-                        <td><b>Onderwerp</b></td>
-                        <td>{{ cases.onderwerp }}</td>
-                        <td><b>Datum melding</b></td>
-                        <td>{{ cases.datum_melding }}</td>
-                    </tr>
-                    <tr> 
-                        <td><b>Omschrijving</b></td>
-                        <td>{{ cases.omschrijving }}</td>
-                        <td><b>Status</b></td>
-                        <td>{{ cases.status }}</td>
-                    </tr>                    
-                    <tr> 
-                        <td><b>Bedrijf</b></td>
-                        <td>{{ cases.bedrijf }}</td>
-                        <td><b>Datum gereed</b></td>
-                        <td>{{ cases.datum_gereed }}</td>
-                    </tr>                    
-                    <tr>
-                        <td><b>Contact</b></td>
-                        <td>{{ cases.contact }}</td>
-                        <td><b>Uitvoerende</b></td>
-                        <td>{{ cases.uitvoerende }}</td>
-                    </tr>
-                </table>
-            </div>
+            <!-- Readonly Input -->
+            <div class="container">
+                <div class="row">
+                    <div class="form-group pmd-textfield">
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Onderwerp
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">{{ cases.onderwerp }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Datum melding
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">{{ cases.datum_melding }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Omschrijving
+                            </label>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">{{ cases.omschrijving }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Bedrijf
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">{{ cases.bedrijf }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Contact
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">{{ cases.contact }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Status
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">{{ cases.status }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Datum gereed
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">{{ cases.datum_gereed }}</div>
+                        </div>
+                        <div class="col-md-2 textRight">
+                            <label class="control-label">
+                                Uitvoerende
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">{{ cases.uitvoerende }}</div>
+                        </div>
+                    </div>
+                </div>                                                
 <!--
 Placeholder voor het modal form
 -->
@@ -60,7 +101,7 @@ Button voor openen van het modal form
                         data-toggle="modal" 
                         data-backdrop="static" 
                         data-keyboard="false" 
-                        class="btn btn-primary btn-custom">Case aanpassen</a>                     
+                        class="btn btn-primary btn-custom btn-xs">{% propeller_icon "edit" %} Case aanpassen</a>                     
 <!--
 Einde modal form
 -->
@@ -112,11 +153,7 @@ Placeholder voor het modal form
 Button voor openen van het modal form
 -->  
                     <a href="{% url 'support:activity_new' cases.case_code %}" 
-                                data-target="#ModalID" 
-                                data-toggle="modal" 
-                                data-backdrop="static" 
-                                data-keyboard="false" 
-                                class="btn btn-primary btn-custom">Activiteit Toevoegen</a>                     
+                                class="btn btn-primary btn-custom btn-xs">{% propeller_icon "add" %} Activiteit Toevoegen</a>                     
 <!--
 Einde modal form
 -->            

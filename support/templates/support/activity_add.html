@@ -1,7 +1,7 @@
-{%  extends './modal_base.html' %}
+{%  extends 'base.html' %}
 
 {% load bootstrap %}
-
+{% load propeller %}
 {% block title %}Maak nieuwe activiteit aan{% endblock %}
 
 {% block bodyblock %}
@@ -11,16 +11,24 @@
             <h3 class="panel-title">Nieuwe Activiteit</h3>
         </div>
         <div style="padding: 10pt">
-                <form class="form-vertical">
+                <form action="" method="POST" class="form">
                   {% csrf_token %}
-                  {{ form | bootstrap }}
-                    <div class="form-group" style="padding: 10pt">
-                      <button type="submit" class="btn btn-primary btn-custom"" value="Sla actie op">Opslaan</button>
-                      <a href="{% url 'support:case_detail' case_pk %}" class="btn btn-primary btn-custom"">Annuleren</a>
-                    </div>
+                  <!-- {{ form | bootstrap }} -->
+                  {% propeller_form form %}
+                  {% buttons %}
+                    <button type="submit" class="btn btn-primary btn-xs" value="Sla actie op">{% propeller_icon "save" %} Opslaan</button>
+                    <a href="{% url 'support:case_detail' case_pk %}" class="btn btn-primary btn-xs">{% propeller_icon "cancel" %} Annuleren</a>
+                  {% endbuttons %}
                 </form>
         </div>
     </div>
 
 {%  endblock %}
 
+                
+
+                </form>
+                    <!-- <div class="form-group" style="padding: 10pt">
+                      <button type="submit" class="btn btn-primary btn-custom"" value="Sla actie op">Opslaan</button>
+                      <a href="{% url 'support:case_detail' case_pk %}" class="btn btn-primary btn-custom">Annuleren</a>
+                    </div> -->

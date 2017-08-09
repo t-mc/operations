@@ -21,6 +21,8 @@
     <link href="{% static 'css/lavish-bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
+    {% block local_css %}
+    {% endblock local_css %}    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -39,23 +41,18 @@
      {% if user.is_authenticated %}
         <div class="main_container"> 
             <div class="nav_bar">
-                <!-- <span> 
-                    <img src="/static/imgs/t-mc_logo_fc.png" alt="" height="50"> -->
                     {% if navbar %}
                         {% propeller_navbar navbar %}
                     {% endif %}
-                <!-- </span> -->
             </div> <!-- End class nav_bar -->
             <div class="content">
                 <div class="sidebar">
-                    <p class="pmd-z-depth-1 shadow-demo" style="padding: 10px 5px 5px 5px;">
-                    <!-- <div class="card"> -->
-                        <!-- <div class="container-sidebar"> -->
+                     <div class="card">
+                        <div class="container-sidebar">  
                             {% block sidebar %}{% endblock sidebar %}
-                        <!-- </div>  End class container-sidebar  -->
-                        </p>
-                    <!-- </div>  End class card                               -->
-                </div> <!-- End class sidebar -->
+                         </div>  <!-- End class container-sidebar  -->
+                     </div>  <!-- End class card -->
+                </div> <!-- End class sidebar -->	
                 <div class="page">
                     <div class="dashboard">
                         <div class="card">
@@ -63,19 +60,17 @@
                                 {% block dashboard %}{% endblock dashboard %}
                             </div> <!-- End class container -->
                         </div> <!-- End class card -->                                
-                    </div>
+                    </div> <!-- End class dashboard -->
                     <div class="body_block">
                         <div class="card">
                             <div class="container"> 
-                                <p class="pmd-z-depth-1 shadow-demo">                       
-                                {% block bodyblock %}The meat and patatoes of this app...{% endblock bodyblock %} </p
+                                {% block bodyblock %}The meat and patatoes of this app...{% endblock bodyblock %}
                             </div> <!-- End class container -->
                         </div> <!-- End class card -->                                    
-                    </div> <!-- End class body_block -->
                         <div class="propeller_content">
                             <div class="card">
                                 <div class="container">                       
-                                    {% block propeller_content %}django-propeller template content{% endblock %}
+                                    {% block propeller_content %}{% endblock %}
                                     {% if not 'javascript_in_head'|propeller_setting %}
                                     {% propeller_javascript jquery=True %}
                                     <script type="text/javascript" src="{% static 'js/propeller.min.js' %}"></script>
@@ -83,17 +78,17 @@
                                 </div> <!-- End class container -->                                    
                             </div> <!-- End class card -->
                         </div> <!-- End class propeller -->
-                    <div class="propeller_extra">
-                        <div class="card">
-                            <div class="container">                                                    
-                                {% block propeller_extra_script %}{% endblock %}
-                            </div> <!-- End class container -->                                    
-                        </div> <!-- End class card -->
-                    </div> <!-- End class propeller_extra -->
+                        <div class="propeller_extra">
+                            <div class="card">
+                                <div class="container">                                                    
+                                    {% block propeller_extra_script %}{% endblock %}
+                                </div> <!-- End class container -->                                    
+                            </div> <!-- End class card -->
+                        </div> <!-- End class propeller_extra -->	
+                    </div> <!-- End class body_block -->
                 </div> <!-- End class page -->
             </div> <!-- End class content -->
         </div> <!-- End class main_container -->
-
      {% else %}
         {# Indien niet in gelogd toon loginscherm #}
         <form id="login_form" method="post" action="/support/login/">

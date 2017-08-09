@@ -1,8 +1,12 @@
-{%  extends './modal_base.html' %}
-
+{%  extends 'modal_base.html' %}
+{% load staticfiles %}
 {% load bootstrap3 %}
-
+{% load propeller %}
 {% block title %}Case Details{% endblock %}
+
+{% block local_css%}
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+{% endblock local_css%}
 
 {% block bodyblock %}
 
@@ -13,13 +17,12 @@
         <div style="padding: 10pt">
                 <form action="" method="POST" class="form">
                   {% csrf_token %}
-                  {% bootstrap_form form %}
+                  {% propeller_form form layout='horizontal' %}
                   {% buttons %}
-                    <button type="submit" class="btn btn-primary btn-custom" value="Sla actie op">{% bootstrap_icon "ok" %} Opslaan</button>
-                    <button type="cancel" class="btn btn-primary btn-custom" value="Cancel">{% bootstrap_icon "remove" %} Annuleren</button>
-                    <a href="/support/case/delete/{{ object.pk }}" class="btn btn-primary btn-custom">{% bootstrap_icon "remove" %} Verwijderen</a>
+                    <button type="submit" class="btn btn-primary btn-xs" value="Sla actie op">{% propeller_icon "save" %} Opslaan</button>
+                    <button type="cancel" class="btn btn-primary btn-xs" value="Cancel">{% propeller_icon "cancel" %} Annuleren</button>
+                    <a href="/support/case/delete/{{ object.pk }}" class="btn btn-primary btn-xs">{% propeller_icon "delete" %} Verwijderen</a>
                   {% endbuttons %}
-                </form>
                 </form>
         </div>
     </div>

@@ -23,12 +23,13 @@ from support.navbars import MainNavBar
 """
 Activity views
 """
-class ActivityCreate(CreateView):
+class ActivityCreate(CreateView, NavBarMixin):
     model = Activiteiten
     form_class = ActivityForm
     template_name = 'support/activity_add.html'
     # success_url = "/support/case/list"
-
+    navbar_class = MainNavBar
+    
     def get_context_data(self, **kwargs):
         context = super(ActivityCreate, self).get_context_data(**kwargs)
         case_code = (self.kwargs['case_code'], None)
@@ -40,18 +41,21 @@ class ActivityCreate(CreateView):
         return context
 
     def get_success_url(self):
+        print("In get succes url")
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
     def form_valid(self, form):
+        print("In form valid!")
         form.instance.case_id = Cases.objects.get(case_code = self.kwargs['case_code'])
         return super(ActivityCreate, self).form_valid(form)
 
 
-class ActivityDelete(DeleteView):
+class ActivityDelete(DeleteView, NavBarMixin):
     model = Activiteiten
     template_name = "support/activity_confirm_delete.html"
     # success_url = "/support/case/list"
     fields = '__all__'
+    navbar_class = MainNavBar
 
     def get_success_url(self):
         print(self.request.session['pk'])
@@ -64,16 +68,18 @@ class ActivityDelete(DeleteView):
         else:
             return super(ActivityDelete, self).post(request, *args, **kwargs)
 
-class ActivityListView(ListView):
+class ActivityListView(ListView, NavBarMixin):
     model = Activiteiten
     template_name = 'support/activity_list.html'
     context_object_name = 'activities'
+    navbar_class = MainNavBar
 
 
-class ActivityUpdate(UpdateView):
+class ActivityUpdate(UpdateView, NavBarMixin):
     model = Activiteiten
     form_class = ActivityForm
     template_name = 'support/activity_update.html'
+    navbar_class = MainNavBar
 
     def get_success_url(self):
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
@@ -95,10 +101,11 @@ class CaseCreate(CreateView, NavBarMixin):
     #     form.save()
     #     return super(CaseCreate, self).form_valid(form)
 
-class CaseDelete(DeleteView):
+class CaseDelete(DeleteView, NavBarMixin):
     model = Cases
     success_url = "/support/case/list"
     fields = '__all__'
+    navbar_class = MainNavBar
 
     def get_context_data(self, **kwargs):
         context = super(CaseDelete, self).get_context_data(**kwargs)
@@ -118,13 +125,14 @@ class CaseDelete(DeleteView):
     def get_success_url(self):
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
-class CaseDetail(UpdateView):
+class CaseDetail(UpdateView, NavBarMixin):
     model = Cases
     form_class = CaseDetailForm
     template_name = 'support/case_activities.html'
     success_url = "/support/case/list"
     context_object_name = 'cases'
-    
+    navbar_class = MainNavBar
+
     def get_context_data(self, **kwargs):
         self.request.session['pk'] = self.kwargs['pk']
         context = super(CaseDetail, self).get_context_data(**kwargs)
@@ -152,22 +160,24 @@ class CaseListView(ListView, NavBarMixin):
         return context
 
 
-class CaseUpdate(UpdateView):
+class CaseUpdate(UpdateView, NavBarMixin):
     model = Cases
     template_name = 'support/case_update.html'
     success_url = "/support/case/list"
     form_class = CaseForm
+    navbar_class = MainNavBar
 
     def get_success_url(self):
         print(self)
         return reverse('support:case_detail', kwargs={'pk': self.request.session['pk']})
 
 
-class CaseNoUpdate(UpdateView):
+class CaseNoUpdate(UpdateView, NavBarMixin):
     model = Cases
     template_name = 'support/case_update.html'
     success_url = "/support/case/list"
     form_class = CaseForm
+    navbar_class = MainNavBar
 
     # Zet de formuliervelden op read only
     # door ReadOnly = True als argument mee te geven.
