@@ -26,8 +26,7 @@ SECRET_KEY = '6=dy&^9bc85^lwyhi=2lm&#gqa@_*0n^-sl@2ao3ap5*5f99*)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['192.168.1.50', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -90,10 +89,10 @@ WSGI_APPLICATION = 'T_MC_Apps.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tmc-support',
-        'USER': 'mydatabaseuser',
+        'NAME': 'tmc',
+        'USER': 'tmc',
         'PASSWORD': 'Hard24Get',
-        'HOST': '127.0.0.1',
+        'HOST': '192.1.1.50',
         'PORT': '5432',
     }
 }

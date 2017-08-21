@@ -9,15 +9,15 @@
 {% block sidebar %}
     <br>
     <a href="{% url 'support:case_list' %}" 
-            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" 
+            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block btn-primary btn-custom" 
                 role="button">Overzicht
     </a>
     <a href="{% url 'support:case_new' %}" 
-            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" 
+            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block btn-primary btn-custom" 
                 role="button">Nieuwe case
     </a>
     <a href="{% url 'support:activity_new' %}" 
-            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" 
+            class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block btn-primary btn-custom" 
                 role="button">Nieuwe activiteit
     </a>
     <br>
@@ -27,9 +27,14 @@
 <!-- Small Table -->
 <!-- <div class="pmd-card pmd-z-depth"> -->
     <div class="dashboard-table">
-    <div class="table-responsive" style="padding-top: 10px">
+    <div class="table-responsive" style="padding-top: 10px;" width="100%">
     	<table class="table pmd-table table-sm">
         	<thead>
+            <col width="20%" />
+            <col width="20%" />
+            <col width="20%" />
+            <col width="20%" />
+            <col width="20%" />            
                 <tr>
                   <th class="centerText"># Actieve cases</th>
                   <th class="centerText"># Wacht op reactie klant</th>

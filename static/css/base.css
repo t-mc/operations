@@ -24,7 +24,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 5px;
+    padding: 5px 5px 5px 5px;
 }
 .nav_bar {
     flex-grow: 1;
@@ -43,7 +43,7 @@ body {
     padding-right: 5px;
     padding-bottom: 30px;
     flex-grow: 2;  
-    /* background-color: white; */
+     background-color: white; 
 }
 .page {
     display: flex;
