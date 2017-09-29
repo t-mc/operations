@@ -6,6 +6,7 @@ import string
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
+from crm.models import Bedrijf, Contactpersoon
 """
 Abstracte class voor het toevoegen van time stamp op de modellen.
 """
@@ -89,36 +90,36 @@ class Tijdsduur(models.Model):
 #
 # Record layout bedrijven tabel
 #
-class Bedrijf(TransactionDT):
-    bedrijfsnaam = models.CharField(max_length=64)
-    telefoon = PhoneNumberField(blank=True, null=True)
-    telefoonnummer = models.CharField(max_length=20)
-    primair_contact = models.CharField(max_length=64)
-    klantpartner = models.CharField(max_length=254)
-    emailadres = models.CharField(max_length=254)
+# class Bedrijf(TransactionDT):
+#     bedrijfsnaam = models.CharField(max_length=64)
+#     telefoon = PhoneNumberField(blank=True, null=True)
+#     telefoonnummer = models.CharField(max_length=20)
+#     primair_contact = models.CharField(max_length=64)
+#     klantpartner = models.CharField(max_length=254)
+#     emailadres = models.CharField(max_length=254)
 
-    class Meta:
-        verbose_name_plural = 'Bedrijven'
+#     class Meta:
+#         verbose_name_plural = 'Bedrijven'
 
-    def __str__(self):
-        return self.bedrijfsnaam
+#     def __str__(self):
+#         return self.bedrijfsnaam
 
 #
 # Record layout contactpersonen tabel
 #
-class Contactpersoon(TransactionDT):
-    contactnaam = models.CharField(max_length=64)
-    functie = models.CharField(max_length=64)
-    telefoonnummer = models.CharField(max_length=20)
-    mobielnummer = models.CharField(max_length=20)
-    emailadres = models.CharField(max_length=254)
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
+# class Contactpersoon(TransactionDT):
+#     contactnaam = models.CharField(max_length=64)
+#     functie = models.CharField(max_length=64)
+#     telefoonnummer = models.CharField(max_length=20)
+#     mobielnummer = models.CharField(max_length=20)
+#     emailadres = models.CharField(max_length=254)
+#     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
 
-    class Meta:
-        verbose_name_plural = 'Contactpersonen'
+#     class Meta:
+#         verbose_name_plural = 'Contactpersonen'
 
-    def __str__(self):
-        return self.contactnaam
+#     def __str__(self):
+#         return self.contactnaam
 
 #
 # Record layout leverancier tabel

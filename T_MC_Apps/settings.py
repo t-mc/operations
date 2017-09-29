@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'dal',
     'dal_select2',
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,8 +47,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'phonenumber_field',
     # T-MC Apps
-    'support',
+    'crm',
     'pcoverzicht',
+    'projecten',
+    'support',
 ]
 
 MIDDLEWARE = [
@@ -87,17 +90,27 @@ WSGI_APPLICATION = 'T_MC_Apps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'tmc-support',
+#         'USER': 'mydatabaseuser',
+#         'PASSWORD': 'Hard24Get',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tmc-support',
-        'USER': 'mydatabaseuser',
+        'NAME': 't_mc_crm',
+        'USER': 't_mc_crm',
         'PASSWORD': 'Hard24Get',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -198,4 +211,36 @@ PROPELLER = {
     #     'default': 'propeller.renderers.FieldRenderer',
     #     'inline': 'propeller.renderers.InlineFieldRenderer',
     # },
+}
+
+# Django Suit configuration example
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'T-MC Apps',
+    'HEADER_DATE_FORMAT': 'l, j F Y',
+    'HEADER_TIME_FORMAT': 'G:i',
+
+    # forms
+    'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    # 'SEARCH_URL': '/admin/auth/user/',
+    'MENU_ICONS': {
+       'sites': 'icon-leaf',
+       'auth': 'icon-lock',
+    },
+    # 'MENU_OPEN_FIRST_CHILD': True, # Default True
+    # 'MENU_EXCLUDE': ('auth.group',),
+    # 'MENU': (
+    #     'sites',
+    #     {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
+    #     {'app': 'crm', 'label': 'CRM', 'icon':'icon-user', 'models': ('bedrijf', 'contactpersoon')},
+    #     {'app': 'projecten', 'label': 'Projecten', 'icon':'icon-coins', 'models': ('verkoopkans', 'order', 'verkoopstadium', 'orderstadium')},
+    # #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
+    #     {'projecten': 'Projectadministratie', 'icon':'icon-cog', 'url': '/projecten/'},
+    # ),
+
+    # misc
+    'LIST_PER_PAGE': 15
 }

@@ -3,9 +3,11 @@ from django.db import models
 from django.forms import TextInput, Textarea
 from django.utils.html import format_html
 
-from .models import Activiteiten, ActivityStatus, ActivityType, Bedrijf,\
-                    Cases, CaseStatus, CaseType, Contactpersoon, Contract, \
+from .models import Activiteiten, ActivityStatus, ActivityType, \
+                    Cases, CaseStatus, CaseType, Contract, \
                     Leverancier, SLA, UserProfile, Tijdsduur
+from crm.models import Bedrijf, Contactpersoon
+
 
 class ActiviteitenAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -15,26 +17,26 @@ class ActiviteitenAdmin(admin.ModelAdmin):
 
     list_display = ('case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd')
 
-class BedrijfContacten(admin.TabularInline):
-    model = Contactpersoon
-    classes = ['collapse']
-    extra = 1
+# class BedrijfContacten(admin.TabularInline):
+#     model = Contactpersoon
+#     classes = ['collapse']
+#     extra = 1
 
-class BedrijfContracten(admin.TabularInline):
-    model = Contract
-    classes = ['collapse']
-    extra = 1
+# class BedrijfContracten(admin.TabularInline):
+#     model = Contract
+#     classes = ['collapse']
+#     extra = 1
 
-class BedrijvenAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
-    }
-    inlines = [
-        BedrijfContracten,
-        BedrijfContacten
-    ]
-    list_display = ('bedrijfsnaam', 'telefoon', 'telefoonnummer', 'primair_contact', 'klantpartner', 'emailadres')    
+# class BedrijvenAdmin(admin.ModelAdmin):
+#     formfield_overrides = {
+#         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
+#         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
+#     }
+#     inlines = [
+#         BedrijfContracten,
+#         BedrijfContacten
+#     ]
+#     list_display = ('bedrijfsnaam', 'telefoon', 'telefoonnummer', 'primair_contact', 'klantpartner', 'emailadres')    
 
 class CaseActivities(admin.TabularInline):
     model = Activiteiten
@@ -52,13 +54,13 @@ class CasesAdmin(admin.ModelAdmin):
     list_display= ('onderwerp', 'omschrijving', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
     list_filter = ('status', 'bedrijf')
 
-class ContactpersonenAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
-    }
+# class ContactpersonenAdmin(admin.ModelAdmin):
+#     formfield_overrides = {
+#         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
+#         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
+#     }
 
-    list_display = ('contactnaam', 'telefoonnummer', 'functie', 'mobielnummer', 'emailadres', 'bedrijf')  
+#     list_display = ('contactnaam', 'telefoonnummer', 'functie', 'mobielnummer', 'emailadres', 'bedrijf')  
 
 class ContractenAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -119,11 +121,11 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(Activiteiten, ActiviteitenAdmin)
 admin.site.register(ActivityStatus)
 admin.site.register(ActivityType)
-admin.site.register(Bedrijf, BedrijvenAdmin)
+# admin.site.register(Bedrijf, BedrijvenAdmin)
 admin.site.register(Cases, CasesAdmin)
 admin.site.register(CaseStatus)
 admin.site.register(CaseType)
-admin.site.register(Contactpersoon, ContactpersonenAdmin)
+# admin.site.register(Contactpersoon, ContactpersonenAdmin)
 admin.site.register(Contract, ContractenAdmin)
 admin.site.register(Leverancier, LeveranciersAdmin)
 admin.site.register(SLA, SLAAdmin)
