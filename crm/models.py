@@ -33,12 +33,32 @@ class Branche(TransactionDT):
         return self.branch
 
 
+class Bedrijf(TransactionDT):
+    bedrijfsnaam = models.CharField(max_length=120, unique=True)
+    telefoonnummer = PhoneNumberField(blank=True, null=True)
+    branche = models.ForeignKey(Branche, blank=True, null=True)
+    email = models.EmailField(max_length=75, blank=True, null=True)
+    website = models.URLField(max_length=200, blank=True, null=True)
+    kvk_nummer = models.CharField(max_length=20, blank=True, null=True)
+    onenote = models.URLField(max_length=400, blank=True, null=True)
+    actief = models.BooleanField(default=True)
+    klantpartner = models.ForeignKey(User, related_name='Klantpartner', blank=True, null=True)
+
+    class Meta:
+        ordering = ['bedrijfsnaam']
+        verbose_name_plural = 'Bedrijven'
+
+    def __str__(self):
+        return self.bedrijfsnaam
+
+
 class Adres(TransactionDT):
     ADRESTYPE_CHOICES = (
         ('P', 'Postadres'),
         ('B', 'Bezoekadres')
     )
 
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
     adrestype = models.CharField(max_length=1, choices=ADRESTYPE_CHOICES, null=False, blank=False)
     adresregel_1 = models.CharField(max_length=80, null=True)
     adresregel_2 = models.CharField(max_length=80, blank=True, null=True)
@@ -53,27 +73,6 @@ class Adres(TransactionDT):
         return self.adresregel_1 + ', ' + self.postcode + ' ' + self.plaats
 
 
-
-class Bedrijf(TransactionDT):
-    bedrijfsnaam = models.CharField(max_length=120, unique=True)
-    telefoonnummer = PhoneNumberField(blank=True, null=True)
-    branche = models.ForeignKey(Branche, blank=True, null=True)
-    email = models.EmailField(max_length=75, blank=True, null=True)
-    website = models.URLField(max_length=200, blank=True, null=True)
-    kvk_nummer = models.CharField(max_length=20, blank=True, null=True)
-    onenote = models.URLField(max_length=400, blank=True, null=True)
-    actief = models.BooleanField(default=True)
-    klantpartner = models.ForeignKey(User, related_name='Klantpartner', blank=True, null=True)
-    adres = models.ForeignKey(Adres, blank=True, null=True)
-
-    class Meta:
-        ordering = ['bedrijfsnaam']
-        verbose_name_plural = 'Bedrijven'
-
-    def __str__(self):
-        return self.bedrijfsnaam
-
-      
 class Contactpersoon(TransactionDT):
     GENDER_CHOICES = (
         ('M', 'Man'),

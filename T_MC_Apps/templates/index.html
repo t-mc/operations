@@ -4,7 +4,7 @@
 {% block sidebar %}
      {% if user.is_authenticated %}
         <br>
-        <a href="{% url 'support:case_list' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Klanten</a>
+        <a href="{% url 'admin:index' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">CRM</a>
         <a href="{% url 'support:case_new' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Verkoopkansen</a>
         <a href="{% url 'support:activity_new' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Projecten</a>
         <a href="{% url 'support:case_list' %}" class="btn pmd-btn-raised pmd-ripple-effect btn-default btn-block" role="button">Contracten</a>

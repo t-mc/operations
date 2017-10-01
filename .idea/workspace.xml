@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4dc34109-e210-4e6f-9510-a2c4ca635095" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/T_MC_Apps/settings.py" afterPath="$PROJECT_DIR$/T_MC_Apps/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/T_MC_Apps/templates/base.html" afterPath="$PROJECT_DIR$/T_MC_Apps/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/t_mc_apps/settings.py" afterPath="$PROJECT_DIR$/t_mc_apps/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/t_mc_apps/templates/base.html" afterPath="$PROJECT_DIR$/t_mc_apps/templates/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/support/forms/supportforms.py" afterPath="$PROJECT_DIR$/support/forms/supportforms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/support/templates/support/activity_add.html" afterPath="$PROJECT_DIR$/support/templates/support/activity_add.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/support/templates/support/case_activities.html" afterPath="$PROJECT_DIR$/support/templates/support/case_activities.html" />
@@ -61,7 +61,7 @@
         </entry>
       </file>
       <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/T_MC_Apps/templates/base.html">
+        <entry file="file://$PROJECT_DIR$/t_mc_apps/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="380">
               <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
@@ -189,12 +189,12 @@
         <option value="$PROJECT_DIR$/support/templates/support/modal_base.html" />
         <option value="$PROJECT_DIR$/support/templates/support/case_update.html" />
         <option value="$PROJECT_DIR$/support/urls.py" />
-        <option value="$PROJECT_DIR$/T_MC_Apps/settings.py" />
+        <option value="$PROJECT_DIR$/t_mc_apps/settings.py" />
         <option value="$PROJECT_DIR$/support/templates/support/case_add.html" />
         <option value="$PROJECT_DIR$/support/templates/support/activity_add.html" />
         <option value="$PROJECT_DIR$/support/templates/support/case_list.html" />
         <option value="$PROJECT_DIR$/support/views/supportviews.py" />
-        <option value="$PROJECT_DIR$/T_MC_Apps/templates/base.html" />
+        <option value="$PROJECT_DIR$/t_mc_apps/templates/base.html" />
         <option value="$PROJECT_DIR$/support/templates/support/case_activities.html" />
         <option value="$PROJECT_DIR$/support/forms/supportforms.py" />
         <option value="$PROJECT_DIR$/static/css/select2.css" />
@@ -254,7 +254,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="T_MC_Apps" />
+              <option name="myItemId" value="t_mc_apps" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -268,7 +268,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="T_MC_Apps" />
+              <option name="myItemId" value="t_mc_apps" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -724,7 +724,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
           <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
@@ -806,7 +806,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="665">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
@@ -814,7 +814,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/templates/index.html">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="15" column="15" lean-forward="false" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
@@ -881,7 +881,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/templates/index.html">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="15" column="15" lean-forward="false" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
@@ -909,7 +909,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/urls.py">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -923,7 +923,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/settings.py">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="512">
           <caret line="43" column="20" lean-forward="false" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
@@ -993,7 +993,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/T_MC_Apps/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/t_mc_apps/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />

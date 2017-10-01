@@ -1,5 +1,5 @@
 """
-WSGI config for T_MC_Apps project.
+WSGI config for t_mc_apps project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "T_MC_Apps.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "t_mc_apps.settings")
 
 application = get_wsgi_application()

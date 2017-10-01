@@ -22,7 +22,7 @@ class ReadonlyFormMixin(forms.ModelForm):
     #  Flag = True | False
     def SetReadonly(form_object, Flag):
         for name, field in form_object.fields.items():
-            form_object.fields[name].widget.attrs['readonly'] = Flag
+            form_object.fields[name].widget.attrs['readonly'] = False
 
 
 class Readonly(object):
