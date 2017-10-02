@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = STATIC_DIR
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -73,11 +73,11 @@ ROOT_URLCONF = 't_mc_apps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [(os.path.join(BASE_DIR, 't_mc_apps\\templates')),
-                  os.path.join(BASE_DIR, 'support\\templates'),
-                  os.path.join(BASE_DIR, 'pcoverzicht\\templates'),
-                  os.path.join(BASE_DIR, 'crm\\templates'),
-                  os.path.join(BASE_DIR, 'projecten\\templates')]
+        'DIRS': [(os.path.join(BASE_DIR, 't_mc_apps/templates')),
+                  os.path.join(BASE_DIR, 'support/templates'),
+                  os.path.join(BASE_DIR, 'pcoverzicht/templates'),
+                  os.path.join(BASE_DIR, 'crm/templates'),
+                  os.path.join(BASE_DIR, 'projecten/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -156,7 +156,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR, ]
+# STATICFILES_DIRS = [STATIC_DIR, ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
