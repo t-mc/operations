@@ -74,10 +74,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [(os.path.join(BASE_DIR, 't_mc_apps/templates')),
-                  os.path.join(BASE_DIR, 'support/templates'),
-                  os.path.join(BASE_DIR, 'pcoverzicht/templates'),
-                  os.path.join(BASE_DIR, 'crm/templates'),
-                  os.path.join(BASE_DIR, 'projecten/templates')]
+            os.path.join(BASE_DIR, 'support/templates'),
+            os.path.join(BASE_DIR, 'pcoverzicht/templates'),
+            os.path.join(BASE_DIR, 'crm/templates'),
+            os.path.join(BASE_DIR, 'projecten/templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -96,17 +96,6 @@ WSGI_APPLICATION = 't_mc_apps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'tmc-support',
-#         'USER': 'mydatabaseuser',
-#         'PASSWORD': 'Hard24Get',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
 
 DATABASES = {
     'default': {

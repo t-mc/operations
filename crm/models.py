@@ -27,6 +27,7 @@ class Branche(TransactionDT):
     branch = models.CharField(max_length=80, unique=True)
 
     class Meta:
+        ordering = ['branch']
         verbose_name_plural = 'Branches'
 
     def __str__(self):
@@ -81,6 +82,7 @@ class Contactpersoon(TransactionDT):
     )
 
     volledige_naam = models.CharField(max_length=120)
+    title = models.CharField(max_length=10, blank=True, null=True)
     initialen = models.CharField(max_length=20)
     voornaam = models.CharField(max_length=120)
     tussenvoegsel = models.CharField(max_length=120, blank=True, null=True)
@@ -95,6 +97,7 @@ class Contactpersoon(TransactionDT):
     assistent = models.CharField(max_length=120, blank=True, null=True)
     manager = models.CharField(max_length=120, blank=True, null=True)
     overige_contactgegevens = models.CharField(max_length=120, blank=True, null=True)
+    nieuwsbrief = models.BooleanField(default=False)
     actief = models.BooleanField(default=True)
     sexe = models.CharField('geslacht', max_length=1, choices=GENDER_CHOICES, default='O', null=False, blank=False)
 
