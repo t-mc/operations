@@ -15,33 +15,26 @@ def import_csv():
 # Read file    
     print("Opening file: " + csv_filename)
     dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
-    
+
     for row in dataReader:
         if row[0] != 'Bedrijfsnaam': # Ignore the header row, import everything else
-            bedrijf = Bedrijf()
-            print("Bedrijf: " + row[0])
-            bedrijf.bedrijfsnaam = row[0]
-            bedrijf.telefoonnummer = row[1]
-            if row[2] != "":
-                print(row[2])
-                bedrijf.branche = Branche.objects.get(branch = row[2]) 
-            bedrijf.email = row[3]
-            bedrijf.website = row[4]
-            bedrijf.kvk_nummer = row[5]
-            bedrijf.onenote = row[6]
-            bedrijf.actief = row[7]
+            adres = Adres()
+            print("adres: " + row[0])
+            adres.bedrijf = Bedrijf.objects.get(bedrijfsnaam = row[0])
+            if row[1] == 'Bezoekadres':
+                adres.adrestype = 'B'
+            if row[1] == 'Postadres':
+                adres.adrestype = 'P'
+            adres.postcode = row[2]
+            adres.plaats = row[3]
+            adres.Land = row[4]
+            adres.adresregel_1 = row[5]
+            adres.adresregel_2 = row[6]
+            print("Save adres: " + adres.bedrijf.bedrijfsnaam)            
             try:
-                kp = User.objects.get(username = row[8] )
+                adres.save()
             except:
-                kp = User.objects.create(username = row[8])
-                kp.save()
-                print("Created user: " + row[8])
-            bedrijf.klantpartner = kp
-            print("Save bedrijf: " + bedrijf.bedrijfsnaam)            
-            try:
-                bedrijf.save()
-            except:
-                print("Save bedrijf niet gelukt: " + row[0])
+                print("Save adres niet gelukt: " + row[0])
 
  
 # Start execution here!
@@ -60,7 +53,7 @@ if __name__ == '__main__':
     import django
 
     django.setup()
-    from crm.models import Bedrijf, Branche
+    from crm.models import Bedrijf, Adres
     from django.contrib.auth.models import User
 
     import_csv()   

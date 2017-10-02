@@ -33,7 +33,7 @@ class VerkoopkansAdmin(admin.StackedInline):
     list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium', 'geschatte_omzet', 'werkelijke_omzet', 'einddatum_project', 'broncampagne', 'onenote_doc', 'klantpartner', 'actief')
     exclude = ('last_modified_user', )
 
-class ContactpersoonListAdmin(admin.TabularInline):
+class ContactpersoonListAdmin(admin.StackedInline):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'40'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},

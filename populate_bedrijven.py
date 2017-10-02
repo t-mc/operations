@@ -24,7 +24,14 @@ def import_csv():
             bedrijf.telefoonnummer = row[1]
             if row[2] != "":
                 print(row[2])
-                bedrijf.branche = Branche.objects.get(branch = row[2]) 
+                # bedrijf.branche = Branche.objects.get(branch = row[2]) 
+                try:
+                    branche = Branche.objects.get(branch = row[2])
+                except:
+                    branche = Branche.objects.create(branch = row[2])
+                    branche.save()
+                    print("Created branche: " + row[2])
+                bedrijf.branche = branche
             bedrijf.email = row[3]
             bedrijf.website = row[4]
             bedrijf.kvk_nummer = row[5]
