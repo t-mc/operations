@@ -14,7 +14,7 @@ class Computer(models.Model):
         verbose_name_plural = "Computers"
         ordering = ['naam']
 
-    def __str__(self):
+    def __unicode__(self):
         return self.naam
 
     def get_absolute_url(self):
@@ -30,7 +30,7 @@ class Software(models.Model):
     class Meta:
         verbose_name_plural = "Software"
 
-    # def __str__(self):
+    # def __unicode__(self):
     #     return self.pk
 
     def get_absolute_url(self):

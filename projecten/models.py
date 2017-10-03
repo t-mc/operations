@@ -32,7 +32,7 @@ class Verkoopstadium(TransactionDT):
         ordering = ['verkoopkans']
         verbose_name_plural = 'Verkoopstadia'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.verkoopstadium    
 
 
@@ -43,7 +43,7 @@ class Orderstadium(TransactionDT):
     class Meta:
         verbose_name_plural = 'Orderstadia'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.orderstadium    
 
 
@@ -65,7 +65,7 @@ class Verkoopkans(TransactionDT):
     class Meta:
         verbose_name_plural = 'Verkoopkansen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.projectcode    
 
 
@@ -87,5 +87,5 @@ class Order(TransactionDT):
     class Meta:
         verbose_name_plural = 'Orders'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.projectcode    

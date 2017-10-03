@@ -34,7 +34,7 @@ class CaseStatus(models.Model):
     class Meta:
         verbose_name_plural = 'Case statussen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.status
 
 #
@@ -46,7 +46,7 @@ class ActivityStatus(models.Model):
     class Meta:
         verbose_name_plural = 'Activiteit statussen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.status
 
 #
@@ -58,7 +58,7 @@ class CaseType(models.Model):
     class Meta:
         verbose_name_plural = 'Case typen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.type
 
 #
@@ -70,7 +70,7 @@ class ActivityType(models.Model):
     class Meta:
         verbose_name_plural = 'Activiteit typen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.type
 
 #
@@ -83,7 +83,7 @@ class Tijdsduur(models.Model):
         verbose_name_plural = 'Tijdsduur'
         ordering = ['minuten']
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.minuten)
 
 
@@ -133,7 +133,7 @@ class Leverancier(TransactionDT):
     class Meta:
         verbose_name_plural = 'Leveranciers'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.leveranciernaam
 
 #
@@ -150,7 +150,7 @@ class Contract(TransactionDT):
     class Meta:
         verbose_name_plural = 'Contracten'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.projectcode
 
 #
@@ -168,7 +168,7 @@ class SLA(TransactionDT):
     class Meta:
         verbose_name_plural = 'SLA-s'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.classificatie
 
 #
@@ -189,7 +189,7 @@ class Cases(TransactionDT):
     class Meta:
         verbose_name_plural = 'Cases'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.case_code
 
     def save(self, *args, **kwargs):
@@ -226,7 +226,7 @@ class Activiteiten(TransactionDT):
     class Meta:
         verbose_name_plural = 'Activiteiten'
 
-    # def __str__(self):
+    # def __unicode__(self):
     #     return self.activiteit
 
 #

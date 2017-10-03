@@ -41,14 +41,16 @@ class ContactpersoonListAdmin(admin.StackedInline):
     model = Contactpersoon
     formset = MyInline 
     classes = ['collapse']
-    verbose_name_plural = "Contactpersonen overzicht"
+    verbose_name_plural = "Contactpersonen overzichtje"
     # can_delete = False
     extra = 1
+    fields = ('volledige_naam', 'initialen', ('voornaam', 'tussenvoegsel', 'achternaam'), 'sexe', \
+                ('telefoonnummer', 'mobielnummer', 'email'), ('functie', 'afdeling'), ('assistent', 'manager' ), \
+                ('actief', 'overige_contactgegevens'))
 
-    # readonly_fields = ('pk', 'volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', 'bedrijf')
-    exclude = ('last_modified_user', 'initialen', 'voornaam', 'tussenvoegsel', 'achternaam', 'standplaats', 'afdeling', 'assistent', 'manager', 'overige_contactgegevens', 'sexe')
+    exclude = ('last_modified_user')
 
 class ContactpersoonAddAdmin(admin.StackedInline):
     formfield_overrides = {

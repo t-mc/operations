@@ -30,7 +30,7 @@ class Branche(TransactionDT):
         ordering = ['branch']
         verbose_name_plural = 'Branches'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.branch
 
 
@@ -49,7 +49,7 @@ class Bedrijf(TransactionDT):
         ordering = ['bedrijfsnaam']
         verbose_name_plural = 'Bedrijven'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.bedrijfsnaam
 
 
@@ -70,7 +70,7 @@ class Adres(TransactionDT):
     class Meta:
         verbose_name_plural = 'Adressen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.adresregel_1 + ', ' + self.postcode + ' ' + self.plaats
 
 
@@ -106,6 +106,6 @@ class Contactpersoon(TransactionDT):
         ordering = ['volledige_naam']
         verbose_name_plural = 'Contactpersonen'
 
-    def __str__(self):
+    def __unicode__(self):
         return self.volledige_naam
     
