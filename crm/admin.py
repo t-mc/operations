@@ -50,7 +50,7 @@ class ContactpersoonListAdmin(admin.StackedInline):
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', 'bedrijf')
-    exclude = ('last_modified_user')
+    exclude = ('last_modified_user',)
 
 class ContactpersoonAddAdmin(admin.StackedInline):
     formfield_overrides = {
