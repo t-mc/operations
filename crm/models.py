@@ -52,6 +52,9 @@ class Bedrijf(TransactionDT):
     def __unicode__(self):
         return self.bedrijfsnaam
 
+    def __str__(self):
+        return self.bedrijfsnaam
+
 
 class Adres(TransactionDT):
     ADRESTYPE_CHOICES = (

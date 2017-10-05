@@ -32,7 +32,7 @@ class Verkoopstadium(TransactionDT):
         ordering = ['verkoopkans']
         verbose_name_plural = 'Verkoopstadia'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.verkoopstadium    
 
 
@@ -56,7 +56,8 @@ class Verkoopkans(TransactionDT):
     verkoopstadium = models.ForeignKey(Verkoopstadium, related_name='Verkoop_Stadium', null=False, blank=False)
     geschatte_omzet = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
     werkelijke_omzet = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    einddatum_project = models.DateTimeField()
+    startdatum_project = models.DateTimeField(blank=True, null=True)
+    einddatum_project = models.DateTimeField(blank=True, null=True)
     broncampagne = models.CharField(max_length=80, blank=True, null=True)
     onenote_doc = models.URLField(blank=True, null=True)
     klantpartner = models.ForeignKey(User, related_name='Verkoopkans_Klantpartner', blank=True, null=True)
