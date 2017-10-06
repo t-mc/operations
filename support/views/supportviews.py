@@ -14,7 +14,8 @@ from dal import autocomplete
 import datetime
 
 from support.forms import ActivityForm, CaseForm, CaseDetailForm, CasesList
-from support.models import Cases, Activiteiten, Contactpersoon
+from support.models import Cases, Activiteiten 
+from crm.models import Contactpersoon
 from support.navbars import MainNavBar
 
 
@@ -202,7 +203,7 @@ class ZoekContactAutocomplete(autocomplete.Select2QuerySetView):
         qs = Contactpersoon.objects.all()
 
         bedrijf = self.forwarded.get('bedrijf', None)
-
+        print("Bedrijf in DAL is: " + bedrijf)
         if bedrijf:
              qs = qs.filter(bedrijf=bedrijf)
         # if self.q:

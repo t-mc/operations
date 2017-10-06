@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'crispy_forms',
     'phonenumber_field',
+    'django_admin_listfilter_dropdown',
     # T-MC Apps
     'crm',
     'pcoverzicht',

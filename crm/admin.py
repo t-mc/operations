@@ -3,18 +3,14 @@ from django.db import models
 from django.forms import TextInput, Textarea
 from django.utils.html import format_html
 from django.forms import BaseInlineFormSet
+from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
 from .forms import MyCrispyForm
+from projecten.models import Verkoopkans, Orders
 
 # Register your models here.
 from .models import Adres, Bedrijf, Branche, Contactpersoon
 from projecten.models import Verkoopkans, Order
-
-# @admin.register(Bedrijf)
-# class MyModelAdmin(admin.ModelAdmin):
-#     form = MyCrispyForm
-#     add_form_template = "admin/bedrijf_form.html"
-
 
 class MyInline(BaseInlineFormSet): 
     def __init__(self, *args, **kwargs): 
@@ -41,7 +37,7 @@ class ContactpersoonListAdmin(admin.StackedInline):
     model = Contactpersoon
     formset = MyInline 
     classes = ['collapse']
-    verbose_name_plural = "Contactpersonen overzichtje"
+    verbose_name_plural = "Contactpersonen overzicht"
     # can_delete = False
     extra = 1
     fields = ('volledige_naam', 'initialen', ('voornaam', 'tussenvoegsel', 'achternaam'), 'sexe', \
@@ -73,14 +69,11 @@ class ContactpersoonAdmin(admin.ModelAdmin):
 
 class ContactpersoonInline(admin.TabularInline):
     model = Contactpersoon
-    # suit_classes = 'suit-tab suit-tab-contact'
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
-    # readonly_fields = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
-    list_display_links = ('volledige_naam', )
+    # list_display_links = ('volledige_naam', )
     list_display_links = ('volledige_naam', 'bedrijf')
     exclude = ('last_modified_user', 'initialen', 'voornaam', 'tussenvoegsel', 'achternaam', 'standplaats', 'afdeling', 'assistent', 'manager', 'overige_contactgegevens', 'sexe')
     readonly_fields = ('pk', 'volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
-    # exclude = ('last_modified_user', 'standplaats', 'functie', 'afdeling', 'assistent', 'manager', 'overige_contactgegevens', 'actief', 'sexe',)
     extra = 1
     classes = ['collapse']
 
@@ -97,10 +90,36 @@ class AdresAdmin(admin.ModelAdmin):
     list_display = ('bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
     search_fields = ('bedrijf__bedrijfsnaam', 'adresregel_1', 'plaats', 'postcode')
 
+class VerkoopkansInlineAdmin(admin.TabularInline):
+    model = Verkoopkans
+    def get_queryset(self, request):
+        qs = super(VerkoopkansInlineAdmin, self).get_queryset(request)
+        return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
+
+    list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
+    readonly_fields = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
+    # list_display_links = ('volledige_naam', )
+    exclude = ('last_modified_user',)
+    extra = 1
+    classes = ['collapse']
+
+class OrdersInlineAdmin(admin.TabularInline):
+    model = Orders
+    def get_queryset(self, request):
+        qs = super(OrdersInlineAdmin, self).get_queryset(request)
+        return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
+    
+    list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
+    readonly_fields = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
+    # list_display_links = ('volledige_naam', )
+    exclude = ('last_modified_user',)
+    extra = 1
+    classes = ['collapse']
+
 
 class BedrijvenAdmin(admin.ModelAdmin):
-    inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin]
-    list_display = ('bedrijfsnaam', 'telefoonnummer', 'onenote', 'klantpartner')
+    inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin, OrdersInlineAdmin, VerkoopkansInlineAdmin]
+    list_display = ('bedrijfsnaam', 'telefoonnummer', 'klantpartner')
     fieldsets = (
         (None, {
             'fields': (('bedrijfsnaam', 'telefoonnummer'), ('klantpartner', 'onenote'))
@@ -112,7 +131,9 @@ class BedrijvenAdmin(admin.ModelAdmin):
     ) 
 
     search_fields = ('bedrijfsnaam',)
-    list_filter = ('klantpartner', 'actief')
+    list_filter = (('klantpartner', RelatedDropdownFilter), 
+                    'actief',
+                    )
 
 
 admin.site.register(Bedrijf, BedrijvenAdmin)    

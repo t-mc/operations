@@ -33,6 +33,8 @@ class Branche(TransactionDT):
     def __unicode__(self):
         return self.branch
 
+    def __str__(self):
+        return self.branch
 
 class Bedrijf(TransactionDT):
     bedrijfsnaam = models.CharField(max_length=120, unique=True)
@@ -76,6 +78,9 @@ class Adres(TransactionDT):
     def __unicode__(self):
         return self.adresregel_1 + ', ' + self.postcode + ' ' + self.plaats
 
+    def __str__(self):
+        return self.adresregel_1 + ', ' + self.postcode + ' ' + self.plaats
+
 
 class Contactpersoon(TransactionDT):
     GENDER_CHOICES = (
@@ -111,4 +116,6 @@ class Contactpersoon(TransactionDT):
 
     def __unicode__(self):
         return self.volledige_naam
-    
+
+    def __str__(self):
+        return self.volledige_naam    
