@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'django_admin_listfilter_dropdown',
     # T-MC Apps
+    'base',
     'crm',
     'pcoverzicht',
     'projecten',

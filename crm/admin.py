@@ -59,6 +59,7 @@ class ContactpersoonAddAdmin(admin.StackedInline):
     verbose_name_plural = "Contactpersonen aanpassen"
     exclude = ('last_modified_user', )
 
+
 class ContactpersoonAdmin(admin.ModelAdmin):
     model = Contactpersoon
 
@@ -66,7 +67,9 @@ class ContactpersoonAdmin(admin.ModelAdmin):
     list_display_links = ('volledige_naam', )
     exclude = ('last_modified_user',)
     search_fields = ('volledige_naam', 'bedrijf__bedrijfsnaam')
+    prepopulated_fields = {'volledige_naam': ('voornaam', 'tussenvoegsel', 'achternaam')}
 
+    
 class ContactpersoonInline(admin.TabularInline):
     model = Contactpersoon
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
@@ -83,6 +86,13 @@ class BedrijfAdresAdmin(admin.TabularInline):
     exclude = ('last_modified_user',)
     extra = 1
     classes = ['collapse']
+
+    fieldsets = [
+        (None, {'fields': []}),
+        ('Advanced settings', {
+            'classes': ('collapse',), # Specify fieldset classes here
+            'fields': ['bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land']}),
+    ]
 
 
 class AdresAdmin(admin.ModelAdmin):
@@ -131,7 +141,7 @@ class BedrijvenAdmin(admin.ModelAdmin):
     ) 
 
     search_fields = ('bedrijfsnaam',)
-    list_filter = (('klantpartner', RelatedDropdownFilter), 
+    list_filter = (('klantpartner', admin.RelatedOnlyFieldListFilter), 
                     'actief',
                     )
 

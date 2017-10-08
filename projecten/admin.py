@@ -9,20 +9,18 @@ from .models import Verkoopkans, Orders, Verkoopstadium
 
 
 class VerkoopkansAdmin(admin.ModelAdmin):
-    # form = VerkoopkansForm
     model = Verkoopkans
     def get_queryset(self, request):
         qs = super(VerkoopkansAdmin, self).get_queryset(request)
         return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
 
     list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'klantpartner', 'verkoopstadium')
-    # list_display_links = ('volledige_naam', )
     exclude = ('last_modified_user',)
-    list_filter = (('verkoopstadium', RelatedDropdownFilter),
-                    ('klantpartner', RelatedDropdownFilter), 
+    list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
+                    ('klantpartner', admin.RelatedOnlyFieldListFilter), 
                     ('bedrijf', RelatedDropdownFilter), 
-                    ('opdrachtgever', RelatedDropdownFilter))
-    search_fields = ('projectcode', 'bedrijf__bedrijfsnaam')
+                    ('opdrachtgever', RelatedDropdownFilter))                    
+    search_fields = ('projectcode', 'bedrijf__bedrijfsnaam', 'omschrijving')
 
     fieldsets = (
         (None, {
@@ -41,13 +39,12 @@ class OrderAdmin(admin.ModelAdmin):
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
 
     list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'klantpartner', 'verkoopstadium')
-    # list_display_links = ('volledige_naam', )
     exclude = ('last_modified_user',)
-    list_filter = (('verkoopstadium', RelatedDropdownFilter),
-                    ('klantpartner', RelatedDropdownFilter), 
+    list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
+                    ('klantpartner', admin.RelatedOnlyFieldListFilter), 
                     ('bedrijf', RelatedDropdownFilter), 
-                    ('opdrachtgever', RelatedDropdownFilter))
-    search_fields = ('projectcode', 'bedrijf__bedrijfsnaam')
+                    ('opdrachtgever', RelatedDropdownFilter))                    
+    search_fields = ('projectcode', 'bedrijf__bedrijfsnaam', 'omschrijving')
 
     fieldsets = (
         (None, {
