@@ -31,7 +31,7 @@ pylint-django==0.7.2
 pylint-plugin-utils==0.2.4
 pyparsing==2.2.0
 pytz==2016.10
-six==1.10.0
+six==1.11.0
 sqlparse==0.2.2
 virtualenv==15.1.0
 wrapt==1.10.8
