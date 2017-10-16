@@ -19,7 +19,7 @@ djangorestframework==3.5.3
 isort==4.2.5
 lazy-object-proxy==1.2.2
 Markdown==2.6.8
-mccabe==0.5.3
+mccabe==0.6.1
 olefile==0.44
 packaging==16.8
 phonenumberslite==8.3.1
