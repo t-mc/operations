@@ -1,7 +1,7 @@
 appdirs==1.4.3
 astroid==1.4.9
 Babel==2.3.4
-colorama==0.3.7
+colorama==0.3.9
 Django==1.11.3
 django-admin-list-filter-dropdown==1.0.1
 django-autocomplete-light==3.2.9
