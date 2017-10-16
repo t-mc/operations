@@ -16,7 +16,7 @@ django-propeller==1.4.1
 django-suit==0.2.25
 django-vanilla-views==1.0.4
 djangorestframework==3.5.3
-isort==4.2.5
+isort==4.2.15
 lazy-object-proxy==1.2.2
 Markdown==2.6.8
 mccabe==0.5.3
