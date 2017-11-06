@@ -15,7 +15,7 @@ django-phonenumber-field==1.1.0
 django-propeller==1.4.1
 django-suit==0.2.25
 django-vanilla-views==1.0.4
-djangorestframework==3.5.3
+djangorestframework==3.7.3
 isort==4.2.5
 lazy-object-proxy==1.2.2
 Markdown==2.6.8
