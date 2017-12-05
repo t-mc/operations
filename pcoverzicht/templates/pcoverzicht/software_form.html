@@ -1,8 +1,7 @@
 {%  extends 'pcoverzicht/pcoverzicht_base.html' %}
 
 {% load staticfiles %}
-
-{% load bootstrap3 %}
+{% load propeller %}
 
 {% block title %}Software toevoegen{% endblock %}
 
@@ -15,9 +14,9 @@
         <div style="padding: 10pt">
             <form action="" method="POST" class="form">
               {% csrf_token %}
-              {% bootstrap_form form %}
+              {% propeller_form form layout='horizontal'  %}
               {% buttons %}
-                <button type="submit" class="btn btn-custom" value="Sla op">Opslaan</button>
+                <button type="submit" class="btn btn-primary btn-sm" value="Sla op">{% propeller_icon "save" %} Opslaan</button>
                 <a href="/pcoverzicht/software/list" class="btn btn-custom">Annuleren</a>
               {% endbuttons %}
             </form>

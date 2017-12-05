@@ -2,28 +2,28 @@
 
 {% load staticfiles %}
 
-{% load bootstrap3 %}
 {% load propeller %}
 
 {% block title %}Computer toevoegen{% endblock %}
 
 {% block bodyblock %}
 
-        <div class="panel">
-        <div class="panel-heading">
-            <h3 class="panel-title">Nieuwe PC toevoegen</h3>
-        </div>
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">Nieuwe PC toevoegen</h3>
+    </div>
         <div style="padding: 10pt">
             <form action="" method="POST" class="form">
-              {% csrf_token %}
+                {% csrf_token %}
                 {% propeller_form form layout='horizontal'  %}
                 {% buttons %}
-                    <button type="submit" class="btn btn-primary btn-sm">
+                <button type="submit" class="btn btn-primary btn-sm">
                     {% propeller_icon "save" %} Opslaan
-                    </button>
+                </button>
                 {% endbuttons %}
             </form>
         </div>
     </div>
-
-{% endblock %}
+    
+    {% endblock %}
+    

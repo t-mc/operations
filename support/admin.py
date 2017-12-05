@@ -45,12 +45,12 @@ class CaseActivities(admin.TabularInline):
 
 class CasesAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['bedrijf', 'contact', 'onderwerp', 'contract']}),
+        (None, {'fields': ['bedrijf', 'contact', 'onderwerp']}),
         ("Detail informatie", {'fields': ['case_code', 'status', 'omschrijving', 'datum_melding', 'uitvoerende']})
     ]
-    inlines = [
-        CaseActivities
-    ]
+    # inlines = [
+    #     CaseActivities
+    # ]
     list_display= ('onderwerp', 'omschrijving', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
     list_filter = ('status', 'bedrijf')
 
@@ -100,7 +100,6 @@ class SLAAdmin(admin.ModelAdmin):
 
     list_display = ('leverancier', 'omschrijving', 'classificatie', 'bevestiging', 'oplossingsplan', 'workaround', 'oplossing') 
 
-
 class UserProfileAdmin(admin.ModelAdmin):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
@@ -122,6 +121,7 @@ admin.site.register(Activiteiten, ActiviteitenAdmin)
 admin.site.register(ActivityStatus)
 admin.site.register(ActivityType)
 # admin.site.register(Bedrijf, BedrijvenAdmin)
+# admin.site.register(Cases)
 admin.site.register(Cases, CasesAdmin)
 admin.site.register(CaseStatus)
 admin.site.register(CaseType)

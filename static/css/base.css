@@ -103,3 +103,8 @@ body {
 .textRight {
     text-align: right;
 }
+
+.form-control {
+    color: #6d949c;
+    font-size: 12px;
+}

@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 # Create your models here.
 class Computer(models.Model):
@@ -16,13 +16,16 @@ class Computer(models.Model):
 
     def __unicode__(self):
         return self.naam
+    
+    def __str__(self):
+        return self.naam    
 
     def get_absolute_url(self):
         return reverse('computer_edit', kwargs={'pk': self.pk})
 
 
 class Software(models.Model):
-    naam = models.ForeignKey(Computer, verbose_name='PC Naam', null= False)
+    naam = models.ForeignKey(Computer, verbose_name='PC Naam', null= False, on_delete=models.CASCADE)
     software = models.CharField(max_length=80, null=False)
     versienummer = models.CharField(max_length=20)
     productkey = models.CharField(max_length=40, null=True, blank=True)

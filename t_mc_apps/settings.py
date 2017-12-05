@@ -26,6 +26,9 @@ SECRET_KEY = '6=dy&^9bc85^lwyhi=2lm&#gqa@_*0n^-sl@2ao3ap5*5f99*)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+INTERNAL_IPS = ['127.0.0.1']
+ENVIRONMENT = 'dev'
+
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
@@ -49,15 +52,16 @@ INSTALLED_APPS = [
     'django_propeller',
     # 'bootstrap3',
     'bootstrapform',
-    'crispy_forms',
+    # 'crispy_forms',
     'phonenumber_field',
     'django_admin_listfilter_dropdown',
+    # 'debug_toolbar',
     # T-MC Apps
     'base',
     'crm',
-    'pcoverzicht',
     'projecten',
-    'support',
+    # 'pcoverzicht',
+    # 'support',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 't_mc_apps.urls'
@@ -147,8 +152,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [STATIC_DIR, ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR, ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

@@ -14,7 +14,8 @@ class TransactionDT(models.Model):
     last_modified_user = models.ForeignKey('auth.User',
                                            verbose_name='Laatst gewijzigd door',
                                            null=True,
-                                           blank=True
+                                           blank=True,
+                                           on_delete=models.CASCADE
                                            )
 
     class Meta:
@@ -39,13 +40,13 @@ class Branche(TransactionDT):
 class Bedrijf(TransactionDT):
     bedrijfsnaam = models.CharField(max_length=120, unique=True)
     telefoonnummer = PhoneNumberField(blank=True, null=True)
-    branche = models.ForeignKey(Branche, blank=True, null=True)
+    branche = models.ForeignKey(Branche, blank=True, null=True, on_delete=models.CASCADE)
     email = models.EmailField(max_length=75, blank=True, null=True)
     website = models.URLField(max_length=200, blank=True, null=True)
     kvk_nummer = models.CharField(max_length=20, blank=True, null=True)
     onenote = models.URLField(max_length=400, blank=True, null=True)
     actief = models.BooleanField(default=True)
-    klantpartner = models.ForeignKey(User, related_name='Klantpartner', blank=True, null=True)
+    klantpartner = models.ForeignKey(User, related_name='Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['bedrijfsnaam']
@@ -64,7 +65,7 @@ class Adres(TransactionDT):
         ('B', 'Bezoekadres')
     )
 
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
     adrestype = models.CharField(max_length=1, choices=ADRESTYPE_CHOICES, null=False, blank=False)
     adresregel_1 = models.CharField(max_length=80, null=True)
     adresregel_2 = models.CharField(max_length=80, blank=True, null=True)
@@ -97,9 +98,9 @@ class Contactpersoon(TransactionDT):
     achternaam = models.CharField(max_length=120, blank=True, null=True)
     telefoonnummer = PhoneNumberField(blank=True, null=True)
     mobielnummer = PhoneNumberField(blank=True, null=True)
-    email = models.EmailField(max_length=75, null=True)
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
-    standplaats = models.ForeignKey(Adres, blank=True, null=True)
+    email = models.EmailField(max_length=75, blank=True, null=True)
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
+    standplaats = models.ForeignKey(Adres, blank=True, null=True, on_delete=models.CASCADE)
     functie = models.CharField(max_length=120, blank=True, null=True)
     afdeling = models.CharField(max_length=120, blank=True, null=True)
     assistent = models.CharField(max_length=120, blank=True, null=True)

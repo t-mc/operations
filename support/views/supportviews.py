@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse
 from django.contrib.sessions.models import Session
 from django.db.models import Q
 from django.forms import formset_factory
@@ -87,20 +87,20 @@ class ActivityUpdate(UpdateView, NavBarMixin):
 
 """
 Case views
-"""
-
+"""  
 class CaseCreate(CreateView, NavBarMixin):
     model = Cases
-    fields = '__all__'
+    fields = ['onderwerp', 'omschrijving', 'datum_melding', 'datum_gereed', 'status', 'bedrijf', 'contact', 'contract']
+    # fields = '__all__'
     # form_class = CaseForm
     template_name = 'support/case_add.html'
     success_url = '/support/case/list'
     navbar_class = MainNavBar
 
-    # def form_valid(self, form):
-    #     print("Koekoek")
-    #     form.save()
-    #     return super(CaseCreate, self).form_valid(form)
+    def form_valid(self, form):
+        print("Koekoek")
+        form.save()
+        return super(CaseCreate, self).form_valid(form)
 
 class CaseDelete(DeleteView, NavBarMixin):
     model = Cases

@@ -14,6 +14,11 @@
               {% csrf_token %}
               {% propeller_form form layout='inline'%}
               <!-- {% crispy form %} -->
+              {% buttons %}
+              <button type="submit" class="btn btn-primary btn-sm">
+                  {% propeller_icon "save" %} Opslaan
+              </button>
+              {% endbuttons %}
             </form>
         </div>
     <!-- </div> -->

@@ -86,6 +86,8 @@ class BedrijfAdresAdmin(admin.TabularInline):
     exclude = ('last_modified_user',)
     extra = 1
     classes = ['collapse']
+    show_change_link = True
+    readonly_fields = ('adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
 
     fieldsets = [
         (None, {'fields': []}),
@@ -99,6 +101,8 @@ class AdresAdmin(admin.ModelAdmin):
     exclude = ('last_modified_user',)
     list_display = ('bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
     search_fields = ('bedrijf__bedrijfsnaam', 'adresregel_1', 'plaats', 'postcode')
+    show_change_link = True
+
 
 class VerkoopkansInlineAdmin(admin.TabularInline):
     model = Verkoopkans
@@ -128,7 +132,8 @@ class OrdersInlineAdmin(admin.TabularInline):
 
 
 class BedrijvenAdmin(admin.ModelAdmin):
-    inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin, OrdersInlineAdmin, VerkoopkansInlineAdmin]
+    # inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin, OrdersInlineAdmin, VerkoopkansInlineAdmin]
+    inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin]
     list_display = ('bedrijfsnaam', 'telefoonnummer', 'klantpartner')
     fieldsets = (
         (None, {

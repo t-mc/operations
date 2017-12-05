@@ -1,8 +1,7 @@
 {%  extends 'pcoverzicht/pcoverzicht_base.html' %}
 
 {% load staticfiles %}
-
-{% load bootstrap3 %}
+{% load propeller %}
 
 {% block title %}Computer aanpassen{% endblock %}
 
@@ -15,10 +14,10 @@
         <div style="padding: 10pt">
             <form action="" method="POST" class="form">
               {% csrf_token %}
-              {% bootstrap_form form %}
+              {% propeller_form form layout='horizontal'  %}
               {% buttons %}
-                <button type="submit" class="btn btn-custom" value="Sla wijziging op">
-                  Opslaan
+                <button type="submit" class="btn btn-primary btn-sm" value="Sla wijziging op">
+                    {% propeller_icon "save" %} Opslaan
                 </button>
               {% endbuttons %}
             </form>

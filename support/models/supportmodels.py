@@ -19,7 +19,8 @@ class TransactionDT(models.Model):
     last_modified_user = models.ForeignKey('auth.User',
                                            verbose_name='Laatst gewijzigd door',
                                            null=True,
-                                           blank=True
+                                           blank=True, 
+                                           on_delete=models.CASCADE
                                            )
 
     class Meta:
@@ -37,6 +38,9 @@ class CaseStatus(models.Model):
     def __unicode__(self):
         return self.status
 
+    def __str__(self):
+        return self.status    
+
 #
 # Lookup tabel voor activiteit status
 #
@@ -49,6 +53,8 @@ class ActivityStatus(models.Model):
     def __unicode__(self):
         return self.status
 
+    def __str__(self):
+        return self.status 
 #
 # Lookup tabel voor case typen
 #
@@ -61,6 +67,8 @@ class CaseType(models.Model):
     def __unicode__(self):
         return self.type
 
+    def __str__(self):
+        return self.type 
 #
 # Lookup tabel voor activiteit soorten
 #
@@ -73,6 +81,8 @@ class ActivityType(models.Model):
     def __unicode__(self):
         return self.type
 
+    def __str__(self):
+        return self.type 
 #
 # Lookup tabel voor tijdsduur
 #
@@ -113,7 +123,7 @@ class Tijdsduur(models.Model):
 #     telefoonnummer = models.CharField(max_length=20)
 #     mobielnummer = models.CharField(max_length=20)
 #     emailadres = models.CharField(max_length=254)
-#     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
+#     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
 
 #     class Meta:
 #         verbose_name_plural = 'Contactpersonen'
@@ -136,16 +146,18 @@ class Leverancier(TransactionDT):
     def __unicode__(self):
         return self.leveranciernaam
 
+    def __str__(self):
+        return self.leveranciernaam 
 #
 # Record layout contracten tabel
 #
 class Contract(TransactionDT):
     projectcode = models.CharField(max_length=6)
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
     startdatum = models.DateField()
     einddatum = models.DateField()
     klantpartner = models.CharField(max_length=254)
-    contract_bij = models.ForeignKey(Leverancier, blank=True, null=True)
+    contract_bij = models.ForeignKey(Leverancier, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Contracten'
@@ -153,6 +165,8 @@ class Contract(TransactionDT):
     def __unicode__(self):
         return self.projectcode
 
+    def __str__(self):
+        return self.projectcode 
 #
 # Record layout sla tabel
 #
@@ -163,7 +177,7 @@ class SLA(TransactionDT):
     oplossingsplan = models.IntegerField()
     workaround = models.IntegerField()
     oplossing = models.IntegerField()
-    leverancier = models.ForeignKey(Leverancier, blank=True, null=True)
+    leverancier = models.ForeignKey(Leverancier, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'SLA-s'
@@ -171,6 +185,8 @@ class SLA(TransactionDT):
     def __unicode__(self):
         return self.classificatie
 
+    def __str__(self):
+        return self.classificatie 
 #
 # Record layout cases tabel
 #
@@ -180,16 +196,19 @@ class Cases(TransactionDT):
     omschrijving = models.TextField()
     datum_melding = models.DateField(("Datum melding"), default=date.today)
     datum_gereed = models.DateField(("Datum gereed"), blank=True, null=True)
-    status = models.ForeignKey(CaseStatus, null=True, default=1)
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True)
-    contact = models.ForeignKey(Contactpersoon, blank=True, null=True)
-    contract = models.ForeignKey(Contract, blank=True, null=True)
-    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='user_uitvoerende')
+    status = models.ForeignKey(CaseStatus, null=True, default=1, on_delete=models.CASCADE)
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
+    contract = models.ForeignKey(Contract, blank=True, null=True, on_delete=models.CASCADE)
+    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='user_uitvoerende', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Cases'
 
     def __unicode__(self):
+        return self.case_code
+
+    def __str__(self):
         return self.case_code
 
     def save(self, *args, **kwargs):
@@ -215,13 +234,13 @@ class Cases(TransactionDT):
 # Record layout voor activiteiten tabel
 #
 class Activiteiten(TransactionDT):
-    case_id = models.ForeignKey(Cases)
-    activiteit = models.ForeignKey(ActivityType)
-    status = models.ForeignKey(ActivityStatus)
+    case_id = models.ForeignKey(Cases, on_delete=models.CASCADE)
+    activiteit = models.ForeignKey(ActivityType, on_delete=models.CASCADE)
+    status = models.ForeignKey(ActivityStatus, on_delete=models.CASCADE)
     omschrijving = models.TextField()
-    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='act_uitvoerende')
+    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='act_uitvoerende', on_delete=models.CASCADE)
     datum_uitgevoerd = models.DateField(("Datum"), default=date.today)
-    tijdsduur = models.ForeignKey(Tijdsduur, blank=True, null=True, default=1)
+    tijdsduur = models.ForeignKey(Tijdsduur, blank=True, null=True, default=1, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Activiteiten'
@@ -229,6 +248,8 @@ class Activiteiten(TransactionDT):
     # def __unicode__(self):
     #     return self.activiteit
 
+    def __str__(self):
+        return self.activiteit 
 #
 # Functie voor het genereren van alfanumerieke case code
 #
