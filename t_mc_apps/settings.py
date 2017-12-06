@@ -30,6 +30,7 @@ INTERNAL_IPS = ['127.0.0.1']
 ENVIRONMENT = 'dev'
 
 ALLOWED_HOSTS = [
+    'crm.t-mc.nl',
     'localhost',
     '127.0.0.1',
     '192.168.1.18',
@@ -104,14 +105,26 @@ WSGI_APPLICATION = 't_mc_apps.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 't_mc_crm',
+#         'USER': 't_mc_crm',
+#         'PASSWORD': 'Hard24Get',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 't_mc_crm',
-        'USER': 't_mc_crm',
-        'PASSWORD': 'Hard24Get',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'tmc_crm',
+        'HOST': 'TMC-SRV01',
+        'PORT': '',
+        'USER': 'django_db_login',
+        'PASSWORD': 'Not24Get',
+        'AUTOCOMMIT': True,
     }
 }
 
@@ -152,8 +165,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [STATIC_DIR, ]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [STATIC_DIR, ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
