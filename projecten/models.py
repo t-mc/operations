@@ -50,13 +50,13 @@ class Orderstadium(TransactionDT):
 
 class Verkoopkans(TransactionDT):
 
-    projectcode = models.CharField(max_length=10, unique=True)
-    omschrijving = models.CharField(max_length=80, null=False, blank=False)
+    projectcode = models.CharField(max_length=10, unique=False)
+    omschrijving = models.CharField(max_length=256, null=False, blank=False)
     bedrijf = models.ForeignKey(Bedrijf, null=False, blank=False, on_delete=models.CASCADE)
     opdrachtgever = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
     verkoopstadium = models.ForeignKey(Verkoopstadium, related_name='Verkoop_Stadium', null=False, blank=False, on_delete=models.CASCADE)
-    geschatte_omzet = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    werkelijke_omzet = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
+    geschatte_omzet = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    werkelijke_omzet = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     startdatum_project = models.DateField(blank=True, null=True)
     einddatum_project = models.DateField(blank=True, null=True)
     broncampagne = models.CharField(max_length=80, blank=True, null=True)
@@ -78,13 +78,13 @@ class Orders(Verkoopkans):
 
 class Order(TransactionDT):
     
-    projectcode = models.CharField(max_length=10, unique=True)
-    omschrijving = models.CharField(max_length=80, null=False, blank=False)
+    projectcode = models.CharField(max_length=10, unique=False)
+    omschrijving = models.CharField(max_length=256, null=False, blank=False)
     bedrijf = models.ForeignKey(Bedrijf, null=False, blank=False, on_delete=models.CASCADE)
     opdrachtgever = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
     orderstadium = models.ForeignKey(Orderstadium, related_name='Order_Stadium', null=False, blank=False, on_delete=models.CASCADE)
-    geschatte_omzet = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
-    werkelijke_omzet = models.DecimalField(max_digits=7, decimal_places=2, blank=True, null=True)
+    geschatte_omzet = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    werkelijke_omzet = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     einddatum_project = models.DateField()
     broncampagne = models.CharField(max_length=80, blank=True, null=True)
     onenote_doc = models.URLField(blank=True, null=True)

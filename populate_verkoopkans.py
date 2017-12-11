@@ -16,6 +16,9 @@ def import_csv():
     print("Opening file: " + csv_filename)
     dataReader = csv.reader(open(csv_filename, encoding='utf-8-sig'), delimiter=';', quotechar='"')
     
+    saved_records = 0
+    not_saved_records = 0
+
     for row in dataReader:
         if row[0] != 'Projectcode': # Ignore the header row, import everything else
             verkoopkans = Verkoopkans()
@@ -45,23 +48,31 @@ def import_csv():
             if row[8] != "":
                 verkoopkans.einddatum_project = datetime.strptime(row[8],"%d-%m-%Y")
             verkoopkans.broncampagne = row[9]
-            verkoopkans.onenote_doc = row[10]
-            try:
-                og = Contactpersoon.objects.get(volledige_naam = row[11] )
-                verkoopkans.opdrachtgever = og
-            except:
-                print("Opdrachtgever niet gevonden: " + row[11])
+            verkoopkans.onenote_doc = row[10]          
+            if row[11] == '< voeg opdrachtgever in >':
+                verkoopkans.opdrachtgever = None
+            else:
+                try:
+                    og = Contactpersoon.objects.get(volledige_naam = row[11] )
+                    verkoopkans.opdrachtgever = og
+                except:
+                    print("Opdrachtgever niet gevonden: " + row[11])
+                    verkoopkans.opdrachtgever = None
             try:
                 kp = User.objects.get(username = row[12] )
                 verkoopkans.klantpartner = kp
             except:
                 print("Klantpartner niet gevonden: " + row[12])
-            print("Save verkoopkans: " + verkoopkans.projectcode)            
+            # print("Save verkoopkans: " + verkoopkans.projectcode)            
             try:
                 verkoopkans.save()
+                saved_records = saved_records + 1
             except:
+                not_saved_records = not_saved_records + 1
                 print("Save verkoopkans niet gelukt: " + row[0])
 
+    print("Records opgeslagen: " + str(saved_records))
+    print("Records niet opgeslagen: " + str(not_saved_records))
  
 # Start execution here!
 if __name__ == '__main__':
