@@ -87,7 +87,7 @@ class BedrijfAdresAdmin(admin.TabularInline):
     extra = 1
     classes = ['collapse']
     show_change_link = True
-    readonly_fields = ('adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
+    # fields = ('adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
 
     fieldsets = [
         (None, {'fields': []}),

@@ -14,7 +14,8 @@ def import_csv():
     
 # Read file    
     print("Opening file: " + csv_filename)
-    dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
+    # dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
+    dataReader = csv.reader(open(csv_filename, encoding='utf-8-sig'), delimiter=';', quotechar='"')
     
     for row in dataReader:
         if row[0] != 'Volledige naam': # Ignore the header row, import everything else
@@ -35,18 +36,26 @@ def import_csv():
             except:
                 pass
             # contactpersoon.standplaats = row[10]
-            contactpersoon.functie = row[12]
-            contactpersoon.afdeling = row[13]
-            contactpersoon.assistent = row[14]
-            contactpersoon.manager = row[15]
-            contactpersoon.onenote = row[16]
-            contactpersoon.nieuwsbrief = row[17]
-            contactpersoon.actief = row[18]
-            if row[20] == 'Man':
+            contactpersoon.functie = row[11]
+            contactpersoon.afdeling = row[12]
+            contactpersoon.assistent = row[13]    # < voeg.....> check invoegen
+            if row[14] == '< voeg assistent in >':
+                contactpersoon.assistent = ''
+            contactpersoon.manager = row[14]      # < voeg.....> check invoegen
+            if row[15] == '< voeg manager in >':
+                contactpersoon.manager = ''
+            contactpersoon.onenote = row[15]      
+            contactpersoon.nieuwsbrief = False
+            if row[16] == 'WAAR':
+                contactpersoon.nieuwsbrief = True
+            contactpersoon.actief = False
+            if row[17] == 'WAAR':
+                contactpersoon.actief = True            
+            if row[18] == 'Man':
                 contactpersoon.sexe = 'M'
-            if row[20] == 'Vrouw':
+            if row[18] == 'Vrouw':
                 contactpersoon.sexe = 'V'
-            if row[20] == '':
+            if row[18] == '':
                 contactpersoon.sexe = 'O'
             
             print(contactpersoon)

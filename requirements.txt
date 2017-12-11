@@ -14,6 +14,7 @@ django-filter==1.0.1
 django-formtools==2.1
 django-phonenumber-field==1.1.0
 django-propeller==1.4.1
+django-pyodbc-azure==1.11.0.0
 django-suit==0.2.25
 django-vanilla-views==1.0.4
 djangorestframework==3.5.3
@@ -31,9 +32,11 @@ Pygments==2.2.0
 pylint==1.6.4
 pylint-django==0.7.2
 pylint-plugin-utils==0.2.4
+pyodbc==4.0.21
 pyparsing==2.2.0
 pytz==2016.10
 six==1.10.0
 sqlparse==0.2.2
 virtualenv==15.1.0
+wfastcgi==3.0.0
 wrapt==1.10.8

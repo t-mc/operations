@@ -14,8 +14,9 @@ def import_csv():
     
 # Read file    
     print("Opening file: " + csv_filename)
-    dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
-
+    # dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
+    dataReader = csv.reader(open(csv_filename, encoding='utf-8-sig'), delimiter=';', quotechar='"')
+    
     for row in dataReader:
         if row[0] != 'Bedrijfsnaam': # Ignore the header row, import everything else
             adres = Adres()

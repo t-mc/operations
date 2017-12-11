@@ -14,7 +14,8 @@ def import_csv():
     
 # Read file    
     print("Opening file: " + csv_filename)
-    dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
+    # dataReader = csv.reader(open(csv_filename), delimiter=';', quotechar='"')
+    dataReader = csv.reader(open(csv_filename, encoding='utf-8-sig'), delimiter=';', quotechar='"')
     
     for row in dataReader:
         if row[0] != 'Bedrijfsnaam': # Ignore the header row, import everything else
@@ -34,15 +35,18 @@ def import_csv():
                 bedrijf.branche = branche
             bedrijf.email = row[3]
             bedrijf.website = row[4]
-            bedrijf.kvk_nummer = row[5]
-            bedrijf.onenote = row[6]
-            bedrijf.actief = row[7]
+            # In de csv file zijn hier twee extra kolommen die we niet importeren!
+            bedrijf.kvk_nummer = row[7]
+            bedrijf.onenote = row[8]
+            bedrijf.actief = False
+            if row[9] == 'WAAR':
+                bedrijf.actief = True
             try:
-                kp = User.objects.get(username = row[8] )
+                kp = User.objects.get(username = row[10] )
             except:
-                kp = User.objects.create(username = row[8])
+                kp = User.objects.create(username = row[10])
                 kp.save()
-                print("Created user: " + row[8])
+                print("Created user: " + row[10])
             bedrijf.klantpartner = kp
             print("Save bedrijf: " + bedrijf.bedrijfsnaam)            
             try:

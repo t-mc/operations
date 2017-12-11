@@ -71,7 +71,7 @@ class Adres(TransactionDT):
     adresregel_2 = models.CharField(max_length=80, blank=True, null=True)
     postcode = models.CharField(max_length=7, null=True)
     plaats = models.CharField(max_length=80, null=True)
-    Land = models.CharField(max_length=80, null=True)
+    Land = models.CharField(max_length=80, blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Adressen'
