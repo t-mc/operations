@@ -8,7 +8,7 @@ USER=jaap
 GROUP=jaap
 NUM_WORKERS=3
 
-DJANGO_SETTINGS_MODULE=t_mc_apps.settings
+DJANGO_SETTINGS_MODULE=t_mc_apps.settings_test
 DJANGO_WSGI_MODULE=t_mc_apps.wsgi
 
 echo "Staring $NAME as `whoami`"
