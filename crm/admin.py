@@ -42,7 +42,7 @@ class ContactpersoonListAdmin(admin.StackedInline):
     extra = 1
     fields = ('volledige_naam', 'initialen', ('voornaam', 'tussenvoegsel', 'achternaam'), 'sexe', \
                 ('telefoonnummer', 'mobielnummer', 'email'), ('functie', 'afdeling'), ('assistent', 'manager' ), \
-                ('actief', 'overige_contactgegevens'))
+                ('actief', 'nieuwsbrief', 'overige_contactgegevens'))
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', 'bedrijf')
