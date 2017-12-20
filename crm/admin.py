@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from django.forms import BaseInlineFormSet
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
-from .forms import MyCrispyForm
+from .forms import ContactpersoonForm, MyCrispyForm
 from projecten.models import Verkoopkans, Orders
 
 # Register your models here.
@@ -61,7 +61,8 @@ class ContactpersoonAddAdmin(admin.StackedInline):
 
 
 class ContactpersoonAdmin(admin.ModelAdmin):
-    model = Contactpersoon
+    # model = Contactpersoon
+    form = ContactpersoonForm
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', )

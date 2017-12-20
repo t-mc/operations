@@ -6,10 +6,10 @@ from projecten.forms import VerkoopkansForm
 
 # Register your models here.
 from .models import Verkoopkans, Orders, Verkoopstadium
-
+from crm.models import Contactpersoon
 
 class VerkoopkansAdmin(admin.ModelAdmin):
-    model = Verkoopkans
+    form = VerkoopkansForm
     def get_queryset(self, request):
         qs = super(VerkoopkansAdmin, self).get_queryset(request)
         return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
