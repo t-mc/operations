@@ -19,6 +19,7 @@ from django.views.generic.base import TemplateView
 from django.conf import settings
 
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
+from projecten.views import VerkoopkansAutocomplete
 
 # app_name = 'home'
 
@@ -30,5 +31,6 @@ urlpatterns = [
     url(r'^', admin.site.urls),
     url(r'^contactpersoon-autocomplete/$', ContacpersoonAutocomplete.as_view(), name= 'contactpersoon-autocomplete'),
     url(r'^adres-autocomplete/$', AdressenAutocomplete.as_view(), name= 'adres-autocomplete'),
+    url(r'^verkoopkans-autocomplete/$', VerkoopkansAutocomplete.as_view(), name= 'verkoopkans-autocomplete'),
 ]
 

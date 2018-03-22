@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from crm.models import Bedrijf, Contactpersoon
-
+from producten.models import Productgroep
 
 """
 Abstracte class voor het toevoegen van time stamp op de modellen.
@@ -23,30 +23,27 @@ class TransactionDT(models.Model):
     class Meta:
         abstract = True
 
-
-# Create your models here.
 class Verkoopstadium(TransactionDT):
     verkoopstadium = models.CharField(max_length=30, unique=True)
     verkoopkans = models.DecimalField(max_digits=4, decimal_places=2)
 
     class Meta:
-        ordering = ['verkoopkans']
+        ordering = ['verkoopstadium']
         verbose_name_plural = 'Verkoopstadia'
 
     def __str__(self):
         return self.verkoopstadium    
-
 
 class Orderstadium(TransactionDT):
     orderstadium = models.CharField(max_length=30, unique=True)
     order = models.DecimalField(max_digits=4, decimal_places=2)
 
     class Meta:
+        ordering = ['orderstadium']
         verbose_name_plural = 'Orderstadia'
 
     def __unicode__(self):
         return self.orderstadium    
-
 
 class Verkoopkans(TransactionDT):
 
@@ -55,13 +52,12 @@ class Verkoopkans(TransactionDT):
     bedrijf = models.ForeignKey(Bedrijf, null=False, blank=False, on_delete=models.CASCADE)
     opdrachtgever = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
     verkoopstadium = models.ForeignKey(Verkoopstadium, related_name='Verkoop_Stadium', null=False, blank=False, on_delete=models.CASCADE)
-    geschatte_omzet = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    werkelijke_omzet = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     startdatum_project = models.DateField(blank=True, null=True)
     einddatum_project = models.DateField(blank=True, null=True)
-    broncampagne = models.CharField(max_length=80, blank=True, null=True)
     onenote_doc = models.URLField(blank=True, null=True)
     klantpartner = models.ForeignKey(User, related_name='Verkoopkans_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    ordereigenaar = models.ForeignKey(User, related_name='Verkoopkans_Ordereigenaar', blank=True, null=True, on_delete=models.CASCADE)
+    productgroep = models.ForeignKey(Productgroep, related_name='Verkoopkans_Productgroep', blank=True, null=True, on_delete=models.CASCADE)
     actief = models.BooleanField(default=True)
 
     class Meta:
@@ -69,6 +65,9 @@ class Verkoopkans(TransactionDT):
         ordering = ['-modified_dt']
 
     def __unicode__(self):
+        return self.projectcode    
+
+    def __str__(self):
         return self.projectcode    
 
 class Orders(Verkoopkans):

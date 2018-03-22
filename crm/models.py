@@ -21,9 +21,6 @@ class TransactionDT(models.Model):
     class Meta:
         abstract = True
 
-
-# Create your models here.
-
 class Branche(TransactionDT):
     branch = models.CharField(max_length=80, unique=True)
 
@@ -58,7 +55,6 @@ class Bedrijf(TransactionDT):
     def __str__(self):
         return self.bedrijfsnaam
 
-
 class Adres(TransactionDT):
     ADRESTYPE_CHOICES = (
         ('P', 'Postadres'),
@@ -81,7 +77,6 @@ class Adres(TransactionDT):
 
     def __str__(self):
         return self.adresregel_1 + ', ' + self.postcode + ' ' + self.plaats
-
 
 class Contactpersoon(TransactionDT):
     GENDER_CHOICES = (

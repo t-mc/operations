@@ -7,6 +7,8 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDrop
 
 from .forms import ContactpersoonForm, MyCrispyForm
 from projecten.models import Verkoopkans, Orders
+from notities.models import Notitie
+from notities.forms import NotitieForm
 
 # Register your models here.
 from .models import Adres, Bedrijf, Branche, Contactpersoon
@@ -97,6 +99,22 @@ class BedrijfAdresAdmin(admin.TabularInline):
             'fields': ['bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land']}),
     ]
 
+class BedrijfNotitieAdmin(admin.TabularInline):
+    model = Notitie
+    form = NotitieForm
+    exclude = ('last_modified_user', 'datumtijd')
+    extra = 1
+    classes = ['collapse']
+    show_change_link = True
+    # fields = ('adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
+
+    # fieldsets = [
+    #     (None, {'fields': []}),
+    #     ('Advanced settings', {
+    #         'classes': ('collapse',), # Specify fieldset classes here
+    #         'fields': ['bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land']}),
+    # ]
+
 
 class AdresAdmin(admin.ModelAdmin):
     exclude = ('last_modified_user',)
@@ -134,7 +152,7 @@ class OrdersInlineAdmin(admin.TabularInline):
 
 class BedrijvenAdmin(admin.ModelAdmin):
     # inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin, OrdersInlineAdmin, VerkoopkansInlineAdmin]
-    inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin]
+    inlines = [BedrijfNotitieAdmin, BedrijfAdresAdmin, ContactpersoonListAdmin]
     list_display = ('bedrijfsnaam', 'telefoonnummer', 'klantpartner')
     fieldsets = (
         (None, {
