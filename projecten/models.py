@@ -122,6 +122,24 @@ class Omzetpermaand(TransactionDT):
         verbose_name_plural = 'Omzetten per maand'
         ordering = ['jaar', 'maand']
 
+    def __unicode__(self):
+        for loop in JAAR_KEUZE:
+            if loop[0] == self.jaar:
+                jaar = loop[1]
+        for loop in MAAND_KEUZE:
+            if loop[0] == self.maand:
+                maand = loop[1]
+        return '%s - %s - %s' % (self.projectcode, jaar, maand)   
+
+    def __str__(self):
+        for loop in JAAR_KEUZE:
+            if loop[0] == self.jaar:
+                jaar = loop[1]
+        for loop in MAAND_KEUZE:
+            if loop[0] == self.maand:
+                maand = loop[1]
+        return '%s - %s - %s' % (self.projectcode, jaar, maand)   
+
 class Orders(Verkoopkans):
     class Meta:
         verbose_name_plural = 'Orders'
@@ -147,4 +165,7 @@ class Order(TransactionDT):
         verbose_name_plural = 'Orders'
 
     def __unicode__(self):
+        return self.projectcode    
+
+    def __str__(self):
         return self.projectcode    

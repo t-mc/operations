@@ -33,7 +33,6 @@ class NotitieContactFormSet(forms.BaseInlineFormSet):
       
     def get_form_kwargs(self, index):
         kwargs = super(NotitieContactFormSet, self).get_form_kwargs(index)
-        # print(self[0])
         kwargs.update({'parent': self.instance})
         kwargs.update({'bedrijf': self.instance.bedrijf})
         return kwargs
@@ -51,18 +50,13 @@ class NotitieContactForm(forms.ModelForm):
         parent = kwargs.pop('parent')
         bedrijfsnaam = kwargs.pop('bedrijf')
         bedrijf = Bedrijf.objects.get(bedrijfsnaam = bedrijfsnaam)
-        print(bedrijf)
         super(NotitieContactForm, self).__init__(*args, **kwargs)
-
         self.fields['bedrijf'].initial = bedrijf
-
-
 
 class NotitieProjectFormSet(forms.BaseInlineFormSet):
   
     def get_form_kwargs(self, index):
         kwargs = super(NotitieProjectFormSet, self).get_form_kwargs(index)
-        # print(self[0])
         kwargs.update({'parent': self.instance})
         kwargs.update({'bedrijf': self.instance.bedrijf})
         return kwargs
@@ -81,7 +75,5 @@ class NotitieProjectForm(forms.ModelForm):
         parent = kwargs.pop('parent')
         bedrijfsnaam = kwargs.pop('bedrijf')
         bedrijf = Bedrijf.objects.get(bedrijfsnaam = bedrijfsnaam)
-        print(bedrijf)
         super(NotitieProjectForm, self).__init__(*args, **kwargs)
-
         self.fields['bedrijf'].initial = bedrijf
