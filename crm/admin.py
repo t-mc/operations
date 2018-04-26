@@ -8,10 +8,10 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDrop
 from .forms import ContactpersoonForm, MyCrispyForm
 from projecten.models import Verkoopkans, Orders
 from notities.models import Notitie
-from notities.forms import NotitieForm
+from notities.forms import NotitieBedrijfForm, NotitieContactForm
 
 # Register your models here.
-from .models import Adres, Bedrijf, Branche, Contactpersoon
+from .models import Adres, Bedrijf, Branche, Contactpersoon, Relatietype
 from projecten.models import Verkoopkans, Order
 
 class MyInline(BaseInlineFormSet): 
@@ -61,10 +61,19 @@ class ContactpersoonAddAdmin(admin.StackedInline):
     verbose_name_plural = "Contactpersonen aanpassen"
     exclude = ('last_modified_user', )
 
+class ContactNotitieAdmin(admin.TabularInline):
+    model = Notitie
+    form = NotitieContactForm
+    exclude = ('last_modified_user',)
+    extra = 1
+    classes = ['collapse']
+    show_change_link = True
 
 class ContactpersoonAdmin(admin.ModelAdmin):
+    save_on_top = True
     # model = Contactpersoon
     form = ContactpersoonForm
+    inlines = [ContactNotitieAdmin,]
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', )
@@ -72,7 +81,20 @@ class ContactpersoonAdmin(admin.ModelAdmin):
     search_fields = ('volledige_naam', 'bedrijf__bedrijfsnaam')
     prepopulated_fields = {'volledige_naam': ('voornaam', 'tussenvoegsel', 'achternaam')}
 
-    
+    fieldsets = (
+        (None, {
+            'fields': (('title', 'initialen', 'voornaam', 'tussenvoegsel', 'achternaam', 'sexe'), 
+            ('volledige_naam'),
+            ('telefoonnummer', 'mobielnummer', 'email'))
+        }),
+        ('Details', {
+            'classes': ('collapse',),
+            'fields': (('bedrijf', 'standplaats'), ('functie', 'afdeling'), ('manager', 'assistent'), 
+                        ('overige_contactgegevens'), ('nieuwsbrief' , 'actief')),
+        }),
+    ) 
+
+
 class ContactpersoonInline(admin.TabularInline):
     model = Contactpersoon
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
@@ -90,8 +112,6 @@ class BedrijfAdresAdmin(admin.TabularInline):
     extra = 1
     classes = ['collapse']
     show_change_link = True
-    # fields = ('adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
-
     fieldsets = [
         (None, {'fields': []}),
         ('Advanced settings', {
@@ -101,22 +121,15 @@ class BedrijfAdresAdmin(admin.TabularInline):
 
 class BedrijfNotitieAdmin(admin.TabularInline):
     model = Notitie
-    form = NotitieForm
-    exclude = ('last_modified_user', 'datumtijd')
+    form = NotitieBedrijfForm
+    exclude = ('last_modified_user',)
     extra = 1
-    classes = ['collapse']
+    # classes = ['collapse']
     show_change_link = True
-    # fields = ('adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
-
-    # fieldsets = [
-    #     (None, {'fields': []}),
-    #     ('Advanced settings', {
-    #         'classes': ('collapse',), # Specify fieldset classes here
-    #         'fields': ['bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land']}),
-    # ]
 
 
 class AdresAdmin(admin.ModelAdmin):
+    save_on_top = True
     exclude = ('last_modified_user',)
     list_display = ('bedrijf', 'adrestype', 'adresregel_1', 'adresregel_2', 'postcode', 'plaats', 'Land')
     search_fields = ('bedrijf__bedrijfsnaam', 'adresregel_1', 'plaats', 'postcode')
@@ -149,14 +162,32 @@ class OrdersInlineAdmin(admin.TabularInline):
     extra = 1
     classes = ['collapse']
 
+def apply_klant(modeladmin, request, queryset):
+    relatietype = Relatietype.objects.get(relatietype = 'Klant')
+    for bedrijf in queryset:
+        bedrijf.relatietype = relatietype
+        bedrijf.save()
+apply_klant.short_description = 'Maak selectie klant'
+
+
+def apply_leverancier(modeladmin, request, queryset):
+    relatietype = Relatietype.objects.get(relatietype = 'Leverancier')
+    for bedrijf in queryset:
+        bedrijf.relatietype = relatietype
+        bedrijf.save()
+apply_leverancier.short_description = 'Maak selectie leverancier'
+
 
 class BedrijvenAdmin(admin.ModelAdmin):
+    save_on_top = True
     # inlines = [BedrijfAdresAdmin, ContactpersoonListAdmin, OrdersInlineAdmin, VerkoopkansInlineAdmin]
     inlines = [BedrijfNotitieAdmin, BedrijfAdresAdmin, ContactpersoonListAdmin]
-    list_display = ('bedrijfsnaam', 'telefoonnummer', 'klantpartner')
+    list_display = ('bedrijfsnaam', 'telefoonnummer', 'klantpartner', 'relatietype')
+    actions = [apply_klant, apply_leverancier,]
+
     fieldsets = (
         (None, {
-            'fields': (('bedrijfsnaam', 'telefoonnummer'), ('klantpartner', 'onenote'))
+            'fields': (('bedrijfsnaam', 'telefoonnummer', 'relatietype'), ('klantpartner', 'onenote'))
         }),
         ('Details', {
             'classes': ('collapse',),
@@ -166,11 +197,12 @@ class BedrijvenAdmin(admin.ModelAdmin):
 
     search_fields = ('bedrijfsnaam',)
     list_filter = (('klantpartner', admin.RelatedOnlyFieldListFilter), 
+                    ('relatietype', admin.RelatedOnlyFieldListFilter), 
                     'actief',
                     )
-
 
 admin.site.register(Bedrijf, BedrijvenAdmin)    
 admin.site.register(Adres, AdresAdmin)
 admin.site.register(Branche)
+admin.site.register(Relatietype)
 admin.site.register(Contactpersoon, ContactpersoonAdmin)

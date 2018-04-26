@@ -21,6 +21,11 @@ from django.conf import settings
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
 from projecten.views import VerkoopkansAutocomplete
 
+if (settings.ENVIRONMENT == 'prod'):
+    admin.site.site_header = 'T-MC - CRM APP'
+else:
+    admin.site.site_header = 'T-MC - CRM APP [ DEV - TEST ]'
+    
 # app_name = 'home'
 
 urlpatterns = [

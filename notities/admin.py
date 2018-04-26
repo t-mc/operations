@@ -1,9 +1,11 @@
 from django.contrib import admin
 from notities.models import Notitie
 # Register your models here.
-from notities.forms import NotitieForm
+from notities.forms import NotitieBedrijfForm, NotitieForm
+
 
 class NotitieAdmin(admin.ModelAdmin):
+    save_on_top = True
     form = NotitieForm
     exclude = ('last_modified_user',)
     list_display = ('onderwerp', 'bedrijf', 'contactpersoon', 'verkoopkans', 'onderwerp', 'datumtijd')
