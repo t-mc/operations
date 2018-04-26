@@ -31,7 +31,7 @@ class OmzetpermaandAdmin(admin.TabularInline):
 
 class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
-    # form = VerkoopkansForm
+    form = VerkoopkansForm
     inlines = [ NotitieAdmin, OmzetpermaandAdmin]
 
     def get_queryset(self, request):

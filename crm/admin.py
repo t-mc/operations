@@ -8,7 +8,7 @@ from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDrop
 from .forms import ContactpersoonForm, MyCrispyForm
 from projecten.models import Verkoopkans, Orders
 from notities.models import Notitie
-from notities.forms import NotitieBedrijfForm, NotitieContactForm
+from notities.forms import NotitieBedrijfForm, NotitieContactForm, NotitieContactFormSet
 
 # Register your models here.
 from .models import Adres, Bedrijf, Branche, Contactpersoon, Relatietype
@@ -64,6 +64,7 @@ class ContactpersoonAddAdmin(admin.StackedInline):
 class ContactNotitieAdmin(admin.TabularInline):
     model = Notitie
     form = NotitieContactForm
+    formset = NotitieContactFormSet
     exclude = ('last_modified_user',)
     extra = 1
     classes = ['collapse']
