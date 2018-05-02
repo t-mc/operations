@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Sum
 from django.contrib.auth.models import User
 # from django.utils.functional import cached_property
+import decimal
 
 from crm.models import Bedrijf, Contactpersoon
 from producten.models import Productgroep
@@ -71,13 +72,11 @@ class Verkoopkans(TransactionDT):
 
     # @cached_property
     def totaal_omzet(self):
-        # telling = self.omzetpermaand_set.all().annotate(bedrag = sum(omzet))
-        telling = Omzetpermaand.objects.filter(projectcode__id=self.id).annotate(bedrag = Sum('omzet'))
-        if telling:
-            return telling[0].bedrag
+        telling = Omzetpermaand.objects.filter(projectcode__projectcode=self.projectcode).aggregate(bedrag = Sum('omzet'))
+        if telling['bedrag'] != None:
+            return telling['bedrag']
         else: 
-            return 0
-        # return 500
+            return decimal.Decimal(0.00).quantize(decimal.Decimal('0.00'))
 
     def __unicode__(self):
         return self.projectcode    

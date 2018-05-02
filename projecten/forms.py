@@ -1,18 +1,20 @@
 from django import forms
-from django.forms import DateTimeInput, ChoiceField
-import datetime
+from django.forms import DateTimeInput, ChoiceField, DecimalField, TextInput
 from dal import autocomplete
+import datetime
 
 from .models import Verkoopkans, Omzetpermaand
+from crm.models import Contactpersoon
 
 class VerkoopkansForm(forms.ModelForm):
 
     class Meta:
         model = Verkoopkans
         fields = '__all__'
+
         widgets = {
             'opdrachtgever': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
-            'kwo_ontvanger': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf'])
+            'kwo_ontvanger': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
         }
 
 MAAND_KEUZE = (

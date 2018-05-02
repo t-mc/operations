@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from django.forms import BaseInlineFormSet
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
-from .forms import ContactpersoonForm, MyCrispyForm
+from .forms import ContactpersoonForm
 from projecten.models import Verkoopkans, Orders
 from notities.models import Notitie
 from notities.forms import NotitieBedrijfForm, NotitieContactForm, NotitieContactFormSet
@@ -65,6 +65,7 @@ class ContactNotitieAdmin(admin.TabularInline):
     model = Notitie
     form = NotitieContactForm
     formset = NotitieContactFormSet
+    readonly_fields = ('datumtijd',)
     exclude = ('last_modified_user',)
     extra = 1
     classes = ['collapse']
@@ -75,6 +76,8 @@ class ContactpersoonAdmin(admin.ModelAdmin):
     # model = Contactpersoon
     form = ContactpersoonForm
     inlines = [ContactNotitieAdmin,]
+
+    # search_fields = ['volledige_naam']
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', )
@@ -124,8 +127,9 @@ class BedrijfNotitieAdmin(admin.TabularInline):
     model = Notitie
     form = NotitieBedrijfForm
     exclude = ('last_modified_user',)
+    readonly_fields = ('datumtijd',)    
     extra = 1
-    # classes = ['collapse']
+    classes = ['collapse']
     show_change_link = True
 
 

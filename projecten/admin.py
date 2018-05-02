@@ -1,6 +1,8 @@
 from django.contrib import admin
+from django.contrib.admin import site
 from django.db import models
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
+import decimal
 
 from projecten.forms import VerkoopkansForm, OmzetpermaandForm
 
@@ -17,7 +19,7 @@ class NotitieAdmin(admin.TabularInline):
     formset = NotitieProjectFormSet
     exclude = ('last_modified_user',)
     readonly_fields = ('datumtijd',)
-    extra = 1
+    extra = 0
     classes = ['collapse']
     show_change_link = True
 
@@ -25,7 +27,7 @@ class OmzetpermaandAdmin(admin.TabularInline):
     model = Omzetpermaand
     form = OmzetpermaandForm
     exclude = ('last_modified_user',)
-    extra = 1
+    extra = 0
     classes = ['collapse']
     show_change_link = True
 
@@ -33,6 +35,8 @@ class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
     inlines = [ NotitieAdmin, OmzetpermaandAdmin]
+
+    # search_fields = ['bedrijf']
 
     def get_queryset(self, request):
         qs = super(VerkoopkansAdmin, self).get_queryset(request)
@@ -90,7 +94,8 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     def totaal_omzet(self, obj):
-        return '€ %s' % obj.totaal_omzet()
+        return '€ %.2f' % obj.totaal_omzet()
+
 
 
 class VerkoopstadiumAdmin(admin.ModelAdmin):

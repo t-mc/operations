@@ -25,6 +25,7 @@ class TransactionDT(models.Model):
 
 # Create your models here.
 class Notitie(TransactionDT):
+
     bedrijf = models.ForeignKey(Bedrijf, blank=False, null=False, on_delete=models.CASCADE)
     contactpersoon = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
     verkoopkans = models.ForeignKey(Verkoopkans, blank=True, null=True, on_delete=models.CASCADE)

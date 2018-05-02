@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import TemplateView
+from django.views.generic import RedirectView
 from django.conf import settings
 
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
@@ -33,9 +34,9 @@ urlpatterns = [
     # url(r'^pcoverzicht/', include('pcoverzicht.urls')),
     # url(r'^support/', include('support.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^', admin.site.urls),
     url(r'^contactpersoon-autocomplete/$', ContacpersoonAutocomplete.as_view(), name= 'contactpersoon-autocomplete'),
     url(r'^adres-autocomplete/$', AdressenAutocomplete.as_view(), name= 'adres-autocomplete'),
     url(r'^verkoopkans-autocomplete/$', VerkoopkansAutocomplete.as_view(), name= 'verkoopkans-autocomplete'),
+    url(r'^', RedirectView.as_view(url='/admin/')),
 ]
 

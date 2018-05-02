@@ -13,6 +13,9 @@ body {
     background: #fff;
 }
 
+.field-totaal_omzet {
+    text-align: right;
+}
 /* LINKS */
 
 a:link, a:visited {
