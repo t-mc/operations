@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'base',
     'crm',
     'projecten',
+    'producten',
+    'notities',
     # 'pcoverzicht',
     # 'support',
 ]

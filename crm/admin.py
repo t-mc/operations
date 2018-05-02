@@ -26,7 +26,7 @@ class VerkoopkansAdmin(admin.StackedInline):
     }    
     model = Verkoopkans
     classes = ['collapse']
-    extra = 1
+    extra = 0
 
     list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium', 'geschatte_omzet', 'werkelijke_omzet', 'einddatum_project', 'broncampagne', 'onenote_doc', 'klantpartner', 'actief')
     exclude = ('last_modified_user', )
@@ -41,7 +41,7 @@ class ContactpersoonListAdmin(admin.StackedInline):
     classes = ['collapse']
     verbose_name_plural = "Contactpersonen overzicht"
     # can_delete = False
-    extra = 1
+    extra = 0
     fields = ('volledige_naam', 'initialen', ('voornaam', 'tussenvoegsel', 'achternaam'), 'sexe', \
                 ('telefoonnummer', 'mobielnummer', 'email'), ('functie', 'afdeling'), ('assistent', 'manager' ), \
                 ('actief', 'nieuwsbrief', 'overige_contactgegevens'))
@@ -57,7 +57,7 @@ class ContactpersoonAddAdmin(admin.StackedInline):
     }
     model = Contactpersoon
     classes = ['collapse']
-    extra = 1
+    extra = 0
     verbose_name_plural = "Contactpersonen aanpassen"
     exclude = ('last_modified_user', )
 
@@ -67,7 +67,7 @@ class ContactNotitieAdmin(admin.TabularInline):
     formset = NotitieContactFormSet
     readonly_fields = ('datumtijd',)
     exclude = ('last_modified_user',)
-    extra = 1
+    extra = 0
     classes = ['collapse']
     show_change_link = True
 
@@ -83,7 +83,7 @@ class ContactpersoonAdmin(admin.ModelAdmin):
     list_display_links = ('volledige_naam', )
     exclude = ('last_modified_user',)
     search_fields = ('volledige_naam', 'bedrijf__bedrijfsnaam')
-    prepopulated_fields = {'volledige_naam': ('voornaam', 'tussenvoegsel', 'achternaam')}
+    # prepopulated_fields = {'volledige_naam': ('voornaam', 'tussenvoegsel', 'achternaam')}
 
     fieldsets = (
         (None, {
