@@ -108,7 +108,7 @@ class Contactpersoon(TransactionDT):
     telefoonnummer = PhoneNumberField(blank=True, null=True)
     mobielnummer = PhoneNumberField(blank=True, null=True)
     email = models.EmailField(max_length=75, blank=True, null=True)
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
+    bedrijf = models.ForeignKey(Bedrijf, blank=False, null=False, on_delete=models.CASCADE)
     standplaats = models.ForeignKey(Adres, blank=True, null=True, on_delete=models.CASCADE)
     functie = models.CharField(max_length=120, blank=True, null=True)
     afdeling = models.CharField(max_length=120, blank=True, null=True)

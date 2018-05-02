@@ -11,3 +11,4 @@ db.sqlite3
 *.csv
 .vscode/settings.json
 Administration/logins.md
+logs/gunicorn_supervisor.log
