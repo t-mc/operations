@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'base',
     'crm',
     'projecten',
+    'producten',
+    'notities',
     # 'pcoverzicht',
     # 'support',
 ]
@@ -141,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'nl-nl'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Amsterdam'
 
 USE_I18N = True
 
@@ -155,9 +157,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [STATIC_DIR, ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATICFILES_DIRS = [STATIC_DIR, ]
+# STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

@@ -21,9 +21,6 @@ class TransactionDT(models.Model):
     class Meta:
         abstract = True
 
-
-# Create your models here.
-
 class Branche(TransactionDT):
     branch = models.CharField(max_length=80, unique=True)
 
@@ -37,10 +34,24 @@ class Branche(TransactionDT):
     def __str__(self):
         return self.branch
 
+class Relatietype(TransactionDT):
+    relatietype = models.CharField(max_length=80, unique=True)
+
+    class Meta:
+        ordering = ['relatietype']
+        verbose_name_plural = 'Relatietypen'
+
+    def __unicode__(self):
+        return self.relatietype
+
+    def __str__(self):
+        return self.relatietype
+
 class Bedrijf(TransactionDT):
     bedrijfsnaam = models.CharField(max_length=120, unique=True)
     telefoonnummer = PhoneNumberField(blank=True, null=True)
     branche = models.ForeignKey(Branche, blank=True, null=True, on_delete=models.CASCADE)
+    relatietype = models.ForeignKey(Relatietype, blank=True, null=True, on_delete=models.CASCADE)
     email = models.EmailField(max_length=75, blank=True, null=True)
     website = models.URLField(max_length=200, blank=True, null=True)
     kvk_nummer = models.CharField(max_length=20, blank=True, null=True)
@@ -57,7 +68,6 @@ class Bedrijf(TransactionDT):
 
     def __str__(self):
         return self.bedrijfsnaam
-
 
 class Adres(TransactionDT):
     ADRESTYPE_CHOICES = (
@@ -82,7 +92,6 @@ class Adres(TransactionDT):
     def __str__(self):
         return self.adresregel_1 + ', ' + self.postcode + ' ' + self.plaats
 
-
 class Contactpersoon(TransactionDT):
     GENDER_CHOICES = (
         ('M', 'Man'),
@@ -91,7 +100,7 @@ class Contactpersoon(TransactionDT):
     )
 
     volledige_naam = models.CharField(max_length=120)
-    title = models.CharField(max_length=10, blank=True, null=True)
+    title = models.CharField(verbose_name='titel', max_length=10, blank=True, null=True)
     initialen = models.CharField(max_length=20, blank=True, null=True)
     voornaam = models.CharField(max_length=120, blank=True, null=True)
     tussenvoegsel = models.CharField(max_length=120, blank=True, null=True)

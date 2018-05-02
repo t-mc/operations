@@ -10,8 +10,6 @@ class ContacpersoonAutocomplete(autocomplete.Select2QuerySetView):
         
         gekozen_bedrijf = self.forwarded.get('bedrijf', None)
         qs = Contactpersoon.objects.all()
-        print("self.q")
-        print(self.q)
         qs = qs.filter(bedrijf=gekozen_bedrijf)
         if self.q:
             qs = qs.filter(volledige_naam__icontains=self.q)
@@ -23,8 +21,6 @@ class AdressenAutocomplete(autocomplete.Select2QuerySetView):
         
         gekozen_bedrijf = self.forwarded.get('bedrijf', None)
         qs = Adres.objects.all()
-        print("self.q")
-        print(self.q)
         qs = qs.filter(bedrijf=gekozen_bedrijf)
         if self.q:
             qs = qs.filter(volledige_naam__icontains=self.q)
