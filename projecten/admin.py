@@ -6,7 +6,7 @@ import decimal
 
 from projecten.forms import VerkoopkansForm, OmzetpermaandForm
 
-from .models import Verkoopkans, Omzetpermaand, Orders, Verkoopstadium
+from .models import Verkoopkans, Omzetpermaand, Orders, Verkoopstadium, Trainingregistratie
 from crm.models import Bedrijf, Contactpersoon
 from notities.models import Notitie
 from notities.forms import NotitieProjectForm, NotitieProjectFormSet
@@ -55,10 +55,11 @@ class VerkoopkansAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-           'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever', 'kwo_ontvanger'), ('verkoopstadium', 'klantpartner', 'ordereigenaar'), 'actief')
+           'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever'), 'kwo_ontvanger', 'verkoopstadium', 'klantpartner', 'ordereigenaar', 'actief')
         }),
         ('Details', {
-            'fields': (('startdatum_project', 'einddatum_project'), ('geschatte_omzet', 'werkelijke_omzet', 'totaal_omzet'),('onenote_doc'))
+            'classes': ('collapse', 'open'),
+            'fields': (('werkelijke_omzet', 'einddatum_project'), ('geschatte_omzet', 'startdatum_project'), ('totaal_omzet', 'onenote_doc'))
         }),
     )
 
@@ -112,10 +113,22 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
     list_display = ('projectcode', 'jaar', 'maand', 'omzet')
     exclude = ('last_modified_user',)
 
+class TrainingregistratieAdmin(admin.ModelAdmin):
+    save_on_top = True
+    model = Trainingregistratie
+
+    list_display = ('contactpersoon', 'training', 'order', 'trainer', 'bijzonderheden', 'datum')
+    exclude = ('last_modified_user',)
+    list_filter = (('training', RelatedDropdownFilter),
+                   ('order', RelatedDropdownFilter), 
+                   ('trainer', RelatedDropdownFilter))                    
+
+
 
 admin.site.register(Verkoopkans, VerkoopkansAdmin)
 admin.site.register(Orders, OrderAdmin)
 # admin.site.register(Order, OrderAdmin)
 admin.site.register(Verkoopstadium, VerkoopstadiumAdmin)
 admin.site.register(Omzetpermaand, OmzetpermaandAdmin)
-# admin.site.register(Orderstadium)
+admin.site.register(Trainingregistratie, TrainingregistratieAdmin)
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from producten.models import Productgroep
+from producten.models import Productgroep, Training
 
 # Register your models here.
 
@@ -15,3 +15,4 @@ class ProductgroepAdmin(admin.ModelAdmin):
                     )
 
 admin.site.register(Productgroep, ProductgroepAdmin)
+admin.site.register(Training)

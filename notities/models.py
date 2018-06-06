@@ -22,6 +22,15 @@ class TransactionDT(models.Model):
     class Meta:
         abstract = True
 
+class NotitieType(TransactionDT):
+    notitietype = models.CharField(max_length=30, unique=True)
+
+    class Meta:
+        ordering = ['notitietype']
+        verbose_name_plural = 'Notitietypen'
+
+    def __str__(self):
+        return self.notitietype    
 
 # Create your models here.
 class Notitie(TransactionDT):
@@ -30,6 +39,7 @@ class Notitie(TransactionDT):
     contactpersoon = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
     verkoopkans = models.ForeignKey(Verkoopkans, blank=True, null=True, on_delete=models.CASCADE)
     onderwerp = models.CharField(max_length=80, null=False, blank=False)
+    notitietype = models.ForeignKey(NotitieType, blank=True, null=True, on_delete=models.CASCADE)
     notitie = models.CharField(max_length=512, null=True)
     datumtijd = models.DateTimeField(default=datetime.now, blank=False)
 

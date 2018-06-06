@@ -6,7 +6,7 @@ from django.forms import BaseInlineFormSet
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
 from .forms import ContactpersoonForm
-from projecten.models import Verkoopkans, Orders
+from projecten.models import Verkoopkans, Orders, Trainingregistratie
 from notities.models import Notitie
 from notities.forms import NotitieBedrijfForm, NotitieContactForm, NotitieContactFormSet
 
@@ -71,25 +71,29 @@ class ContactNotitieAdmin(admin.TabularInline):
     classes = ['collapse']
     show_change_link = True
 
+class ContactTrainingsregistratieAdmin(admin.TabularInline):
+    model = Trainingregistratie
+    exclude = ('last_modified_user',)
+    extra = 0
+    classes = ['collapse']
+    show_change_link = True
+
 class ContactpersoonAdmin(admin.ModelAdmin):
     save_on_top = True
     # model = Contactpersoon
     form = ContactpersoonForm
-    inlines = [ContactNotitieAdmin,]
+    inlines = [ContactNotitieAdmin, ContactTrainingsregistratieAdmin]
 
-    # search_fields = ['volledige_naam']
-
-    list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
+    list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'klantpartner', 'actief')
     list_display_links = ('volledige_naam', )
     exclude = ('last_modified_user',)
-    search_fields = ('volledige_naam', 'bedrijf__bedrijfsnaam')
-    # prepopulated_fields = {'volledige_naam': ('voornaam', 'tussenvoegsel', 'achternaam')}
+    search_fields = ('volledige_naam', 'bedrijf__bedrijfsnaam', 'klantpartner__username')
+    list_filter = ('klantpartner', )
 
     fieldsets = (
         (None, {
             'fields': (('title', 'initialen', 'voornaam', 'tussenvoegsel', 'achternaam', 'sexe'), 
-            ('volledige_naam'),
-            ('telefoonnummer', 'mobielnummer', 'email'))
+            ('volledige_naam', 'klantpartner'), 'telefoonnummer', 'mobielnummer', 'email')
         }),
         ('Details', {
             'classes': ('collapse',),

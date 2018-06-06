@@ -11,7 +11,7 @@ class NotitieForm(forms.ModelForm):
 
     class Meta:
         model = Notitie
-        fields = ('bedrijf', 'contactpersoon', 'verkoopkans', 'onderwerp', 'notitie', 'datumtijd')
+        fields = ('bedrijf', 'contactpersoon', 'verkoopkans', 'notitietype', 'onderwerp', 'notitie', 'datumtijd')
         widgets = {
             'notitie': Textarea(attrs={'cols': 80, 'rows': 4}),
             'contactpersoon': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
