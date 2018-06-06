@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
+# from projecten.models import Verkoopkans
+
 """
 Abstracte class voor het toevoegen van time stamp op de modellen.
 """
@@ -57,7 +59,7 @@ class Bedrijf(TransactionDT):
     kvk_nummer = models.CharField(max_length=20, blank=True, null=True)
     onenote = models.URLField(max_length=400, blank=True, null=True)
     actief = models.BooleanField(default=True)
-    klantpartner = models.ForeignKey(User, related_name='Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Relatiemanager", related_name='Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['bedrijfsnaam']
@@ -108,7 +110,7 @@ class Contactpersoon(TransactionDT):
     telefoonnummer = PhoneNumberField(blank=True, null=True)
     mobielnummer = PhoneNumberField(blank=True, null=True)
     email = models.EmailField(max_length=75, blank=True, null=True)
-    bedrijf = models.ForeignKey(Bedrijf, blank=False, null=False, on_delete=models.CASCADE)
+    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
     standplaats = models.ForeignKey(Adres, blank=True, null=True, on_delete=models.CASCADE)
     functie = models.CharField(max_length=120, blank=True, null=True)
     afdeling = models.CharField(max_length=120, blank=True, null=True)
@@ -119,6 +121,7 @@ class Contactpersoon(TransactionDT):
     nieuwsbrief = models.BooleanField(default=False)
     actief = models.BooleanField(default=True)
     sexe = models.CharField('geslacht', max_length=1, choices=GENDER_CHOICES, default='O', null=False, blank=False)
+    klantpartner = models.ForeignKey(User, verbose_name="Relatiemanager", related_name='Relatiemanager', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['volledige_naam']
@@ -129,3 +132,4 @@ class Contactpersoon(TransactionDT):
 
     def __str__(self):
         return self.volledige_naam    
+

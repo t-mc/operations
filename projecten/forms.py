@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import DateTimeInput, ChoiceField, DecimalField, TextInput
+from django.forms import DateTimeInput, CharField, ChoiceField, DecimalField, Select, TextInput
 from dal import autocomplete
 import datetime
 
@@ -7,6 +7,9 @@ from .models import Verkoopkans, Omzetpermaand
 from crm.models import Contactpersoon
 
 class VerkoopkansForm(forms.ModelForm):
+    
+    projectcode = forms.CharField(widget=forms.TextInput(attrs={'size': '20'}))
+    omschrijving = forms.CharField(widget=forms.TextInput(attrs={'size': '77'}))
 
     class Meta:
         model = Verkoopkans
@@ -16,6 +19,7 @@ class VerkoopkansForm(forms.ModelForm):
             'opdrachtgever': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
             'kwo_ontvanger': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
         }
+
 
 MAAND_KEUZE = (
     (1, 'Januarie'),

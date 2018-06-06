@@ -1,11 +1,15 @@
-from django.db import models
-from django.db.models import Sum
-from django.contrib.auth.models import User
 # from django.utils.functional import cached_property
 import decimal
 
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.db.models import Sum
+from django.utils.html import format_html
+
 from crm.models import Bedrijf, Contactpersoon
-from producten.models import Productgroep
+from producten.models import Productgroep, Training
+
 
 """
 Abstracte class voor het toevoegen van time stamp op de modellen.
@@ -61,7 +65,7 @@ class Verkoopkans(TransactionDT):
     startdatum_project = models.DateField(blank=True, null=True)
     einddatum_project = models.DateField(blank=True, null=True)
     onenote_doc = models.URLField(blank=True, null=True)
-    klantpartner = models.ForeignKey(User, related_name='Verkoopkans_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Leadeigenaar", related_name='Verkoopkans_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
     ordereigenaar = models.ForeignKey(User, related_name='Verkoopkans_Ordereigenaar', blank=True, null=True, on_delete=models.CASCADE)
     productgroep = models.ForeignKey(Productgroep, related_name='Verkoopkans_Productgroep', blank=True, null=True, on_delete=models.CASCADE)
     actief = models.BooleanField(default=True)
@@ -74,7 +78,9 @@ class Verkoopkans(TransactionDT):
     def totaal_omzet(self):
         telling = Omzetpermaand.objects.filter(projectcode__projectcode=self.projectcode).aggregate(bedrag = Sum('omzet'))
         if telling['bedrag'] != None:
-            return telling['bedrag']
+            # return telling['bedrag']
+            resultaat = telling['bedrag']
+            return format_html('%s' % (resultaat))
         else: 
             return decimal.Decimal(0.00).quantize(decimal.Decimal('0.00'))
 
@@ -86,7 +92,7 @@ class Verkoopkans(TransactionDT):
 
 
 MAAND_KEUZE = (
-    (1, 'Januarie'),
+    (1, 'Januari'),
     (2, 'Februari'),
     (3, 'Maart'),
     (4, 'April'),
@@ -120,6 +126,7 @@ class Omzetpermaand(TransactionDT):
     class Meta:
         verbose_name_plural = 'Omzetten per maand'
         ordering = ['jaar', 'maand']
+        unique_together = ('projectcode', 'jaar', 'maand')
 
     def __unicode__(self):
         for loop in JAAR_KEUZE:
@@ -168,3 +175,22 @@ class Order(TransactionDT):
 
     def __str__(self):
         return self.projectcode    
+
+
+class Trainingregistratie(TransactionDT):
+    contactpersoon = models.ForeignKey(Contactpersoon, blank=False, null=False, on_delete=models.CASCADE)
+    training = models.ForeignKey(Training, blank=False, null=False, on_delete=models.CASCADE)
+    order = models.ForeignKey(Verkoopkans, blank=False, null=False, on_delete=models.CASCADE)
+    trainer = models.ForeignKey(User, related_name='Trainer', blank=False, null=False, on_delete=models.CASCADE)
+    bijzonderheden = models.CharField(max_length=512, blank=True, null=True)
+    datum = models.DateField(blank=False, null=False)
+
+    class Meta:
+        ordering = ['training', 'order']
+        verbose_name_plural = 'Trainingsregistraties'
+
+    def __unicode__(self):
+        return self.training.omschrijving + ', ' + self.order.projectcode + ', ' + str(self.datum) + ', ' + self.trainer.username
+
+    def __str__(self):
+        return self.training.omschrijving + ', ' + self.order.projectcode + ', ' + str(self.datum) + ', ' + self.trainer.username

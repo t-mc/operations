@@ -33,3 +33,15 @@ class Productgroep(TransactionDT):
 
     def __str__(self):
         return self.omschrijving    
+
+
+class Training(TransactionDT):
+    omschrijving = models.CharField(max_length=80, unique=True)
+    productgroep = models.ForeignKey(Productgroep, null=False, blank=False, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['omschrijving']
+        verbose_name_plural = 'Trainingen'
+
+    def __str__(self):
+        return self.omschrijving    
