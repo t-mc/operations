@@ -44,7 +44,8 @@ class ContactpersoonListAdmin(admin.StackedInline):
     extra = 0
     fields = ('volledige_naam', 'initialen', ('voornaam', 'tussenvoegsel', 'achternaam'), 'sexe', \
                 ('telefoonnummer', 'mobielnummer', 'email'), ('functie', 'afdeling'), ('assistent', 'manager' ), \
-                ('actief', 'nieuwsbrief', 'overige_contactgegevens'))
+                ('actief', 'nieuwsbrief', 'overige_contactgegevens'),
+                'klantpartner')
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
     list_display_links = ('volledige_naam', 'bedrijf')
@@ -66,7 +67,7 @@ class ContactNotitieAdmin(admin.TabularInline):
     form = NotitieContactForm
     formset = NotitieContactFormSet
     readonly_fields = ('datumtijd',)
-    exclude = ('last_modified_user',)
+    # exclude = ('last_modified_user',)
     extra = 0
     classes = ['collapse']
     show_change_link = True
@@ -130,12 +131,16 @@ class BedrijfAdresAdmin(admin.TabularInline):
 class BedrijfNotitieAdmin(admin.TabularInline):
     model = Notitie
     form = NotitieBedrijfForm
-    exclude = ('last_modified_user',)
-    readonly_fields = ('datumtijd',)    
+    # exclude = ('last_modified_user',)
+    readonly_fields = ('datumtijd', )    
     extra = 1
     classes = ['collapse']
     show_change_link = True
 
+    def save_model(self, request, obj, form, change):
+        print(obj)
+        obj.last_modified_user=request.user
+        obj.save()
 
 class AdresAdmin(admin.ModelAdmin):
     save_on_top = True
@@ -209,6 +214,11 @@ class BedrijvenAdmin(admin.ModelAdmin):
                     ('relatietype', admin.RelatedOnlyFieldListFilter), 
                     'actief',
                     )
+
+    def save_model(self, request, obj, form, change):
+        # obj.last_modified_user=request.user
+
+        obj.save()                    
 
 admin.site.register(Bedrijf, BedrijvenAdmin)    
 admin.site.register(Adres, AdresAdmin)
