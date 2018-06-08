@@ -35,13 +35,13 @@ class NotitieType(TransactionDT):
 # Create your models here.
 class Notitie(TransactionDT):
 
-    bedrijf = models.ForeignKey(Bedrijf, blank=False, null=False, on_delete=models.CASCADE)
-    contactpersoon = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
-    verkoopkans = models.ForeignKey(Verkoopkans, blank=True, null=True, on_delete=models.CASCADE)
-    onderwerp = models.CharField(max_length=80, null=False, blank=False)
-    notitietype = models.ForeignKey(NotitieType, blank=True, null=True, on_delete=models.CASCADE)
-    notitie = models.CharField(max_length=512, null=True)
-    datumtijd = models.DateTimeField(default=datetime.now, blank=False)
+    bedrijf         = models.ForeignKey(Bedrijf, blank=False, null=False, on_delete=models.CASCADE)
+    contactpersoon  = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
+    verkoopkans     = models.ForeignKey(Verkoopkans, blank=True, null=True, on_delete=models.CASCADE)
+    onderwerp       = models.CharField(max_length=80, null=False, blank=False)
+    notitietype     = models.ForeignKey(NotitieType, blank=True, null=True, on_delete=models.CASCADE)
+    notitie         = models.CharField(max_length=512, null=True)
+    datumtijd       = models.DateTimeField(default=datetime.now, blank=False)
 
     class Meta:
         verbose_name_plural = 'Notities'
@@ -51,3 +51,4 @@ class Notitie(TransactionDT):
 
     def __str__(self):
         return self.bedrijf.bedrijfsnaam + ', ' + self.onderwerp
+  

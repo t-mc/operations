@@ -64,7 +64,7 @@ class VerkoopkansAdmin(admin.ModelAdmin):
     )
 
     def totaal_omzet(self, obj):
-        return '€ %s' % obj.totaal_omzet()
+        return obj.totaal_omzet()
 
 class OrderAdmin(admin.ModelAdmin):
     save_on_top = True
@@ -75,7 +75,7 @@ class OrderAdmin(admin.ModelAdmin):
         qs = super(OrderAdmin, self).get_queryset(request)
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium')
+    list_display = ('projectcode', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
     exclude = ('last_modified_user',)
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 
@@ -90,13 +90,13 @@ class OrderAdmin(admin.ModelAdmin):
            'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever', 'kwo_ontvanger',), ('verkoopstadium', 'klantpartner', 'ordereigenaar'), 'actief')
         }),
         ('Details', {
-            'fields': (('startdatum_project', 'einddatum_project'), ('geschatte_omzet', 'werkelijke_omzet', 'totaal_omzet'),('onenote_doc')),
+            'classes': ('collapse', 'open'),
+            'fields': (('werkelijke_omzet', 'einddatum_project'), ('geschatte_omzet', 'startdatum_project'), ('totaal_omzet', 'onenote_doc'))
         }),
     )
 
     def totaal_omzet(self, obj):
-        return '€ %.2f' % obj.totaal_omzet()
-
+        return obj.totaal_omzet()
 
 
 class VerkoopstadiumAdmin(admin.ModelAdmin):
