@@ -72,7 +72,7 @@ class Verkoopkans(TransactionDT):
 
     class Meta:
         verbose_name_plural = 'Verkoopkansen'
-        ordering = ['-modified_dt']
+        ordering = ['projectcode']
 
     # @cached_property
     def totaal_omzet(self):

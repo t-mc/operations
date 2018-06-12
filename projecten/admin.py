@@ -55,11 +55,12 @@ class VerkoopkansAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-           'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever'), 'kwo_ontvanger', 'verkoopstadium', 'klantpartner', 'ordereigenaar', 'actief')
+           'fields': (('projectcode', 'omschrijving', 'productgroep'), 
+           ('bedrijf', 'opdrachtgever'), 'kwo_ontvanger', 'verkoopstadium', 'klantpartner', 'ordereigenaar', 'actief')
         }),
         ('Details', {
             'classes': ('collapse', 'open'),
-            'fields': (('werkelijke_omzet', 'einddatum_project'), ('geschatte_omzet', 'startdatum_project'), ('totaal_omzet', 'onenote_doc'))
+            'fields': (('einddatum_project', 'totaal_omzet'), ('startdatum_project', 'geschatte_omzet'))
         }),
     )
 
@@ -76,7 +77,7 @@ class OrderAdmin(admin.ModelAdmin):
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
 
     list_display = ('projectcode', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
-    exclude = ('last_modified_user',)
+    exclude = ('last_modified_user', )
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 
                     ('ordereigenaar', admin.RelatedOnlyFieldListFilter), 
@@ -85,16 +86,26 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ('totaal_omzet',)
     search_fields = ('projectcode', 'bedrijf__bedrijfsnaam', 'omschrijving')
 
+    # fieldsets = (
+    #     (None, {
+    #        'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever', 'kwo_ontvanger',), ('verkoopstadium', 'klantpartner', 'ordereigenaar'), 'actief')
+    #     }),
+    #     ('Details', {
+    #         'classes': ('collapse', 'open'),
+    #         'fields': (('werkelijke_omzet', 'einddatum_project'), ('geschatte_omzet', 'startdatum_project'), ('totaal_omzet', 'onenote_doc'))
+    #     }),
+    # )
     fieldsets = (
         (None, {
-           'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever', 'kwo_ontvanger',), ('verkoopstadium', 'klantpartner', 'ordereigenaar'), 'actief')
+           'fields': (('projectcode', 'omschrijving', 'productgroep'), 
+           ('bedrijf', 'opdrachtgever'), 'kwo_ontvanger', 'verkoopstadium', 'klantpartner', 'ordereigenaar', 'actief')
         }),
         ('Details', {
             'classes': ('collapse', 'open'),
-            'fields': (('werkelijke_omzet', 'einddatum_project'), ('geschatte_omzet', 'startdatum_project'), ('totaal_omzet', 'onenote_doc'))
+            'fields': (('einddatum_project', 'totaal_omzet'), ('startdatum_project', 'geschatte_omzet'))
         }),
     )
-
+    
     def totaal_omzet(self, obj):
         return obj.totaal_omzet()
 
@@ -104,14 +115,14 @@ class VerkoopstadiumAdmin(admin.ModelAdmin):
     model = Verkoopstadium
 
     list_display = ('verkoopstadium', 'verkoopkans')
-    exclude = ('last_modified_user',)
+    exclude = ('last_modified_user', )
 
 class OmzetpermaandAdmin(admin.ModelAdmin):
     save_on_top = True
     model = Omzetpermaand
 
     list_display = ('projectcode', 'jaar', 'maand', 'omzet')
-    exclude = ('last_modified_user',)
+    exclude = ('last_modified_user', )
 
 class TrainingregistratieAdmin(admin.ModelAdmin):
     save_on_top = True

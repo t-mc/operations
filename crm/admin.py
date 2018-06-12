@@ -28,7 +28,7 @@ class VerkoopkansAdmin(admin.StackedInline):
     classes = ['collapse']
     extra = 0
 
-    list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium', 'geschatte_omzet', 'werkelijke_omzet', 'einddatum_project', 'broncampagne', 'onenote_doc', 'klantpartner', 'actief')
+    list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium', 'geschatte_omzet', 'werkelijke_omzet', 'einddatum_project', 'broncampagne', 'klantpartner', 'actief')
     exclude = ('last_modified_user', )
 
 class ContactpersoonListAdmin(admin.StackedInline):
@@ -44,7 +44,7 @@ class ContactpersoonListAdmin(admin.StackedInline):
     extra = 0
     fields = ('volledige_naam', 'initialen', ('voornaam', 'tussenvoegsel', 'achternaam'), 'sexe', \
                 ('telefoonnummer', 'mobielnummer', 'email'), ('functie', 'afdeling'), ('assistent', 'manager' ), \
-                ('actief', 'nieuwsbrief', 'overige_contactgegevens'),
+                ('overige_contactgegevens', 'actief', 'nieuwsbrief' ),
                 'klantpartner')
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
@@ -103,7 +103,6 @@ class ContactpersoonAdmin(admin.ModelAdmin):
         }),
     ) 
 
-
 class ContactpersoonInline(admin.TabularInline):
     model = Contactpersoon
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'actief')
@@ -118,7 +117,7 @@ class ContactpersoonInline(admin.TabularInline):
 class BedrijfAdresAdmin(admin.TabularInline):
     model = Adres
     exclude = ('last_modified_user',)
-    extra = 1
+    extra = 0
     classes = ['collapse']
     show_change_link = True
     fieldsets = [
@@ -133,7 +132,7 @@ class BedrijfNotitieAdmin(admin.TabularInline):
     form = NotitieBedrijfForm
     # exclude = ('last_modified_user',)
     readonly_fields = ('datumtijd', )    
-    extra = 1
+    extra = 0
     classes = ['collapse']
     show_change_link = True
 
@@ -159,8 +158,8 @@ class VerkoopkansInlineAdmin(admin.TabularInline):
     list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
     readonly_fields = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
     # list_display_links = ('volledige_naam', )
-    exclude = ('last_modified_user',)
-    extra = 1
+    exclude = ('last_modified_user', 'onenote_doc')
+    extra = 0
     classes = ['collapse']
 
 class OrdersInlineAdmin(admin.TabularInline):
@@ -172,8 +171,8 @@ class OrdersInlineAdmin(admin.TabularInline):
     list_display = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
     readonly_fields = ('projectcode', 'omschrijving', 'bedrijf', 'opdrachtgever', 'verkoopstadium')
     # list_display_links = ('volledige_naam', )
-    exclude = ('last_modified_user',)
-    extra = 1
+    exclude = ('last_modified_user', 'onenote_doc')
+    extra = 0
     classes = ['collapse']
 
 def apply_klant(modeladmin, request, queryset):
@@ -201,7 +200,7 @@ class BedrijvenAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': (('bedrijfsnaam', 'telefoonnummer', 'relatietype'), ('klantpartner', 'onenote'))
+            'fields': (('bedrijfsnaam', 'telefoonnummer', 'relatietype'), ('klantpartner'))
         }),
         ('Details', {
             'classes': ('collapse',),
