@@ -22,7 +22,7 @@ class NotitieBedrijfForm(forms.ModelForm):
 
     class Meta:
         model = Notitie
-        fields = ('onderwerp', 'contactpersoon', 'verkoopkans', 'notitie', 'last_modified_user', 'datumtijd')
+        fields = ('onderwerp', 'contactpersoon', 'verkoopkans', 'notitietype', 'notitie', 'last_modified_user', 'datumtijd')
         widgets = {
             'notitie': Textarea(attrs={'cols': 60, 'rows': 4}),
             'contactpersoon': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
@@ -45,7 +45,7 @@ class NotitieContactForm(forms.ModelForm):
 
     class Meta:
         model = Notitie
-        fields = ('onderwerp', 'notitie', 'verkoopkans', 'last_modified_user', 'datumtijd', 'bedrijf' )
+        fields = ('onderwerp', 'notitietype', 'notitie', 'verkoopkans', 'last_modified_user', 'datumtijd', 'bedrijf' )
 
         widgets={'notitie': Textarea(attrs={'cols': 80, 'rows': 4}),
                 'verkoopkans': autocomplete.ModelSelect2(url='verkoopkans-autocomplete', forward=['bedrijf']),
@@ -77,7 +77,7 @@ class NotitieProjectForm(forms.ModelForm):
 
     class Meta:
         model = Notitie
-        fields = ('onderwerp', 'notitie', 'verkoopkans', 'contactpersoon', 'last_modified_user', 'datumtijd', 'bedrijf' )
+        fields = ('onderwerp', 'notitietype', 'notitie', 'verkoopkans', 'contactpersoon', 'last_modified_user', 'datumtijd', 'bedrijf' )
         widgets = {
             'notitie': Textarea(attrs={'cols': 80, 'rows': 4}),
             'contactpersoon': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
