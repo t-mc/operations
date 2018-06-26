@@ -10,7 +10,7 @@ class NotitieAdmin(admin.ModelAdmin):
     form = NotitieForm
     # exclude = ('last_modified_user',)
     readonly_fields = ('datumtijd', 'last_modified_user')
-    list_display = ('onderwerp', 'bedrijf', 'contactpersoon', 'verkoopkans', 'last_modified_user', 'datumtijd')
+    list_display = ('onderwerp', 'bedrijf', 'contactpersoon', 'verkoopkans', 'notitietype', 'last_modified_user', 'datumtijd')
     search_fields = ('bedrijf__bedrijfsnaam', 'contactpersoon__volledige_naam', 'verkoopkans__projectcode', 'notitie', 'notitietype', 'onderwerp')
     show_change_link = False
   
