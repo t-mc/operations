@@ -35,18 +35,18 @@ MAAND_KEUZE = (
     (12,'December'),
 )
 # Default maandlijst met omzet per maand
-MAANDLIJST = [  '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', 
-                '0.00', ]
+MAANDLIJST = [  '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', 
+                '0', ]
 # Bepaal huidige jaar als default zoekjaar
 current_year = datetime.datetime.now().year
 
@@ -92,11 +92,12 @@ class OmzettenView(View):
             omzet_totaal = 0
             maandlijst = MAANDLIJST.copy()
             # Voor iedere order haal omzetten op
-            omzetten = Omzetpermaand.objects.filter(projectcode__projectcode = order.projectcode).filter(jaar = maand_in_jaar)
+            omzetten = Omzetpermaand.objects.filter(projectcode__id = order.id).filter(jaar = maand_in_jaar)
             # Voor iedere maand vul de juiste omzet per maan in
-            for omzet in omzetten:
-                maandlijst[omzet.maand - 1] = omzet.omzet
-                omzet_totaal = omzet_totaal + omzet.omzet
+            if len(omzetten) > 0:
+                for omzet in omzetten:
+                    maandlijst[omzet.maand - 1] = int(omzet.omzet)
+                    omzet_totaal = omzet_totaal + omzet.omzet
 
                 try :
                     if omzet.jaar == maand_in_jaar:
@@ -121,7 +122,7 @@ class OmzettenView(View):
                         omzet_per_maand_item['Oktober'] = maandlijst[9]
                         omzet_per_maand_item['November'] = maandlijst[10]
                         omzet_per_maand_item['December'] = maandlijst[11]
-                        omzet_per_maand_item['Year end'] = omzet_totaal
+                        omzet_per_maand_item['Year end'] = int(omzet_totaal)
 
                         omzet_per_maand.append(omzet_per_maand_item)
                 except:
