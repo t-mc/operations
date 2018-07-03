@@ -12,3 +12,4 @@ db.sqlite3
 .vscode/settings.json
 Administration/logins.md
 logs/gunicorn_supervisor.log
+static/

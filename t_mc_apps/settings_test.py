@@ -24,13 +24,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = '6=dy&^9bc85^lwyhi=2lm&#gqa@_*0n^-sl@2ao3ap5*5f99*)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 INTERNAL_IPS = ['127.0.0.1']
 ENVIRONMENT = 'dev'
 
 ALLOWED_HOSTS = [
-    'django-test-host', 
+    'crm.django-test-host.t-mc.nl', 
     '192.168.1.18', 
     '127.0.0.1', 
     'localhost'
