@@ -23,7 +23,7 @@ class NotitieAdmin(admin.TabularInline):
     classes = ['collapse']
     show_change_link = True
 
-class OmzetpermaandAdmin(admin.TabularInline):
+class OmzetpermaandInlineAdmin(admin.TabularInline):
     model = Omzetpermaand
     form = OmzetpermaandForm
     exclude = ('last_modified_user',)
@@ -34,7 +34,7 @@ class OmzetpermaandAdmin(admin.TabularInline):
 class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
-    inlines = [ NotitieAdmin, OmzetpermaandAdmin]
+    inlines = [ NotitieAdmin, OmzetpermaandInlineAdmin]
 
     # search_fields = ['bedrijf']
 
@@ -71,7 +71,7 @@ class OrderAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
     # model = Verkoopkans
-    inlines = [NotitieAdmin, OmzetpermaandAdmin]
+    inlines = [NotitieAdmin, OmzetpermaandInlineAdmin]
     def get_queryset(self, request):
         qs = super(OrderAdmin, self).get_queryset(request)
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
@@ -124,6 +124,7 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
 
     list_display = ('projectcode', 'jaar', 'maand', 'omzet')
     exclude = ('last_modified_user', )
+    list_filter = ('jaar', 'maand')      
 
 class TrainingregistratieAdmin(admin.ModelAdmin):
     save_on_top = True

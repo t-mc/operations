@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'producten',
     'notities',
     # 'pcoverzicht',
-    # 'support',
+    'support',
 ]
 
 MIDDLEWARE = [
