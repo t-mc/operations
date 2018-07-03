@@ -106,17 +106,30 @@ WSGI_APPLICATION = 't_mc_apps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 't_mc_crm',
-        'USER': 't_mc_crm',
-        'PASSWORD': 'Hard24Get',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'tmc_crm',
+        'HOST': 'localhost',
+        'PORT': '1433',
+        'USER': 'sa',
+        'PASSWORD': 'Alaska2017',
+        'AUTOCOMMIT': True,
+        'OPTIONS': {
+            'driver': 'SQL Server Native Client 11.0',
+        },
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 't_mc_crm',
+#         'USER': 't_mc_crm',
+#         'PASSWORD': 'Hard24Get',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
