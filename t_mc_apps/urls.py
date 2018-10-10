@@ -33,13 +33,13 @@ else:
 urlpatterns = [
     # url(r'^$', TemplateView.as_view(template_name='index.html'), name="home"),
     # url(r'^pcoverzicht/', include('pcoverzicht.urls')),
-    # url(r'^support/', include('support.urls')),
+    url(r'^support/', include('support.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^contactpersoon-autocomplete/$', ContacpersoonAutocomplete.as_view(), name= 'contactpersoon-autocomplete'),
     url(r'^adres-autocomplete/$', AdressenAutocomplete.as_view(), name= 'adres-autocomplete'),
     url(r'^verkoopkans-autocomplete/$', VerkoopkansAutocomplete.as_view(), name= 'verkoopkans-autocomplete'),
     path('omzetten/', OmzettenView.as_view(), name= 'omzetten'),
     path('omzetten/<int:search_year>/', OmzettenView.as_view(), name= 'omzetten'),
-    url(r'^', RedirectView.as_view(url='/admin/')),
+    url(r'^', RedirectView.as_view(url='/admin/'), name="home"),
 ]
 

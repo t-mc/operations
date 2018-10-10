@@ -42,7 +42,7 @@ class VerkoopkansAdmin(admin.ModelAdmin):
         qs = super(VerkoopkansAdmin, self).get_queryset(request)
         return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
+    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium')
     exclude = ('last_modified_user',)
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 
@@ -76,7 +76,7 @@ class OrderAdmin(admin.ModelAdmin):
         qs = super(OrderAdmin, self).get_queryset(request)
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
+    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium')
     exclude = ('last_modified_user', )
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 

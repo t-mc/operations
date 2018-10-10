@@ -28,10 +28,10 @@ class CaseActivities(admin.TabularInline):
     }
     model = Activiteiten
     classes = ['collapse']
-    extra = 0
+    extra = 1
     exclude = ('last_modified_user',)
 
-class CasesAdmin(admin.ModelAdmin):
+class CaseAdmin(admin.ModelAdmin):
     form = CaseForm
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'80'})},
@@ -78,7 +78,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(Activiteiten, ActiviteitenAdmin)
 admin.site.register(ActivityStatus)
 admin.site.register(ActivityType)
-admin.site.register(Cases, CasesAdmin)
+admin.site.register(Cases, CaseAdmin)
 admin.site.register(CaseStatus)
 admin.site.register(CaseType)
 admin.site.register(Contract, ContractenAdmin)

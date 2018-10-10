@@ -13,7 +13,7 @@ Import voor Crispy Forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Fieldset, Layout, Reset, Submit
 
-from support.models import Activiteiten, Cases
+from support.models import Activiteiten, Cases, Contract
 
 
 class ReadonlyFormMixin(forms.ModelForm):
@@ -66,6 +66,7 @@ class CaseForm(ReadonlyFormMixin, autocomplete.FutureModelForm):
 
         widgets = {
             'contact': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
+            'contract': autocomplete.ModelSelect2(url='support:zoekcontract-autocomplete', forward=['bedrijf']),
     }
 
     def __init__(self, *args, **kwargs):
