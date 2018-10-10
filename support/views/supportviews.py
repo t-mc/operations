@@ -13,12 +13,10 @@ from dal import autocomplete
 
 import datetime
 
-from support.forms import ActivityForm, CaseForm, CaseDetailForm, CasesList
+from support.forms import ActivityForm, CaseForm, CaseDetailForm, CasesList, Contract
 from support.models import Cases, Activiteiten 
 from crm.models import Contactpersoon
 from support.navbars import MainNavBar
-
-
 
 
 """
@@ -209,4 +207,15 @@ class ZoekContactAutocomplete(autocomplete.Select2QuerySetView):
         # if self.q:
         #      qs = qs.filter(omschrijving_default__icontains=self.q)
 
+        return qs
+
+class ZoekContractAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        
+        gekozen_bedrijf = self.forwarded.get('bedrijf', None)
+        qs = Contract.objects.all()
+        qs = qs.filter(bedrijf=gekozen_bedrijf)
+        if self.q:
+            qs = qs.filter(volledige_naam__icontains=self.q)
+        
         return qs

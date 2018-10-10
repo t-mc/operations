@@ -13,7 +13,7 @@ Import voor Crispy Forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Fieldset, Layout, Reset, Submit
 
-from support.models import Activiteiten, Cases
+from support.models import Activiteiten, Cases, Contract
 
 
 class ReadonlyFormMixin(forms.ModelForm):
@@ -49,7 +49,7 @@ class ActivityForm(forms.ModelForm):
 class CaseForm(ReadonlyFormMixin, autocomplete.FutureModelForm):
     datum_melding = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), initial=datetime.date.today)
     datum_gereed = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), required=False)
-    omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':'4'}))
+    omschrijving = forms.CharField(widget=forms.Textarea(attrs={'rows':4, 'cols':80}))
 
     class Meta:
         model = Cases
@@ -65,7 +65,8 @@ class CaseForm(ReadonlyFormMixin, autocomplete.FutureModelForm):
                   ]
 
         widgets = {
-            'contact': autocomplete.ModelSelect2(url='support:zoekcontact-autocomplete', forward=['bedrijf'])
+            'contact': autocomplete.ModelSelect2(url='contactpersoon-autocomplete', forward=['bedrijf']),
+            'contract': autocomplete.ModelSelect2(url='support:zoekcontract-autocomplete', forward=['bedrijf']),
     }
 
     def __init__(self, *args, **kwargs):
@@ -90,6 +91,4 @@ class CasesList(forms.ModelForm):
     class Meta:
         model = Cases
         fields = ('onderwerp', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
-
-
 

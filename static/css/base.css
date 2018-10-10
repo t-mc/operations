@@ -25,11 +25,13 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 5px 5px 5px 5px;
+    /* max-width: 90vw; */
 }
 .nav_bar {
     flex-grow: 1;
     padding: 5px;
     background-color: white;
+    /* max-width: 90vw; */
 }
 .content {
     flex-grow: 5;

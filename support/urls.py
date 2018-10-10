@@ -1,8 +1,8 @@
 from django.conf.urls import url
 from support import views
 from support.views import CaseListView, CaseCreate, CaseDetail, CaseUpdate, CaseNoUpdate, CaseDelete, \
-                            ActivityListView, ActivityCreate, ActivityUpdate, ActivityDelete, \
-                                ZoekContactAutocomplete
+                          ActivityListView, ActivityCreate, ActivityUpdate, ActivityDelete, \
+                          ZoekContactAutocomplete, ZoekContractAutocomplete
 app_name = 'support'
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
         url(r'^login/$',                      views.user_login,           name='login'),
         url(r'^logout/$',                     views.user_logout,          name='logout'),
         url(r'^zoekcontact-autocomplete/$',   ZoekContactAutocomplete.as_view(), name = 'zoekcontact-autocomplete'),
+        url(r'^zoekcontract-autocomplete/$',  ZoekContractAutocomplete.as_view(), name = 'zoekcontract-autocomplete'),
 ]
