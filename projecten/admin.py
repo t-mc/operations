@@ -23,7 +23,7 @@ class NotitieAdmin(admin.TabularInline):
     classes = ['collapse']
     show_change_link = True
 
-class OmzetpermaandAdmin(admin.TabularInline):
+class OmzetpermaandInlineAdmin(admin.TabularInline):
     model = Omzetpermaand
     form = OmzetpermaandForm
     exclude = ('last_modified_user',)
@@ -34,7 +34,7 @@ class OmzetpermaandAdmin(admin.TabularInline):
 class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
-    inlines = [ NotitieAdmin, OmzetpermaandAdmin]
+    inlines = [ NotitieAdmin, OmzetpermaandInlineAdmin]
 
     # search_fields = ['bedrijf']
 
@@ -42,7 +42,7 @@ class VerkoopkansAdmin(admin.ModelAdmin):
         qs = super(VerkoopkansAdmin, self).get_queryset(request)
         return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
+    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium')
     exclude = ('last_modified_user',)
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 
@@ -71,12 +71,12 @@ class OrderAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
     # model = Verkoopkans
-    inlines = [NotitieAdmin, OmzetpermaandAdmin]
+    inlines = [NotitieAdmin, OmzetpermaandInlineAdmin]
     def get_queryset(self, request):
         qs = super(OrderAdmin, self).get_queryset(request)
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
+    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium')
     exclude = ('last_modified_user', )
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 

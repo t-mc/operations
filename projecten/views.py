@@ -35,18 +35,19 @@ MAAND_KEUZE = (
     (12,'December'),
 )
 # Default maandlijst met omzet per maand
-MAANDLIJST = [  '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', 
-                '0', ]
+MAANDLIJST = [  0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00,
+                0.00, ]
+
 # Bepaal huidige jaar als default zoekjaar
 current_year = datetime.datetime.now().year
 
@@ -91,15 +92,18 @@ class OmzettenView(View):
             # Reset maandlijst met default MAANDLIJST
             omzet_totaal = 0
             maandlijst = MAANDLIJST.copy()
+            # vermenigvuldigingsfactor per stadium voor omzetten
+            omzet_gewicht = order.verkoopstadium.verkoopkans
             # Voor iedere order haal omzetten op
             omzetten = Omzetpermaand.objects.filter(projectcode__id = order.id).filter(jaar = maand_in_jaar)
             # Voor iedere maand vul de juiste omzet per maan in
             if len(omzetten) > 0:
                 for omzet in omzetten:
-                    maandlijst[omzet.maand - 1] = int(omzet.omzet)
-                    omzet_totaal = omzet_totaal + omzet.omzet
+                    maandlijst[omzet.maand - 1] = (omzet.omzet * omzet_gewicht)
+                    omzet_totaal = omzet_totaal + (omzet.omzet * omzet_gewicht)
 
-                try :
+
+                try:
                     if omzet.jaar == maand_in_jaar:
                         omzet_per_maand_item = dict()
                         omzet_per_maand_item['Verkoopstadium'] = str(order.verkoopstadium)
@@ -110,19 +114,20 @@ class OmzettenView(View):
                         omzet_per_maand_item['Omschrijving'] = order.omschrijving
                         omzet_per_maand_item['Klantpartner'] = str(order.klantpartner)
                         omzet_per_maand_item['Ordereigenaar'] = str(order.ordereigenaar)
-                        omzet_per_maand_item['Januari'] = maandlijst[0]
-                        omzet_per_maand_item['Februari'] = maandlijst[1]
-                        omzet_per_maand_item['Maart'] = maandlijst[2]
-                        omzet_per_maand_item['April'] = maandlijst[3]
-                        omzet_per_maand_item['Mei'] = maandlijst[4]
-                        omzet_per_maand_item['Juni'] = maandlijst[5]
-                        omzet_per_maand_item['Juli'] = maandlijst[6]
-                        omzet_per_maand_item['Augustus'] = maandlijst[7]
-                        omzet_per_maand_item['September'] = maandlijst[8]
-                        omzet_per_maand_item['Oktober'] = maandlijst[9]
-                        omzet_per_maand_item['November'] = maandlijst[10]
-                        omzet_per_maand_item['December'] = maandlijst[11]
-                        omzet_per_maand_item['Year end'] = int(omzet_totaal)
+                        omzet_per_maand_item['Januari'] = float(maandlijst[0])
+                        omzet_per_maand_item['Februari'] = float(maandlijst[1])
+                        omzet_per_maand_item['Maart'] = float(maandlijst[2])
+                        omzet_per_maand_item['April'] = float(maandlijst[3])
+                        omzet_per_maand_item['Mei'] = float(maandlijst[4])
+                        omzet_per_maand_item['Juni'] = float(maandlijst[5])
+                        omzet_per_maand_item['Juli'] = float(maandlijst[6])
+                        omzet_per_maand_item['Augustus'] = float(maandlijst[7])
+                        omzet_per_maand_item['September'] = float(maandlijst[8])
+                        omzet_per_maand_item['Oktober'] = float(maandlijst[9])
+                        omzet_per_maand_item['November'] = float(maandlijst[10])
+                        omzet_per_maand_item['December'] = float(maandlijst[11])
+                        omzet_per_maand_item['Year end'] = float(omzet_totaal)
+
 
                         omzet_per_maand.append(omzet_per_maand_item)
                 except:
