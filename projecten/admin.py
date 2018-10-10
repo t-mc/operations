@@ -124,7 +124,7 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
 
     list_display = ('projectcode', 'jaar', 'maand', 'omzet')
     exclude = ('last_modified_user', )
-    list_filter = ('jaar', 'maand')      
+    list_filter = ('jaar', 'maand')
 
 class TrainingregistratieAdmin(admin.ModelAdmin):
     save_on_top = True

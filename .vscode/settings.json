@@ -9,4 +9,5 @@
         "--disable=E0401",
         "--disable=R0903",
     ],
+    "python.linting.enabled": false,
 }
