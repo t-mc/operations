@@ -4,6 +4,7 @@ from django.views.generic import View
 
 from dal import autocomplete
 import datetime
+import collections
 
 # from projecten.models import Adres, Contactpersoon
 from projecten.models import Verkoopkans, Omzetpermaand
@@ -105,7 +106,7 @@ class OmzettenView(View):
 
                 try:
                     if omzet.jaar == maand_in_jaar:
-                        omzet_per_maand_item = dict()
+                        omzet_per_maand_item = collections.OrderedDict()
                         omzet_per_maand_item['Verkoopstadium'] = str(order.verkoopstadium)
                         omzet_per_maand_item['Productgroup'] = str(order.productgroep)
                         omzet_per_maand_item['Projectcode'] = order.projectcode
