@@ -104,6 +104,9 @@ DATABASES = {
         'USER': 'django_db_login',
         'PASSWORD': 'Not24Get',
         'AUTOCOMMIT': True,
+        'OPTIONS': {
+            'driver': 'SQL Server Native Client 11.0',
+        },
     }
 }
 

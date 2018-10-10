@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.urls import path
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 from django.views.generic import RedirectView
 from django.conf import settings
 
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
-from projecten.views import VerkoopkansAutocomplete
+from projecten.views import VerkoopkansAutocomplete, OmzettenView
 
 if (settings.ENVIRONMENT == 'prod'):
     admin.site.site_header = 'T-MC - CRM APP'
@@ -37,6 +38,8 @@ urlpatterns = [
     url(r'^contactpersoon-autocomplete/$', ContacpersoonAutocomplete.as_view(), name= 'contactpersoon-autocomplete'),
     url(r'^adres-autocomplete/$', AdressenAutocomplete.as_view(), name= 'adres-autocomplete'),
     url(r'^verkoopkans-autocomplete/$', VerkoopkansAutocomplete.as_view(), name= 'verkoopkans-autocomplete'),
+    path('omzetten/', OmzettenView.as_view(), name= 'omzetten'),
+    path('omzetten/<int:search_year>/', OmzettenView.as_view(), name= 'omzetten'),
     url(r'^', RedirectView.as_view(url='/admin/')),
 ]
 

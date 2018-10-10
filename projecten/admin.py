@@ -42,14 +42,14 @@ class VerkoopkansAdmin(admin.ModelAdmin):
         qs = super(VerkoopkansAdmin, self).get_queryset(request)
         return qs.exclude(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
+    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
     exclude = ('last_modified_user',)
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 
                     ('ordereigenaar', admin.RelatedOnlyFieldListFilter), 
+                    ('productgroep', admin.RelatedOnlyFieldListFilter),
                     ('bedrijf', RelatedDropdownFilter), 
-                    ('opdrachtgever', RelatedDropdownFilter),                    
-                    ('productgroep', RelatedDropdownFilter))                    
+                    ('opdrachtgever', RelatedDropdownFilter))                    
     readonly_fields = ('totaal_omzet',)
     search_fields = ('projectcode', 'bedrijf__bedrijfsnaam', 'omschrijving')
 
@@ -76,11 +76,12 @@ class OrderAdmin(admin.ModelAdmin):
         qs = super(OrderAdmin, self).get_queryset(request)
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
 
-    list_display = ('projectcode', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
+    list_display = ('projectcode', 'productgroep', 'omschrijving', 'totaal_omzet', 'bedrijf', 'opdrachtgever', 'kwo_ontvanger', 'klantpartner', 'ordereigenaar', 'verkoopstadium', 'productgroep')
     exclude = ('last_modified_user', )
     list_filter = (('verkoopstadium', admin.RelatedOnlyFieldListFilter),
                     ('klantpartner', admin.RelatedOnlyFieldListFilter), 
                     ('ordereigenaar', admin.RelatedOnlyFieldListFilter), 
+                    ('productgroep', admin.RelatedOnlyFieldListFilter), 
                     ('bedrijf', RelatedDropdownFilter), 
                     ('opdrachtgever', RelatedDropdownFilter))                    
     readonly_fields = ('totaal_omzet',)
@@ -123,6 +124,7 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
 
     list_display = ('projectcode', 'jaar', 'maand', 'omzet')
     exclude = ('last_modified_user', )
+    list_filter = ('jaar', 'maand')
 
 class TrainingregistratieAdmin(admin.ModelAdmin):
     save_on_top = True
