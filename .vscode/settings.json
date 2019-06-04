@@ -1,7 +1,7 @@
 // Place your settings in this file to overwrite the default settings
 {
     "editor.tabSize": 4,
-    "python.pythonPath": "${workspaceRoot}\\venv\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\WebDevelopment\\Django CRM App\\venv\\Scripts\\python.exe",
     "python.linting.pylintArgs": [
         "--load-plugins pylint_django",
         "--disable=W0312",

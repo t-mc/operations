@@ -116,7 +116,7 @@ DATABASES = {
         'PASSWORD': 'Alaska2017',
         'AUTOCOMMIT': True,
         'OPTIONS': {
-            'driver': 'SQL Server Native Client 11.0',
+            'driver': 'ODBC Driver 17 for SQL Server',
         },
     }
 }
