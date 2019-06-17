@@ -28,7 +28,7 @@ class CaseActivities(admin.TabularInline):
     }
     model = Activiteiten
     classes = ['collapse']
-    extra = 1
+    extra = 0
     exclude = ('last_modified_user',)
 
 class CaseAdmin(admin.ModelAdmin):
