@@ -111,6 +111,7 @@ class OmzettenView(View):
                         omzet_per_maand_item['Productgroup'] = str(order.productgroep)
                         omzet_per_maand_item['Projectcode'] = order.projectcode
                         omzet_per_maand_item['Klant'] = str(order.bedrijf)
+                        omzet_per_maand_item['Branche'] = order.bedrijf.branche.branch
                         omzet_per_maand_item['opdrachtgever'] = str(order.opdrachtgever)
                         omzet_per_maand_item['Omschrijving'] = order.omschrijving
                         omzet_per_maand_item['Klantpartner'] = str(order.klantpartner)
@@ -135,4 +136,3 @@ class OmzettenView(View):
                     print('Niets gevonden!')
 
         return JsonResponse(omzet_per_maand, json_dumps_params={'indent': 3}, safe=False)
-    
