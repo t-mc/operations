@@ -146,6 +146,36 @@ class Omzetpermaand(TransactionDT):
                 maand = loop[1]
         return '%s - %s - %s' % (self.projectcode, jaar, maand)   
 
+def validate_weken(value):
+    if value < 1 or value > 53:
+        raise ValidationError(
+            ('Voer weeknummer tussen 1 en 53 in.'),
+            params={'value': value},
+        )
+class Urenpermedewerker(TransactionDT):
+    projectcode = models.ForeignKey(Verkoopkans, related_name='Urenpermedewerker_Order', on_delete=models.CASCADE)    
+    medewerker = models.ForeignKey(User, related_name='Medewerker_Order', blank=True, null=True, on_delete=models.CASCADE)
+    jaar = models.IntegerField(null=False, blank=False, choices=JAAR_KEUZE)
+    week = models.IntegerField(null=False, blank=False, validators=[validate_weken])
+    uren = models.PositiveSmallIntegerField(null=False, blank=False)    
+
+    class Meta:
+        verbose_name_plural = 'Uren per medewerker'
+        ordering = ['medewerker', 'jaar', 'week']
+        unique_together = ('medewerker', 'projectcode', 'jaar', 'week')
+
+    def __unicode__(self):
+        for loop in JAAR_KEUZE:
+            if loop[0] == self.jaar:
+                jaar = loop[1]
+        return '%s - %s - %s - %s' % (self.projectcode, self.medewerker.username, jaar, self.week)
+
+    def __str__(self):
+        for loop in JAAR_KEUZE:
+            if loop[0] == self.jaar:
+                jaar = loop[1]
+        return '%s - %s - %s - %s' % (self.projectcode, self.medewerker.username, jaar, self.week)
+
 class Orders(Verkoopkans):
     class Meta:
         verbose_name_plural = 'Orders'

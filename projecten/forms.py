@@ -3,7 +3,7 @@ from django.forms import DateTimeInput, CharField, ChoiceField, DecimalField, Se
 from dal import autocomplete
 import datetime
 
-from .models import Verkoopkans, Omzetpermaand
+from .models import Verkoopkans, Omzetpermaand, Urenpermedewerker
 from crm.models import Contactpersoon
 
 class VerkoopkansForm(forms.ModelForm):
@@ -68,3 +68,18 @@ class OmzetpermaandForm(forms.ModelForm):
         self.fields['maand'].initial = month
 
 
+class UrenpermedewerkerForm(forms.ModelForm):
+    
+    class Meta:
+        model = Urenpermedewerker
+        fields = '__all__'
+       
+    def __init__(self, *args, **kwargs):
+        super(UrenpermedewerkerForm, self).__init__(*args, **kwargs)
+
+# Zet het jaar veld gelijk aan huidige jaar
+        year = datetime.date.today().year
+        for jaar in JAAR_KEUZE:
+            if jaar[1] == str(year):
+                self.fields['jaar'].initial = jaar[0]
+                

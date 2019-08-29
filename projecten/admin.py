@@ -6,7 +6,8 @@ import decimal
 
 from projecten.forms import VerkoopkansForm, OmzetpermaandForm
 
-from .models import Verkoopkans, Omzetpermaand, Orders, Verkoopstadium, Trainingregistratie
+from .models import Verkoopkans, Omzetpermaand, Orders, Verkoopstadium, Trainingregistratie, Urenpermedewerker
+from .forms import UrenpermedewerkerForm
 from crm.models import Bedrijf, Contactpersoon
 from notities.models import Notitie
 from notities.forms import NotitieProjectForm, NotitieProjectFormSet
@@ -26,6 +27,14 @@ class NotitieAdmin(admin.TabularInline):
 class OmzetpermaandInlineAdmin(admin.TabularInline):
     model = Omzetpermaand
     form = OmzetpermaandForm
+    exclude = ('last_modified_user',)
+    extra = 0
+    classes = ['collapse']
+    show_change_link = True
+
+class UrenpermedewerkerInlineAdmin(admin.TabularInline):
+    model = Urenpermedewerker
+    form = UrenpermedewerkerForm
     exclude = ('last_modified_user',)
     extra = 0
     classes = ['collapse']
@@ -71,7 +80,7 @@ class OrderAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
     # model = Verkoopkans
-    inlines = [NotitieAdmin, OmzetpermaandInlineAdmin]
+    inlines = [NotitieAdmin, OmzetpermaandInlineAdmin, UrenpermedewerkerInlineAdmin]
     def get_queryset(self, request):
         qs = super(OrderAdmin, self).get_queryset(request)
         return qs.filter(verkoopstadium__verkoopstadium__contains='Order')
@@ -126,6 +135,16 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
     exclude = ('last_modified_user', )
     list_filter = ('jaar', 'maand')
 
+class UrenpermedewerkerAdmin(admin.ModelAdmin):
+    save_on_top = True
+    model = Urenpermedewerker
+
+    list_display = ('projectcode', 'medewerker', 'jaar', 'week', 'uren')
+    exclude = ('last_modified_user', )
+    list_filter = (('medewerker', admin.RelatedOnlyFieldListFilter),
+                    'jaar', 'week',)
+    search_fields = ('projectcode__projectcode', 'medewerker__username' )
+
 class TrainingregistratieAdmin(admin.ModelAdmin):
     save_on_top = True
     model = Trainingregistratie
@@ -144,4 +163,5 @@ admin.site.register(Orders, OrderAdmin)
 admin.site.register(Verkoopstadium, VerkoopstadiumAdmin)
 admin.site.register(Omzetpermaand, OmzetpermaandAdmin)
 admin.site.register(Trainingregistratie, TrainingregistratieAdmin)
+admin.site.register(Urenpermedewerker, UrenpermedewerkerAdmin)
 
