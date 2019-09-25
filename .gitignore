@@ -12,3 +12,9 @@ db.sqlite3
 .vscode/settings.json
 Administration/logins.md
 logs/gunicorn_supervisor.log
+.idea/misc.xml
+.idea/misc.xml
+.idea/operations.iml
+.idea/workspace.xml
+.vscode/launch.json.oud
+.vscode/launch.json

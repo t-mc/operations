@@ -43,7 +43,7 @@ class UrenpermedewerkerInlineAdmin(admin.TabularInline):
 class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
-    inlines = [ NotitieAdmin, OmzetpermaandInlineAdmin]
+    inlines = [ NotitieAdmin, OmzetpermaandInlineAdmin, UrenpermedewerkerInlineAdmin]
 
     # search_fields = ['bedrijf']
 

@@ -21,7 +21,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
-from projecten.views import VerkoopkansAutocomplete, OmzettenView
+from projecten.views import VerkoopkansAutocomplete, OmzettenView, UrenMedewerkerView
 
 if (settings.ENVIRONMENT == 'prod'):
     admin.site.site_header = 'T-MC - CRM APP'
@@ -40,6 +40,8 @@ urlpatterns = [
     url(r'^verkoopkans-autocomplete/$', VerkoopkansAutocomplete.as_view(), name= 'verkoopkans-autocomplete'),
     path('omzetten/', OmzettenView.as_view(), name= 'omzetten'),
     path('omzetten/<int:search_year>/', OmzettenView.as_view(), name= 'omzetten'),
+    path('urenperweek/', UrenMedewerkerView.as_view(), name= 'urenperweek'),
+    path('urenperweek/<int:search_year>/', UrenMedewerkerView.as_view(), name= 'urenperweek'),
     url(r'^', RedirectView.as_view(url='/admin/'), name="home"),
 ]
 
