@@ -194,3 +194,28 @@ class Trainingregistratie(TransactionDT):
 
     def __str__(self):
         return self.training.omschrijving + ', ' + self.order.projectcode + ', ' + str(self.datum) + ', ' + self.trainer.username
+
+
+class Urenpermedewerker(TransactionDT):
+    projectcode = models.ForeignKey(Verkoopkans, related_name='Urenpermedewerker_Order', on_delete=models.CASCADE)    
+    medewerker = models.ForeignKey(User, related_name='Medewerker_Order', blank=True, null=True, on_delete=models.CASCADE)
+    jaar = models.IntegerField(null=False, blank=False, choices=JAAR_KEUZE)
+    maand = models.IntegerField(null=False, blank=False, choices=MAAND_KEUZE)
+    uren = models.PositiveSmallIntegerField(null=False, blank=False)    
+
+    class Meta:
+        verbose_name_plural = 'Uren per medewerker'
+        ordering = ['medewerker', 'jaar', 'maand']
+        unique_together = ('medewerker', 'projectcode', 'jaar', 'maand')
+
+    def __unicode__(self):
+        for loop in JAAR_KEUZE:
+            if loop[0] == self.jaar:
+                jaar = loop[1]
+        return '%s - %s - %s - %s' % (self.projectcode, self.medewerker.username, jaar, self.maand)
+
+    def __str__(self):
+        for loop in JAAR_KEUZE:
+            if loop[0] == self.jaar:
+                jaar = loop[1]
+        return '%s - %s - %s - %s' % (self.projectcode, self.medewerker.username, jaar, self.maand)
