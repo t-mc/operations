@@ -12,6 +12,10 @@ class MainNavBar(NavBar):
             NavBarLinkItem("Nieuwe klant", ""),
             NavBarLinkItem("Nieuw contactpersoon", ""),
         ]),  
+        NavBarDropDownItem("Notities", [
+            NavBarLinkItem("Overzicht notities", ""),
+            NavBarLinkItem("Nieuwe notitie", ""),
+        ]),  
         NavBarDropDownItem("Verkoopkansen", [
             NavBarLinkItem("Overzicht verkoopkansen", ""),
             NavBarLinkItem("Nieuwe verkoopkans", ""),
@@ -30,11 +34,11 @@ class MainNavBar(NavBar):
             NavBarLinkItem("Nieuwe case", "support:case_new"),
             NavBarLinkItem("Nieuwe activiteit", "support:activity_new"),
         ]),
-        NavBarDropDownItem("PC Overzicht", [
-            NavBarLinkItem("Overzicht PC's", "computer:computer_list"),
-            NavBarLinkItem("Nieuwe PC", "computer:computer_new"),
-            NavBarLinkItem("Overzicht Software", "computer:software_list"),
-            NavBarLinkItem("Nieuwe Software", "computer:software_new"),        ]),        
+        # NavBarDropDownItem("PC Overzicht", [
+        #     NavBarLinkItem("Overzicht PC's", "computer:computer_list"),
+        #     NavBarLinkItem("Nieuwe PC", "computer:computer_new"),
+        #     NavBarLinkItem("Overzicht Software", "computer:software_list"),
+        #     NavBarLinkItem("Nieuwe Software", "computer:software_new"),        ]),        
     ]
 
 

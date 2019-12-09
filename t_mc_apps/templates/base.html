@@ -69,7 +69,7 @@
                             </div> <!-- End class container -->
                         </div> <!-- End class card -->                                    
                         <div class="propeller_content">
-                            <div class="card">
+                            <!-- <div class="card"> -->
                                 <div class="container">                       
                                     {% block propeller_content %}{% endblock %}
                                     {% if not 'javascript_in_head'|propeller_setting %}
@@ -77,14 +77,16 @@
                                     <script type="text/javascript" src="{% static 'js/propeller.min.js' %}"></script>
                                     {% endif %}
                                 </div> <!-- End class container -->                                    
-                            </div> <!-- End class card -->
+                            <!-- </div>  -->
+                            <!-- End class card -->
                         </div> <!-- End class propeller -->
                         <div class="propeller_extra">
-                            <div class="card">
+                            <!-- <div class="card"> -->
                                 <div class="container">                                                    
                                     {% block propeller_extra_script %}{% endblock %}
                                 </div> <!-- End class container -->                                    
-                            </div> <!-- End class card -->
+                            <!-- </div>  -->
+                            <!-- End class card -->
                         </div> <!-- End class propeller_extra -->	
                     </div> <!-- End class body_block -->
                 </div> <!-- End class page -->

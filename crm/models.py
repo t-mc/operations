@@ -52,7 +52,7 @@ class Relatietype(TransactionDT):
 class Bedrijf(TransactionDT):
     bedrijfsnaam = models.CharField(max_length=120, unique=True)
     telefoonnummer = PhoneNumberField(blank=True, null=True)
-    branche = models.ForeignKey(Branche, blank=True, null=True, on_delete=models.CASCADE)
+    branche = models.ForeignKey(Branche, blank=False, null=False, on_delete=models.CASCADE)
     relatietype = models.ForeignKey(Relatietype, blank=True, null=True, on_delete=models.CASCADE)
     email = models.EmailField(max_length=75, blank=True, null=True)
     website = models.URLField(max_length=200, blank=True, null=True)

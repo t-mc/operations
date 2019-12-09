@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 from crm.models import Bedrijf, Contactpersoon
+from projecten.models import Verkoopkans
 """
 Abstracte class voor het toevoegen van time stamp op de modellen.
 """
@@ -30,7 +31,7 @@ class TransactionDT(models.Model):
 # Lookup tabel voor case status
 #
 class CaseStatus(models.Model):
-    status = models.CharField(max_length=24, unique=True)
+    status = models.CharField(max_length=48, unique=True)
 
     class Meta:
         verbose_name_plural = 'Case statussen'
@@ -45,10 +46,11 @@ class CaseStatus(models.Model):
 # Lookup tabel voor activiteit status
 #
 class ActivityStatus(models.Model):
-    status = models.CharField(max_length=24, unique=True)
+    status = models.CharField(max_length=48, unique=True)
 
     class Meta:
         verbose_name_plural = 'Activiteit statussen'
+        verbose_name = 'Activiteit status'
 
     def __unicode__(self):
         return self.status
@@ -59,30 +61,31 @@ class ActivityStatus(models.Model):
 # Lookup tabel voor case typen
 #
 class CaseType(models.Model):
-    type = models.CharField(max_length=24)
+    case_type = models.CharField(max_length=48)
 
     class Meta:
         verbose_name_plural = 'Case typen'
 
     def __unicode__(self):
-        return self.type
+        return self.case_type
 
     def __str__(self):
-        return self.type 
+        return self.case_type 
 #
 # Lookup tabel voor activiteit soorten
 #
 class ActivityType(models.Model):
-    type = models.CharField(max_length=24, unique=True)
+    activiteit_type = models.CharField(max_length=48, unique=True)
 
     class Meta:
         verbose_name_plural = 'Activiteit typen'
+        verbose_name = 'Activiteit type'
 
     def __unicode__(self):
-        return self.type
+        return self.activiteit_type
 
     def __str__(self):
-        return self.type 
+        return self.activiteit_type 
 #
 # Lookup tabel voor tijdsduur
 #
@@ -96,102 +99,35 @@ class Tijdsduur(models.Model):
     def __unicode__(self):
         return str(self.minuten)
 
-
-#
-# Record layout bedrijven tabel
-#
-# class Bedrijf(TransactionDT):
-#     bedrijfsnaam = models.CharField(max_length=64)
-#     telefoon = PhoneNumberField(blank=True, null=True)
-#     telefoonnummer = models.CharField(max_length=20)
-#     primair_contact = models.CharField(max_length=64)
-#     klantpartner = models.CharField(max_length=254)
-#     emailadres = models.CharField(max_length=254)
-
-#     class Meta:
-#         verbose_name_plural = 'Bedrijven'
-
-#     def __str__(self):
-#         return self.bedrijfsnaam
-
-#
-# Record layout contactpersonen tabel
-#
-# class Contactpersoon(TransactionDT):
-#     contactnaam = models.CharField(max_length=64)
-#     functie = models.CharField(max_length=64)
-#     telefoonnummer = models.CharField(max_length=20)
-#     mobielnummer = models.CharField(max_length=20)
-#     emailadres = models.CharField(max_length=254)
-#     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
-
-#     class Meta:
-#         verbose_name_plural = 'Contactpersonen'
-
-#     def __str__(self):
-#         return self.contactnaam
-
-#
-# Record layout leverancier tabel
-#
-class Leverancier(TransactionDT):
-    leveranciernaam = models.CharField(max_length=64)
-    telefoonnummer = models.CharField(max_length=20)
-    emailadres = models.CharField(max_length=254)
-    klantpartner = models.CharField(max_length=254)
-
-    class Meta:
-        verbose_name_plural = 'Leveranciers'
-
-    def __unicode__(self):
-        return self.leveranciernaam
-
     def __str__(self):
-        return self.leveranciernaam 
+        return str(self.minuten)
+
 #
 # Record layout contracten tabel
 #
 class Contract(TransactionDT):
-    projectcode = models.CharField(max_length=6)
-    bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
+    projectcode = models.ForeignKey(Verkoopkans, blank=True, null=True, on_delete=models.CASCADE)
+    bedrijf = models.ForeignKey(Bedrijf, related_name='Contractbij_Klant', blank=True, null=True, on_delete=models.CASCADE)
     startdatum = models.DateField()
     einddatum = models.DateField()
-    klantpartner = models.CharField(max_length=254)
-    contract_bij = models.ForeignKey(Leverancier, blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Contracteigenaar", related_name='Contract_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    contract_bij = models.ForeignKey(Bedrijf, related_name='Contractbij_Leverancier', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Contracten'
 
     def __unicode__(self):
-        return self.projectcode
+        return str(self.projectcode)
 
     def __str__(self):
-        return self.projectcode 
-#
-# Record layout sla tabel
-#
-class SLA(TransactionDT):
-    omschrijving = models.CharField(max_length=64)
-    classificatie = models.CharField(max_length=20)
-    bevestiging = models.IntegerField()
-    oplossingsplan = models.IntegerField()
-    workaround = models.IntegerField()
-    oplossing = models.IntegerField()
-    leverancier = models.ForeignKey(Leverancier, blank=True, null=True, on_delete=models.CASCADE)
+        return str(self.projectcode) 
 
-    class Meta:
-        verbose_name_plural = 'SLA-s'
-
-    def __unicode__(self):
-        return self.classificatie
-
-    def __str__(self):
-        return self.classificatie 
 #
 # Record layout cases tabel
 #
 class Cases(TransactionDT):
-    case_code = models.CharField(max_length=16,  unique=True)
+    case_code = models.CharField(max_length=16, blank=True, unique=True)
+    case_type = models.ForeignKey(CaseType, null=True, default=1, on_delete=models.CASCADE)
     onderwerp = models.CharField(max_length=64)
     omschrijving = models.TextField()
     datum_melding = models.DateField(("Datum melding"), default=date.today)
@@ -204,6 +140,7 @@ class Cases(TransactionDT):
 
     class Meta:
         verbose_name_plural = 'Cases'
+        verbose_name = 'Case'
 
     def __unicode__(self):
         return self.case_code
@@ -244,12 +181,13 @@ class Activiteiten(TransactionDT):
 
     class Meta:
         verbose_name_plural = 'Activiteiten'
+        verbose_name = 'Activiteit'
 
-    # def __unicode__(self):
-    #     return self.activiteit
+    def __unicode__(self):
+        return str(self.case_id)
 
     def __str__(self):
-        return self.activiteit 
+        return str(self.case_id) 
 #
 # Functie voor het genereren van alfanumerieke case code
 #

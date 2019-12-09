@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'producten',
     'notities',
     # 'pcoverzicht',
-    # 'support',
+    'support',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +106,6 @@ WSGI_APPLICATION = 't_mc_apps.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',

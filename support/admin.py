@@ -1,66 +1,53 @@
 from django.contrib import admin
 from django.db import models
-from django.forms import TextInput, Textarea
+from django.forms import Textarea, TextInput
 from django.utils.html import format_html
+from django_admin_listfilter_dropdown.filters import (DropdownFilter,
+                                                      RelatedDropdownFilter)
 
-from .models import Activiteiten, ActivityStatus, ActivityType, \
-                    Cases, CaseStatus, CaseType, Contract, \
-                    Leverancier, SLA, UserProfile, Tijdsduur
 from crm.models import Bedrijf, Contactpersoon
 
+from .models import (Activiteiten, ActivityStatus, ActivityType, Cases,
+                     CaseStatus, CaseType, Contract, Tijdsduur, UserProfile)
+
+from .forms import CaseForm
 
 class ActiviteitenAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'80'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
+    }
+    exclude = ('last_modified_user',)
+    list_display = ('case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd')
+    list_filter = ('status', ('case_id', RelatedDropdownFilter ))
+
+class CaseActivities(admin.TabularInline):
     formfield_overrides = {
         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
     }
-
-    list_display = ('case_id', 'activiteit', 'status', 'omschrijving', 'uitvoerende', 'datum_uitgevoerd')
-
-# class BedrijfContacten(admin.TabularInline):
-#     model = Contactpersoon
-#     classes = ['collapse']
-#     extra = 1
-
-# class BedrijfContracten(admin.TabularInline):
-#     model = Contract
-#     classes = ['collapse']
-#     extra = 1
-
-# class BedrijvenAdmin(admin.ModelAdmin):
-#     formfield_overrides = {
-#         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-#         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
-#     }
-#     inlines = [
-#         BedrijfContracten,
-#         BedrijfContacten
-#     ]
-#     list_display = ('bedrijfsnaam', 'telefoon', 'telefoonnummer', 'primair_contact', 'klantpartner', 'emailadres')    
-
-class CaseActivities(admin.TabularInline):
     model = Activiteiten
     classes = ['collapse']
-    extra = 1
+    extra = 0
+    exclude = ('last_modified_user',)
 
-class CasesAdmin(admin.ModelAdmin):
+class CaseAdmin(admin.ModelAdmin):
+    form = CaseForm
+    formfield_overrides = {
+        models.CharField: {'widget': TextInput(attrs={'size':'80'})},
+        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
+    }
     fieldsets = [
         (None, {'fields': ['bedrijf', 'contact', 'onderwerp']}),
-        ("Detail informatie", {'fields': ['case_code', 'status', 'omschrijving', 'datum_melding', 'uitvoerende']})
+        ("Detail informatie", {'fields': ['contract', 'case_type', 'status', 'omschrijving', 'datum_melding', 'uitvoerende']})
     ]
-    # inlines = [
-    #     CaseActivities
-    # ]
-    list_display= ('onderwerp', 'omschrijving', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
-    list_filter = ('status', 'bedrijf')
-
-# class ContactpersonenAdmin(admin.ModelAdmin):
-#     formfield_overrides = {
-#         models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-#         models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
-#     }
-
-#     list_display = ('contactnaam', 'telefoonnummer', 'functie', 'mobielnummer', 'emailadres', 'bedrijf')  
+    inlines = [
+        CaseActivities
+    ]
+    list_display= ('case_code', 'case_type', 'onderwerp', 'datum_melding', 'status', 'bedrijf', 'contact', 'uitvoerende')
+    list_filter = (('case_type', admin.RelatedOnlyFieldListFilter ), 
+                    ('status', admin.RelatedOnlyFieldListFilter ), 
+                    ('bedrijf', RelatedDropdownFilter ))
 
 class ContractenAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -70,35 +57,6 @@ class ContractenAdmin(admin.ModelAdmin):
 
     list_display = ('projectcode', 'startdatum', 'einddatum', 'klantpartner', 'contract_bij')  
 
-class LeverancierContract(admin.TabularInline):
-    model = Contract
-    classes = ['collapse']
-    extra = 1
-
-class LeverancierSLA(admin.TabularInline):
-    model = SLA
-    classes = ['collapse']
-    extra = 1
-
-class LeveranciersAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
-    }
-
-    inlines = [
-        LeverancierContract,
-        LeverancierSLA
-    ]
-    list_display = ('leveranciernaam', 'telefoonnummer', 'emailadres', 'klantpartner')  
-
-class SLAAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.CharField: {'widget': TextInput(attrs={'size':'20'})},
-        models.TextField: {'widget': Textarea(attrs={'rows':4, 'cols':80})},
-    }
-
-    list_display = ('leverancier', 'omschrijving', 'classificatie', 'bevestiging', 'oplossingsplan', 'workaround', 'oplossing') 
 
 class UserProfileAdmin(admin.ModelAdmin):
     formfield_overrides = {
@@ -120,20 +78,9 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(Activiteiten, ActiviteitenAdmin)
 admin.site.register(ActivityStatus)
 admin.site.register(ActivityType)
-# admin.site.register(Bedrijf, BedrijvenAdmin)
-# admin.site.register(Cases)
-admin.site.register(Cases, CasesAdmin)
+admin.site.register(Cases, CaseAdmin)
 admin.site.register(CaseStatus)
 admin.site.register(CaseType)
-# admin.site.register(Contactpersoon, ContactpersonenAdmin)
 admin.site.register(Contract, ContractenAdmin)
-admin.site.register(Leverancier, LeveranciersAdmin)
-admin.site.register(SLA, SLAAdmin)
-admin.site.register(UserProfile, UserProfileAdmin)
+# admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Tijdsduur)
-
-
-
-
-
-
