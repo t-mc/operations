@@ -8,7 +8,7 @@ from django.db.models import Sum
 from django.utils.html import format_html
 
 from crm.models import Bedrijf, Contactpersoon
-from producten.models import Productgroep, Training
+from producten.models import Productgroep, Product, Training
 
 
 """
@@ -146,6 +146,24 @@ class Omzetpermaand(TransactionDT):
                 maand = loop[1]
         return '%s - %s - %s' % (self.projectcode, jaar, maand)   
 
+class Orderregel(TransactionDT):
+    projectcode = models.ForeignKey(Verkoopkans, related_name='Orderregel_Verkoopkans', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
+    aantal_eenheden = models.IntegerField('Aantal Eenheden' ,null=False, blank=False)
+    # Listprice toevoegen, deze moet automatisch gevuld worden met de prijs uit de productregel.
+    # Het veld mag niet worden gewijzigd in de orderregel
+    list_prijs = models.DecimalField('Listprijs per eenheid', max_digits=12, decimal_places=2, blank=True, null=True)
+    selling_prijs = models.DecimalField('Sellingprijs per eenheid', max_digits=12, decimal_places=2, blank=True, null=True)
+    # Sellingprice toevoegen, waarmee een afwijkende prijs kan worden ingegeven.
+    # Deze moet automatisch gevuld worden met de prijs uit de productregel. Het veld mag wel worden gewijzigd in de orderregel
+
+    class Meta:
+        verbose_name = "Orderregel"
+        verbose_name_plural = "Orderregels"
+
+    def __str__(self):
+        return '%s - %s' % (self.projectcode, self.product)
+
 class Orders(Verkoopkans):
     class Meta:
         verbose_name_plural = 'Orders'
@@ -199,6 +217,7 @@ class Trainingregistratie(TransactionDT):
 class Urenpermedewerker(TransactionDT):
     projectcode = models.ForeignKey(Verkoopkans, related_name='Urenpermedewerker_Order', on_delete=models.CASCADE)    
     medewerker = models.ForeignKey(User, related_name='Medewerker_Order', blank=True, null=True, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='Medewerker_Order_Product', blank=True, null=True, on_delete=models.CASCADE)
     jaar = models.IntegerField(null=False, blank=False, choices=JAAR_KEUZE)
     maand = models.IntegerField(null=False, blank=False, choices=MAAND_KEUZE)
     uren = models.PositiveSmallIntegerField(null=False, blank=False)    

@@ -4,7 +4,7 @@ Babel==2.3.4
 colorama==0.3.7
 Django==2.0.4
 django-admin-list-filter-dropdown==1.0.1
-django-autocomplete-light==3.3.0rc1
+django-autocomplete-light==3.5.0
 django-bootstrap-form==3.2.1
 django-bootstrap3==8.1.0
 django-crispy-forms==1.6.1

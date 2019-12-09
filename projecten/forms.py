@@ -6,13 +6,30 @@ from django.forms import (
     DecimalField,
     Select,
     TextInput,
+    Textarea
 )
 from dal import autocomplete
 import datetime
 
-from .models import Verkoopkans, Omzetpermaand, Urenpermedewerker
+from .models import Verkoopkans, Omzetpermaand, Orderregel, Urenpermedewerker
 from crm.models import Contactpersoon
 
+
+class OrderregelForm(forms.ModelForm):
+
+    class Meta:
+        model = Orderregel
+        fields = ('product', 'aantal_eenheden', 'list_prijs', 'selling_prijs')
+        widgets = {
+            'product': Select(attrs={'style': 'width: 250px;'}),
+            # "list_prijs": autocomplete.ModelSelect2(
+            #     url="productprice-autocomplete", forward=["product"]
+            # ),
+        }
+
+
+# Listprice en Sellingprice worden toegevoegd, beide worden automatisch gevuld met het prijsveld uit de productregel.
+# Listprice mag niet worden gewijzigd, Selling price wel.
 
 class VerkoopkansForm(forms.ModelForm):
 

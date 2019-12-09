@@ -7,12 +7,13 @@ from django_admin_listfilter_dropdown.filters import (
 )
 import decimal
 
-from projecten.forms import VerkoopkansForm, OmzetpermaandForm, UrenpermedewerkerForm
+from projecten.forms import VerkoopkansForm, OmzetpermaandForm, OrderregelForm, UrenpermedewerkerForm
 
 from .models import (
     Verkoopkans,
     Omzetpermaand,
     Orders,
+    Orderregel,
     Verkoopstadium,
     Trainingregistratie,
     Urenpermedewerker,
@@ -20,6 +21,7 @@ from .models import (
 from crm.models import Bedrijf, Contactpersoon
 from notities.models import Notitie
 from notities.forms import NotitieProjectForm, NotitieProjectFormSet
+from producten.models import Product
 
 # Register your models here.
 
@@ -53,10 +55,28 @@ class UrenpermedewerkerInline(admin.TabularInline):
     show_change_link = True
 
 
+class ProductenInline(admin.TabularInline):
+    model = Product
+    # form = UrenpermedewerkerForm
+    exclude = ("last_modified_user",)
+    extra = 0
+    classes = ["collapse"]
+    show_change_link = True
+
+
+class OrderregelInline(admin.TabularInline):
+    model = Orderregel
+    form = OrderregelForm
+    exclude = ("last_modified_user",)
+    extra = 0
+    classes = ["collapse"]
+    show_change_link = True
+
+
 class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
-    inlines = [NotitieAdmin, OmzetpermaandAdmin]
+    inlines = [NotitieAdmin, OrderregelInline, UrenpermedewerkerInline, OmzetpermaandAdmin,]
 
     # search_fields = ['bedrijf']
 
@@ -124,7 +144,12 @@ class OrderAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
     # model = Verkoopkans
-    inlines = [NotitieAdmin, OmzetpermaandAdmin, UrenpermedewerkerInline]
+    inlines = [
+        NotitieAdmin,
+        OrderregelInline,
+        UrenpermedewerkerInline,
+        OmzetpermaandAdmin,
+    ]
 
     def get_queryset(self, request):
         qs = super(OrderAdmin, self).get_queryset(request)
@@ -155,15 +180,6 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ("totaal_omzet",)
     search_fields = ("projectcode", "bedrijf__bedrijfsnaam", "omschrijving")
 
-    # fieldsets = (
-    #     (None, {
-    #        'fields': (('projectcode', 'omschrijving', 'productgroep'), ('bedrijf', 'opdrachtgever', 'kwo_ontvanger',), ('verkoopstadium', 'klantpartner', 'ordereigenaar'), 'actief')
-    #     }),
-    #     ('Details', {
-    #         'classes': ('collapse', 'open'),
-    #         'fields': (('werkelijke_omzet', 'einddatum_project'), ('geschatte_omzet', 'startdatum_project'), ('totaal_omzet', 'onenote_doc'))
-    #     }),
-    # )
     fieldsets = (
         (
             None,
@@ -210,6 +226,13 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
     list_display = ("projectcode", "jaar", "maand", "omzet")
     exclude = ("last_modified_user",)
 
+class OrderregelAdmin(admin.ModelAdmin):
+    save_on_top = True
+    model = Orderregel
+
+    list_display = ("projectcode", "product", "aantal_eenheden")
+    exclude = ("last_modified_user",)
+
 
 class TrainingregistratieAdmin(admin.ModelAdmin):
     save_on_top = True
@@ -237,20 +260,22 @@ class UrenpermedewerkerAdmin(admin.ModelAdmin):
     list_display = (
         "projectcode",
         "medewerker",
+        "product",
         "jaar",
         "maand",
         "uren",
     )
     exclude = ("last_modified_user",)
     list_filter = (
-        ("projectcode", RelatedDropdownFilter),
-        ("medewerker", RelatedDropdownFilter),
+        ("projectcode", admin.RelatedOnlyFieldListFilter),
+        ("medewerker", admin.RelatedOnlyFieldListFilter),
+        ("product", admin.RelatedOnlyFieldListFilter),
     )
 
 
 admin.site.register(Verkoopkans, VerkoopkansAdmin)
 admin.site.register(Orders, OrderAdmin)
-# admin.site.register(Order, OrderAdmin)
+admin.site.register(Orderregel, OrderregelAdmin)
 admin.site.register(Verkoopstadium, VerkoopstadiumAdmin)
 admin.site.register(Omzetpermaand, OmzetpermaandAdmin)
 admin.site.register(Trainingregistratie, TrainingregistratieAdmin)
