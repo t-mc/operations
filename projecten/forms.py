@@ -10,26 +10,28 @@ from django.forms import (
 )
 from dal import autocomplete
 import datetime
-
 from .models import Verkoopkans, Omzetpermaand, Orderregel, Urenpermedewerker
 from crm.models import Contactpersoon
 
 
 class OrderregelForm(forms.ModelForm):
 
-    class Meta:
-        model = Orderregel
-        fields = ('product', 'aantal_eenheden', 'list_prijs', 'selling_prijs')
-        widgets = {
-            'product': Select(attrs={'style': 'width: 250px;'}),
-            # "list_prijs": autocomplete.ModelSelect2(
-            #     url="productprice-autocomplete", forward=["product"]
-            # ),
+    class Media:
+        css = {
+            'all': ('css/orderregel_form.css',)
         }
 
+    class Meta:
+        model = Orderregel
+        fields = ('product', 'aantal_eenheden', 'list_prijs', 'selling_prijs', 'regel_totaal_prijs')
+        widgets = {
+            'product': Select(attrs={'style': 'width: 250px;'}),
+            'aantal_eenheden': TextInput(attrs={'class': 'number'}),
+            'list_prijs': TextInput(attrs={'class': 'number', 'readonly':'readonly'}),
+            'selling_prijs': TextInput(attrs={'class': 'number'}),
+            'regel_totaal_prijs': TextInput(attrs={'class': 'number', 'readonly': 'readonly'}),
+        }
 
-# Listprice en Sellingprice worden toegevoegd, beide worden automatisch gevuld met het prijsveld uit de productregel.
-# Listprice mag niet worden gewijzigd, Selling price wel.
 
 class VerkoopkansForm(forms.ModelForm):
 
@@ -81,10 +83,20 @@ JAAR_KEUZE = (
 class OmzetpermaandForm(forms.ModelForm):
     class Meta:
         model = Omzetpermaand
-        fields = "__all__"
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(OmzetpermaandForm, self).__init__(*args, **kwargs)
+
+        # Zet het jaar veld gelijk aan huidige jaar
+        year = datetime.date.today().year
+        for jaar in JAAR_KEUZE:
+            if jaar[1] == str(year):
+                self.fields['jaar'].initial = jaar[0]
+
+        # Zet het maand veld gelijk een de huidige maand
+        month = datetime.date.today().month
+        self.fields['maand'].initial = month
 
 
 class UrenpermedewerkerForm(forms.ModelForm):
@@ -104,4 +116,3 @@ class UrenpermedewerkerForm(forms.ModelForm):
         # Zet het maand veld gelijk een de huidige maand
         month = datetime.date.today().month
         self.fields["maand"].initial = month
-

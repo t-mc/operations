@@ -18,7 +18,6 @@ class ProductgroepAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    save_on_top = True
     exclude = ("last_modified_user",)
     list_display = (
         "code",
@@ -28,6 +27,7 @@ class ProductAdmin(admin.ModelAdmin):
         "prijs_per_eenheid",
     )
     show_change_link = True
+    search_fields = ['prijs_per_eenheid']
 
     list_filter = ("productgroep",)
 

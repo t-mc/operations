@@ -150,12 +150,9 @@ class Orderregel(TransactionDT):
     projectcode = models.ForeignKey(Verkoopkans, related_name='Orderregel_Verkoopkans', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, null=False, blank=False, on_delete=models.CASCADE)
     aantal_eenheden = models.IntegerField('Aantal Eenheden' ,null=False, blank=False)
-    # Listprice toevoegen, deze moet automatisch gevuld worden met de prijs uit de productregel.
-    # Het veld mag niet worden gewijzigd in de orderregel
     list_prijs = models.DecimalField('Listprijs per eenheid', max_digits=12, decimal_places=2, blank=True, null=True)
     selling_prijs = models.DecimalField('Sellingprijs per eenheid', max_digits=12, decimal_places=2, blank=True, null=True)
-    # Sellingprice toevoegen, waarmee een afwijkende prijs kan worden ingegeven.
-    # Deze moet automatisch gevuld worden met de prijs uit de productregel. Het veld mag wel worden gewijzigd in de orderregel
+    regel_totaal_prijs = models.DecimalField('Regel totaalprijs', max_digits=14, decimal_places=2, blank=True, null=True)
 
     class Meta:
         verbose_name = "Orderregel"
