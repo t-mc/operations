@@ -21,7 +21,7 @@ from django.views.generic import RedirectView
 from django.conf import settings
 
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
-from projecten.views import VerkoopkansAutocomplete, OmzettenView
+from projecten.views import VerkoopkansAutocomplete, OmzettenView, UrenMedewerkerView
 from producten.views import ProductpriceAutocomplete, vw_product_zoek_ajax
 
 if (settings.ENVIRONMENT == 'prod'):
@@ -43,6 +43,8 @@ urlpatterns = [
     url(r'^productprice-autocomplete/$', ProductpriceAutocomplete.as_view(), name= 'productprice-autocomplete'),
     path('omzetten/', OmzettenView.as_view(), name= 'omzetten'),
     path('omzetten/<int:search_year>/', OmzettenView.as_view(), name= 'omzetten'),
-    # url(r'^', RedirectView.as_view(url='/admin/'), name="home"),
+    path('urenpermedewerker/', UrenMedewerkerView.as_view(), name='urenpermedewerker'),
+    path('urenpermedewerker/<int:search_year>/', UrenMedewerkerView.as_view(), name='urenpermedewerker'),
+    url(r'^', RedirectView.as_view(url='/admin/'), name="home"),
 ]
 
