@@ -222,7 +222,7 @@ class Urenpermedewerker(TransactionDT):
     class Meta:
         verbose_name_plural = 'Uren per medewerker'
         ordering = ['medewerker', 'jaar', 'maand']
-        unique_together = ('medewerker', 'projectcode', 'jaar', 'maand')
+        unique_together = ('medewerker', 'projectcode', 'product', 'jaar', 'maand')
 
     def __unicode__(self):
         for loop in JAAR_KEUZE:
