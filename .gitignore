@@ -12,4 +12,4 @@ db.sqlite3
 .vscode/settings.json
 Administration/logins.md
 logs/gunicorn_supervisor.log
-static/
+t_mc_apps/settings.py

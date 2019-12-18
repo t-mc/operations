@@ -21,7 +21,8 @@ from django.views.generic import RedirectView
 from django.conf import settings
 
 from crm.views import AdressenAutocomplete, ContacpersoonAutocomplete
-from projecten.views import VerkoopkansAutocomplete, OmzettenView
+from projecten.views import VerkoopkansAutocomplete, OmzettenView, UrenMedewerkerView
+from producten.views import ProductpriceAutocomplete, vw_product_zoek_ajax
 
 if (settings.ENVIRONMENT == 'prod'):
     admin.site.site_header = 'T-MC - CRM APP'
@@ -35,11 +36,15 @@ urlpatterns = [
     # url(r'^pcoverzicht/', include('pcoverzicht.urls')),
     url(r'^support/', include('support.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^product_zoek_ajax/$', vw_product_zoek_ajax, name='vw_product_zoek_ajax'),
     url(r'^contactpersoon-autocomplete/$', ContacpersoonAutocomplete.as_view(), name= 'contactpersoon-autocomplete'),
     url(r'^adres-autocomplete/$', AdressenAutocomplete.as_view(), name= 'adres-autocomplete'),
     url(r'^verkoopkans-autocomplete/$', VerkoopkansAutocomplete.as_view(), name= 'verkoopkans-autocomplete'),
+    url(r'^productprice-autocomplete/$', ProductpriceAutocomplete.as_view(), name= 'productprice-autocomplete'),
     path('omzetten/', OmzettenView.as_view(), name= 'omzetten'),
     path('omzetten/<int:search_year>/', OmzettenView.as_view(), name= 'omzetten'),
+    path('urenpermedewerker/', UrenMedewerkerView.as_view(), name='urenpermedewerker'),
+    path('urenpermedewerker/<int:search_year>/', UrenMedewerkerView.as_view(), name='urenpermedewerker'),
     url(r'^', RedirectView.as_view(url='/admin/'), name="home"),
 ]
 
