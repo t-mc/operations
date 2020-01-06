@@ -1,12 +1,29 @@
 from django.contrib import admin
 from django.contrib.admin import site
 from django.db import models
-from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
+from django_admin_listfilter_dropdown.filters import (
+    DropdownFilter,
+    RelatedDropdownFilter,
+)
 import decimal
 
-from projecten.forms import VerkoopkansForm, OmzetpermaandForm, UrenpermedewerkerForm, OrderregelForm
+from projecten.forms import (
+    VerkoopkansForm,
+    OmzetpermaandForm,
+    UrenpermedewerkerForm,
+    OrderregelForm,
+)
 
-from .models import Verkoopkans, Omzetpermaand, Orders, Orderregel, Verkoopstadium, Trainingregistratie, Urenpermedewerker
+from .models import (
+    Verkoopkans,
+    Omzetpermaand,
+    Orders,
+    Orderregel,
+    Verkoopstadium,
+    Marketingregistratie,
+    Trainingregistratie,
+    Urenpermedewerker,
+)
 from crm.models import Bedrijf, Contactpersoon
 from notities.models import Notitie
 from notities.forms import NotitieProjectForm, NotitieProjectFormSet
@@ -65,7 +82,12 @@ class OrderregelInline(admin.TabularInline):
 class VerkoopkansAdmin(admin.ModelAdmin):
     save_on_top = True
     form = VerkoopkansForm
-    inlines = [NotitieAdmin, OrderregelInline, UrenpermedewerkerInline, OmzetpermaandAdmin,]
+    inlines = [
+        NotitieAdmin,
+        OrderregelInline,
+        UrenpermedewerkerInline,
+        OmzetpermaandAdmin,
+    ]
 
     # search_fields = ['bedrijf']
 
@@ -215,6 +237,7 @@ class OmzetpermaandAdmin(admin.ModelAdmin):
     list_display = ("projectcode", "jaar", "maand", "omzet")
     exclude = ("last_modified_user",)
 
+
 class OrderregelAdmin(admin.ModelAdmin):
     save_on_top = True
     model = Orderregel
@@ -243,6 +266,20 @@ class TrainingregistratieAdmin(admin.ModelAdmin):
     )
 
 
+class MarketingregistratieAdmin(admin.ModelAdmin):
+    model = Marketingregistratie
+    # ('contactpersoon', 'marketinguiting', 'bijzonderheden', )
+    list_display = (
+        "__unicode__",
+        "contactpersoon",
+        "datum",
+        "bijzonderheden",
+    )
+    search_fields = ["marketinguiting__omschrijving", "datum", "contactpersoon__volledige_naam"]
+    exclude = ("last_modified_user",)
+    list_filter = (("marketinguiting", admin.RelatedOnlyFieldListFilter),)
+
+
 class UrenpermedewerkerAdmin(admin.ModelAdmin):
     model = Urenpermedewerker
 
@@ -269,4 +306,5 @@ admin.site.register(Verkoopstadium, VerkoopstadiumAdmin)
 admin.site.register(Omzetpermaand, OmzetpermaandAdmin)
 admin.site.register(Trainingregistratie, TrainingregistratieAdmin)
 admin.site.register(Urenpermedewerker, UrenpermedewerkerAdmin)
+admin.site.register(Marketingregistratie, MarketingregistratieAdmin)
 

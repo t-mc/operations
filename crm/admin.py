@@ -6,7 +6,7 @@ from django.forms import BaseInlineFormSet
 from django_admin_listfilter_dropdown.filters import DropdownFilter, RelatedDropdownFilter
 
 from .forms import ContactpersoonForm
-from projecten.models import Verkoopkans, Orders, Trainingregistratie
+from projecten.models import Verkoopkans, Orders, Trainingregistratie, Marketingregistratie
 from notities.models import Notitie
 from notities.forms import NotitieBedrijfForm, NotitieContactForm, NotitieContactFormSet
 
@@ -79,11 +79,18 @@ class ContactTrainingsregistratieAdmin(admin.TabularInline):
     classes = ['collapse']
     show_change_link = True
 
+class MarketingregistratieAdmin(admin.TabularInline):
+    model = Marketingregistratie
+    exclude = ('last_modified_user',)
+    extra = 0
+    classes = ['collapse']
+    show_change_link = True
+
 class ContactpersoonAdmin(admin.ModelAdmin):
     save_on_top = True
     # model = Contactpersoon
     form = ContactpersoonForm
-    inlines = [ContactNotitieAdmin, ContactTrainingsregistratieAdmin]
+    inlines = [ContactNotitieAdmin, ContactTrainingsregistratieAdmin, MarketingregistratieAdmin]
 
     list_display = ('volledige_naam', 'telefoonnummer', 'mobielnummer', 'email', 'bedrijf', 'functie', 'klantpartner', 'actief')
     list_display_links = ('volledige_naam', )

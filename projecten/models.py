@@ -8,7 +8,7 @@ from django.db.models import Sum
 from django.utils.html import format_html
 
 from crm.models import Bedrijf, Contactpersoon
-from producten.models import Productgroep, Product, Training
+from producten.models import Marketinguiting, Productgroep, Product, Training
 
 
 """
@@ -209,6 +209,23 @@ class Trainingregistratie(TransactionDT):
 
     def __str__(self):
         return self.training.omschrijving + ', ' + self.order.projectcode + ', ' + str(self.datum) + ', ' + self.trainer.username
+
+
+class Marketingregistratie(TransactionDT):
+    contactpersoon = models.ForeignKey(Contactpersoon, blank=False, null=False, on_delete=models.CASCADE)
+    marketinguiting = models.ForeignKey(Marketinguiting, blank=False, null=False, on_delete=models.CASCADE)
+    bijzonderheden = models.CharField(max_length=512, blank=True, null=True)
+    datum = models.DateField(blank=False, null=False)
+
+    class Meta:
+        ordering = ['marketinguiting', 'contactpersoon']
+        verbose_name_plural = 'Marketingregistraties'
+
+    def __unicode__(self):
+        return self.marketinguiting.omschrijving + ', ' + str(self.datum)
+
+    def __str__(self):
+        return self.marketinguiting.omschrijving + ', ' + str(self.datum)
 
 
 class Urenpermedewerker(TransactionDT):

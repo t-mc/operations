@@ -1,5 +1,5 @@
 from django.contrib import admin
-from producten.models import Productgroep, Product, Training
+from producten.models import Productgroep, Product, Training, Marketinguiting
 
 # Register your models here.
 
@@ -27,11 +27,19 @@ class ProductAdmin(admin.ModelAdmin):
         "prijs_per_eenheid",
     )
     show_change_link = True
-    search_fields = ['prijs_per_eenheid']
+    search_fields = ["prijs_per_eenheid"]
 
     list_filter = ("productgroep",)
+
+
+class MarketinguitingAdmin(admin.ModelAdmin):
+    exclude = ("last_modified_user",)
+    list_display = ("omschrijving",)
+    show_change_link = True
+    search_fields = ["omschrijving"]
 
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Productgroep, ProductgroepAdmin)
 admin.site.register(Training)
+admin.site.register(Marketinguiting, MarketinguitingAdmin)
