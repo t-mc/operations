@@ -35,6 +35,7 @@ class Productgroep(TransactionDT):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
+        limit_choices_to={"is_active": True},
     )
     leverancier = models.ForeignKey(
         Bedrijf, null=False, blank=False, on_delete=models.CASCADE
@@ -69,7 +70,7 @@ class Product(models.Model):
         verbose_name_plural = "Producten"
 
     def __str__(self):
-        return '%s per %s' % (self.code, self.get_eenheid_display())
+        return "%s per %s" % (self.code, self.get_eenheid_display())
 
 
 class Training(TransactionDT):
@@ -85,3 +86,13 @@ class Training(TransactionDT):
     def __str__(self):
         return self.omschrijving
 
+
+class Marketinguiting(TransactionDT):
+    omschrijving = models.CharField(max_length=80, unique=True)
+
+    class Meta:
+        ordering = ["omschrijving"]
+        verbose_name_plural = "Marketinguitingen"
+
+    def __str__(self):
+        return self.omschrijving

@@ -8,7 +8,7 @@ from django.db.models import Sum
 from django.utils.html import format_html
 
 from crm.models import Bedrijf, Contactpersoon
-from producten.models import Productgroep, Product, Training
+from producten.models import Marketinguiting, Productgroep, Product, Training
 
 
 """
@@ -65,8 +65,8 @@ class Verkoopkans(TransactionDT):
     startdatum_project = models.DateField(blank=True, null=True)
     einddatum_project = models.DateField(blank=True, null=True)
     onenote_doc = models.URLField(blank=True, null=True)
-    klantpartner = models.ForeignKey(User, verbose_name="Leadeigenaar", related_name='Verkoopkans_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
-    ordereigenaar = models.ForeignKey(User, related_name='Verkoopkans_Ordereigenaar', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Leadeigenaar", related_name='Verkoopkans_Klantpartner', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
+    ordereigenaar = models.ForeignKey(User, related_name='Verkoopkans_Ordereigenaar', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
     productgroep = models.ForeignKey(Productgroep, related_name='Verkoopkans_Productgroep', blank=True, null=True, on_delete=models.CASCADE)
     actief = models.BooleanField(default=True)
 
@@ -179,7 +179,7 @@ class Order(TransactionDT):
     einddatum_project = models.DateField()
     broncampagne = models.CharField(max_length=80, blank=True, null=True)
     onenote_doc = models.URLField(blank=True, null=True)
-    klantpartner = models.ForeignKey(User, related_name='Order_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, related_name='Order_Klantpartner', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
     actief = models.BooleanField(default=True)
 
     class Meta:
@@ -196,7 +196,7 @@ class Trainingregistratie(TransactionDT):
     contactpersoon = models.ForeignKey(Contactpersoon, blank=False, null=False, on_delete=models.CASCADE)
     training = models.ForeignKey(Training, blank=False, null=False, on_delete=models.CASCADE)
     order = models.ForeignKey(Verkoopkans, blank=False, null=False, on_delete=models.CASCADE)
-    trainer = models.ForeignKey(User, related_name='Trainer', blank=False, null=False, on_delete=models.CASCADE)
+    trainer = models.ForeignKey(User, related_name='Trainer', blank=False, null=False, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
     bijzonderheden = models.CharField(max_length=512, blank=True, null=True)
     datum = models.DateField(blank=False, null=False)
 
@@ -211,9 +211,26 @@ class Trainingregistratie(TransactionDT):
         return self.training.omschrijving + ', ' + self.order.projectcode + ', ' + str(self.datum) + ', ' + self.trainer.username
 
 
+class Marketingregistratie(TransactionDT):
+    contactpersoon = models.ForeignKey(Contactpersoon, blank=False, null=False, on_delete=models.CASCADE)
+    marketinguiting = models.ForeignKey(Marketinguiting, blank=False, null=False, on_delete=models.CASCADE)
+    bijzonderheden = models.CharField(max_length=512, blank=True, null=True)
+    datum = models.DateField(blank=False, null=False)
+
+    class Meta:
+        ordering = ['marketinguiting', 'contactpersoon']
+        verbose_name_plural = 'Marketingregistraties'
+
+    def __unicode__(self):
+        return self.marketinguiting.omschrijving + ', ' + str(self.datum)
+
+    def __str__(self):
+        return self.marketinguiting.omschrijving + ', ' + str(self.datum)
+
+
 class Urenpermedewerker(TransactionDT):
     projectcode = models.ForeignKey(Verkoopkans, related_name='Urenpermedewerker_Order', on_delete=models.CASCADE)    
-    medewerker = models.ForeignKey(User, related_name='Medewerker_Order', blank=True, null=True, on_delete=models.CASCADE)
+    medewerker = models.ForeignKey(User, related_name='Medewerker_Order', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
     product = models.ForeignKey(Product, related_name='Medewerker_Order_Product', blank=True, null=True, on_delete=models.CASCADE)
     jaar = models.IntegerField(null=False, blank=False, choices=JAAR_KEUZE)
     maand = models.IntegerField(null=False, blank=False, choices=MAAND_KEUZE)

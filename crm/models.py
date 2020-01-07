@@ -59,7 +59,7 @@ class Bedrijf(TransactionDT):
     kvk_nummer = models.CharField(max_length=20, blank=True, null=True)
     onenote = models.URLField(max_length=400, blank=True, null=True)
     actief = models.BooleanField(default=True)
-    klantpartner = models.ForeignKey(User, verbose_name="Relatiemanager", related_name='Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Relatiemanager", related_name='Klantpartner', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
 
     class Meta:
         ordering = ['bedrijfsnaam']
@@ -121,7 +121,7 @@ class Contactpersoon(TransactionDT):
     nieuwsbrief = models.BooleanField(default=False)
     actief = models.BooleanField(default=True)
     sexe = models.CharField('geslacht', max_length=1, choices=GENDER_CHOICES, default='O', null=False, blank=False)
-    klantpartner = models.ForeignKey(User, verbose_name="Relatiemanager", related_name='Relatiemanager', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Relatiemanager", related_name='Relatiemanager', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
 
     class Meta:
         ordering = ['volledige_naam']

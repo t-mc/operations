@@ -110,7 +110,7 @@ class Contract(TransactionDT):
     bedrijf = models.ForeignKey(Bedrijf, related_name='Contractbij_Klant', blank=True, null=True, on_delete=models.CASCADE)
     startdatum = models.DateField()
     einddatum = models.DateField()
-    klantpartner = models.ForeignKey(User, verbose_name="Contracteigenaar", related_name='Contract_Klantpartner', blank=True, null=True, on_delete=models.CASCADE)
+    klantpartner = models.ForeignKey(User, verbose_name="Contracteigenaar", related_name='Contract_Klantpartner', blank=True, null=True, on_delete=models.CASCADE, limit_choices_to={'is_active': True})
     contract_bij = models.ForeignKey(Bedrijf, related_name='Contractbij_Leverancier', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
@@ -136,7 +136,7 @@ class Cases(TransactionDT):
     bedrijf = models.ForeignKey(Bedrijf, blank=True, null=True, on_delete=models.CASCADE)
     contact = models.ForeignKey(Contactpersoon, blank=True, null=True, on_delete=models.CASCADE)
     contract = models.ForeignKey(Contract, blank=True, null=True, on_delete=models.CASCADE)
-    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='user_uitvoerende', on_delete=models.CASCADE)
+    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='user_uitvoerende', on_delete=models.CASCADE, limit_choices_to={'is_active': True})
 
     class Meta:
         verbose_name_plural = 'Cases'
@@ -175,7 +175,7 @@ class Activiteiten(TransactionDT):
     activiteit = models.ForeignKey(ActivityType, on_delete=models.CASCADE)
     status = models.ForeignKey(ActivityStatus, on_delete=models.CASCADE)
     omschrijving = models.TextField()
-    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='act_uitvoerende', on_delete=models.CASCADE)
+    uitvoerende = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='act_uitvoerende', on_delete=models.CASCADE, limit_choices_to={'is_active': True})
     datum_uitgevoerd = models.DateField(("Datum"), default=date.today)
     tijdsduur = models.ForeignKey(Tijdsduur, blank=True, null=True, default=1, on_delete=models.CASCADE)
 
