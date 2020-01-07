@@ -35,6 +35,7 @@ class Productgroep(TransactionDT):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
+        limit_choices_to={"is_active": True},
     )
     leverancier = models.ForeignKey(
         Bedrijf, null=False, blank=False, on_delete=models.CASCADE
