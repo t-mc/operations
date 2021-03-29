@@ -28,7 +28,7 @@ packaging==16.8
 phonenumberslite==8.3.1
 Pillow==6.2.0
 psycopg2==2.6.2
-Pygments==2.2.0
+Pygments==2.7.4
 pylint==1.6.4
 pylint-django==0.7.2
 pylint-plugin-utils==0.2.4
