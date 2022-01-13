@@ -26,7 +26,7 @@ mccabe==0.5.3
 olefile==0.44
 packaging==16.8
 phonenumberslite==8.3.1
-Pillow==6.2.0
+Pillow==9.0.0
 psycopg2==2.6.2
 Pygments==2.2.0
 pylint==1.6.4
